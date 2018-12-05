@@ -16,6 +16,9 @@ namespace FinalProject.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //can call below to have base DbContext class implement it's modelcreating method
+            //base.OnModelCreating
+
             //need help thinking this through
             modelBuilder.Entity<Proposal>().HasKey(x => x.Id).ForSqlServerIsClustered();
             modelBuilder.Entity<Proposal>().Property(x => x.Id).UseSqlServerIdentityColumn();
