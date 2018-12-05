@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FinalProject.Data;
+using FinalProject.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -34,7 +36,7 @@ namespace FinalProject
             });
 
             services.AddDbContext<FlowerAppContext>(config => config.UseSqlServer(Configuration.GetConnectionString("DbConnection")));
-
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
         
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
@@ -55,7 +57,7 @@ namespace FinalProject
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
-
+            app.UseAuthentication();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
@@ -71,8 +73,11 @@ namespace FinalProject
             var scopeFactory = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>();
             using (var serviceScope = scopeFactory.CreateScope())
             using (var context = serviceScope.ServiceProvider.GetService<FlowerAppContext>())
+            using (var identityContext = serviceScope.ServiceProvider.GetService<FinalProjectIdentityContext>())
+
             {
                 context.Database.Migrate();
+                identityContext.Database.Migrate();
             }
         }
     }
