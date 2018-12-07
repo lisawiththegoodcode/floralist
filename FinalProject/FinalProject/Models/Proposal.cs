@@ -21,5 +21,9 @@ namespace FinalProject.Models
 
         //for each has many, requires a list
         public List<ProposalItem> ProposalItems { get; set; }
+
+        //Also adding a proposal item object, because the creation of a proposal requires the creation of a proposal item
+        public int ProposalItemId { get; set; }
+        public ProposalItem ProposalItem { get; set; }
     }
 }
