@@ -17,8 +17,4 @@ steps:
   displayName: 'dotnet build $(buildConfiguration)'
 - script: dotnet publish FinalProject/FinalProject/FinalProject.csproj --output $(Build.ArtifactStagingDirectory)
   displayName: publish artifacts
-<<<<<<< HEAD
 - task: PublishBuildArtifacts@1
-=======
-- task: PublishBuildArtifacts@1
->>>>>>> cd0b605c9a24a44e27b32a9bd35bc7338d1fdfba
