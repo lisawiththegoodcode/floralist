@@ -28,6 +28,7 @@ namespace FinalProject
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -36,7 +37,6 @@ namespace FinalProject
             });
 
             services.AddDbContext<FlowerAppContext>(config => config.UseSqlServer(Configuration.GetConnectionString("DbConnection")));
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
         
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
@@ -44,6 +44,7 @@ namespace FinalProject
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -70,10 +71,13 @@ namespace FinalProject
 
         private void EnsureDatabaseUpdated(IApplicationBuilder app)
         {
-            var scopeFactory = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>();
+            var scopeFactory = app.ApplicationServices
+                .GetRequiredService<IServiceScopeFactory>();
             using (var serviceScope = scopeFactory.CreateScope())
-            using (var context = serviceScope.ServiceProvider.GetService<FlowerAppContext>())
-            using (var identityContext = serviceScope.ServiceProvider.GetService<FinalProjectIdentityContext>())
+            using (var context = serviceScope.ServiceProvider
+                .GetService<FlowerAppContext>())
+            using (var identityContext = serviceScope.ServiceProvider
+                .GetService<FinalProjectIdentityContext>())
 
             {
                 context.Database.Migrate();

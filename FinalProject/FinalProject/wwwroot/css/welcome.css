@@ -1,6 +1,6 @@
 ﻿header {
     height: 100vh;
-    background-image: url("../images/kari-shea-101978-unsplash.jpg");
+    background-image: url("../images/kari-shea-101978-unsplash.svg");
     /* flex-box thing */
     display: flex;
     flex-direction: column;
