@@ -15,9 +15,11 @@ namespace FinalProject.Areas.Identity
         public void Configure(IWebHostBuilder builder)
         {
             builder.ConfigureServices((context, services) => {
+                //services.AddDbContext<FinalProjectIdentityContext>(options =>
+                //    options.UseSqlServer(
+                //        context.Configuration.GetConnectionString("FinalProjectIdentityContextConnection")));
                 services.AddDbContext<FinalProjectIdentityContext>(options =>
-                    options.UseSqlServer(
-                        context.Configuration.GetConnectionString("FinalProjectIdentityContextConnection")));
+    options.UseInMemoryDatabase("IdDb"));
 
                 services.AddDefaultIdentity<IdentityUser>()
                     .AddEntityFrameworkStores<FinalProjectIdentityContext>();
