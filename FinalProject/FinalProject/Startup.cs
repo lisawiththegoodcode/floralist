@@ -36,8 +36,8 @@ namespace FinalProject
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            //services.AddDbContext<FlowerAppContext>(config => config.UseSqlServer(Configuration.GetConnectionString("DbConnection")));
-            services.AddDbContext<FlowerAppContext>(config => config.UseInMemoryDatabase("FlowerDb"));        
+            services.AddDbContext<FlowerAppContext>(config => config.UseSqlServer(Configuration.GetConnectionString("DbConnection")));
+            //services.AddDbContext<FlowerAppContext>(config => config.UseInMemoryDatabase("FlowerDb"));        
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
@@ -45,17 +45,17 @@ namespace FinalProject
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
 
-            //if (env.IsDevelopment())
-            //{
+            if (env.IsDevelopment())
+            {
                 app.UseDeveloperExceptionPage();
-            //}
-            //else
-            //{
-            //    app.UseExceptionHandler("/Home/Error");
-            //    app.UseHsts();
-            //}
+        }
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");
+                app.UseHsts();
+            }
 
-            app.UseHttpsRedirection();
+    app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseAuthentication();

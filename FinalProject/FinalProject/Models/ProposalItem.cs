@@ -8,8 +8,13 @@ namespace FinalProject.Models
     public class ProposalItem
     {
         public int Id { get; set; }
+
         public Image Image { get; set; }
+        public int ImageId { get; set; }
+
         public string Caption { get; set; }
+
         public Proposal Proposal { get; set; }
+        public int ProposalId { get; set; }
     }
 }
