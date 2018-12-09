@@ -80,8 +80,8 @@ namespace FinalProject
                 .GetService<FinalProjectIdentityContext>())
 
             {
-                context.Database.Migrate();
-                identityContext.Database.Migrate();
+                //context.Database.Migrate();
+                //identityContext.Database.Migrate();
             }
         }
     }
