@@ -19,7 +19,7 @@ namespace FinalProject.Data
             //can call below to have base DbContext class implement it's modelcreating method
             base.OnModelCreating(modelBuilder);
             //this applys the default/convention mapping ie helps with foriegn keys, creating entity columns correctly
-            
+
 
             //PROPOSAL KEY WITH IDENTITY SETUP
             modelBuilder.Entity<Proposal>().HasKey(x => x.Id)
