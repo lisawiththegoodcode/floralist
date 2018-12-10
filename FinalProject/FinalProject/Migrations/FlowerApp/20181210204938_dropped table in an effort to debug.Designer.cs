@@ -4,14 +4,16 @@ using FinalProject.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FinalProject.Migrations.FlowerApp
 {
     [DbContext(typeof(FlowerAppContext))]
-    partial class FlowerAppContextModelSnapshot : ModelSnapshot
+    [Migration("20181210204938_dropped table in an effort to debug")]
+    partial class droppedtableinanefforttodebug
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

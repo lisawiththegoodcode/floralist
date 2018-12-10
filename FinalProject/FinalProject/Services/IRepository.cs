@@ -13,6 +13,6 @@ namespace FinalProject.Services
 
         Task AddProposalAsync(Proposal proposal);
 
-
+    
     }
 }

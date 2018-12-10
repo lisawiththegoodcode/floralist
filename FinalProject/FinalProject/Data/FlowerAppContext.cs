@@ -54,6 +54,9 @@ namespace FinalProject.Data
                 .ForSqlServerIsClustered();
             modelBuilder.Entity<Designer>().Property(x => x.Id)
                 .UseSqlServerIdentityColumn();
+            modelBuilder.Entity<Designer>()
+                .HasMany(x => x.Proposals)
+                .WithOne(x => x.Designer);
 
             //PROPOSALITEM KEY WITH IDENTITY SETUP
             modelBuilder.Entity<ProposalItem>().HasKey(x => x.Id)

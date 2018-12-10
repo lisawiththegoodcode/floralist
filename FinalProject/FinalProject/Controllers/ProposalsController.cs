@@ -28,7 +28,7 @@ namespace FinalProject.Controllers
             {
                 searchResults = searchResults.Where(x => x.FileName == searchString);
             }
-            return View(searchResults);
+            return View(await searchResults.ToListAsync());
         }
 
         // GET: Proposals
