@@ -31,67 +31,66 @@ namespace FinalProject.Controllers
             return View(searchResults);
         }
 
-        //// GET: Proposals
-        //public async Task<IActionResult> Index()
-        //{
-        //    return View(await _repository.Proposals.ToListAsync());
-        //}
+        // GET: Proposals
+        public async Task<IActionResult> Index()
+        {
+            return View(await _repository.Proposals.ToListAsync());
+        }
 
-        //// GET: Proposals/Details/5
-        //public async Task<IActionResult> Details(int? id)
+        // GET: Proposals/Details/5
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var proposal = await _repository.Proposals
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (proposal == null)
+            {
+                return NotFound();
+            }
+
+            return View(proposal);
+        }
+
+        // GET: Proposals/Create
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        // POST: Proposals/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("Id,Title,Description")] Proposal proposal)
+        {
+            if (ModelState.IsValid)
+            {
+                await _repository.AddProposalAsync(proposal);
+                return RedirectToAction(nameof(Index));
+            }
+            return View(proposal);
+        }
+
+        //// GET: Proposals/Edit/5
+        //public async Task<IActionResult> Edit(int? id)
         //{
         //    if (id == null)
         //    {
         //        return NotFound();
         //    }
 
-        //    var proposal = await _repository.Proposals
-        //        .FirstOrDefaultAsync(m => m.Id == id);
+        //    var proposal = await _repository.Proposals.FindAsync(id);
         //    if (proposal == null)
         //    {
         //        return NotFound();
         //    }
-
         //    return View(proposal);
         //}
-
-        //// GET: Proposals/Create
-        //public IActionResult Create()
-        //{
-        //    return View();
-        //}
-
-        //    // POST: Proposals/Create
-        //    // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        //    // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //    [HttpPost]
-        //    [ValidateAntiForgeryToken]
-        //    public async Task<IActionResult> Create([Bind("Id,Title,Description")] Proposal proposal)
-        //    {
-        //        if (ModelState.IsValid)
-        //        {
-        //            _repository.Add(proposal);
-        //            await _repository.SaveChangesAsync();
-        //            return RedirectToAction(nameof(Index));
-        //        }
-        //        return View(proposal);
-        //    }
-
-        //    // GET: Proposals/Edit/5
-        //    public async Task<IActionResult> Edit(int? id)
-        //    {
-        //        if (id == null)
-        //        {
-        //            return NotFound();
-        //        }
-
-        //        var proposal = await _repository.Proposals.FindAsync(id);
-        //        if (proposal == null)
-        //        {
-        //            return NotFound();
-        //        }
-        //        return View(proposal);
-        //    }
 
         //    // POST: Proposals/Edit/5
         //    // To protect from overposting attacks, please enable the specific properties you want to bind to, for 

@@ -15,7 +15,17 @@ namespace FinalProject.Services
         {
             _flowerAppContext = flowerAppContext;
         }
+
         public IQueryable<Image> Images => _flowerAppContext.Images;
+        public IQueryable<Proposal> Proposals => _flowerAppContext.Proposals;
+
+        #region Proposals Methods
+        public async Task AddProposalAsync(Proposal proposal)
+        {
+            await _flowerAppContext.Proposals.AddAsync(proposal);
+            await _flowerAppContext.SaveChangesAsync();
+        }
+        #endregion
 
         public void Dispose()
         {

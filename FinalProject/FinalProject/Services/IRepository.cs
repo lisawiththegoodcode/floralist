@@ -9,5 +9,10 @@ namespace FinalProject.Services
     public interface IRepository : IDisposable
     {
         IQueryable<Image> Images { get; }
+        IQueryable<Proposal> Proposals{ get; }
+
+        Task AddProposalAsync(Proposal proposal);
+
+
     }
 }
