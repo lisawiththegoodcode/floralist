@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using FinalProject.Data;
 using FinalProject.Models;
+using FinalProject.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -28,6 +29,8 @@ namespace FinalProject
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<IRepository, Repository>();
+            services.AddScoped<FlowerAppContext>();
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
             services.Configure<CookiePolicyOptions>(options =>
             {

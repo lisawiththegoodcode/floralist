@@ -104,7 +104,7 @@ namespace FinalProject.Data
                 .WithMany(x => x.ImageTags)
                 .HasForeignKey(x => x.ImageId);
         }
-        //do we need a dbset for each model?
+
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Designer> Designers { get; set; }
         public DbSet<Image> Images { get; set; }
@@ -112,6 +112,8 @@ namespace FinalProject.Data
         public DbSet<ProposalItem> ProposalItems { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<ImageTag> ImageTags { get; set; }
+
+
 
     }
 }
