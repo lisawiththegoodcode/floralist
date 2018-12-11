@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace FinalProject.Migrations.FlowerApp
+namespace FinalProject.Migrations
 {
     [DbContext(typeof(FlowerAppContext))]
-    [Migration("20181210204255_updated models and context")]
-    partial class updatedmodelsandcontext
+    [Migration("20181211062721_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
