@@ -34,7 +34,10 @@ namespace FinalProject.Controllers
         // GET: Proposals
         public async Task<IActionResult> Index()
         {
-            return View(await _repository.Proposals.ToListAsync());
+            return View(await _repository.Proposals
+                .Include(x => x.Customer)
+                .Include(x => x.Designer)
+                .ToListAsync());
         }
 
         // GET: Proposals/Details/5
@@ -45,8 +48,8 @@ namespace FinalProject.Controllers
                 return NotFound();
             }
 
-            var proposal = await _repository.Proposals
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var proposal = _repository.GetProposal(id);
+
             if (proposal == null)
             {
                 return NotFound();
@@ -66,7 +69,7 @@ namespace FinalProject.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Description")] Proposal proposal)
+        public async Task<IActionResult> Create([Bind("Id,Title,Description,CustomerId,DesignerId")] Proposal proposal)
         {
             if (ModelState.IsValid)
             {
@@ -76,90 +79,87 @@ namespace FinalProject.Controllers
             return View(proposal);
         }
 
-        //// GET: Proposals/Edit/5
-        //public async Task<IActionResult> Edit(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
+        //GET: Proposals/Edit/5
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
-        //    var proposal = await _repository.Proposals.FindAsync(id);
-        //    if (proposal == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    return View(proposal);
-        //}
+            var proposal = _repository.GetProposal(id);
 
-        //    // POST: Proposals/Edit/5
-        //    // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        //    // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //    [HttpPost]
-        //    [ValidateAntiForgeryToken]
-        //    public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description")] Proposal proposal)
-        //    {
-        //        if (id != proposal.Id)
-        //        {
-        //            return NotFound();
-        //        }
+            if (proposal == null)
+            {
+                return NotFound();
+            }
+            return View(proposal);
+        }
 
-        //        if (ModelState.IsValid)
-        //        {
-        //            try
-        //            {
-        //                _repository.Update(proposal);
-        //                await _repository.SaveChangesAsync();
-        //            }
-        //            catch (DbUpdateConcurrencyException)
-        //            {
-        //                if (!ProposalExists(proposal.Id))
-        //                {
-        //                    return NotFound();
-        //                }
-        //                else
-        //                {
-        //                    throw;
-        //                }
-        //            }
-        //            return RedirectToAction(nameof(Index));
-        //        }
-        //        return View(proposal);
-        //    }
+        // POST: Proposals/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,CustomerId,DesignerId")] Proposal proposal)
+        {
+            if (id != proposal.Id)
+            {
+                return NotFound();
+            }
 
-        //    // GET: Proposals/Delete/5
-        //    public async Task<IActionResult> Delete(int? id)
-        //    {
-        //        if (id == null)
-        //        {
-        //            return NotFound();
-        //        }
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    await _repository.UpdateProposalAsync(id, proposal);
+                }
+                catch(DbUpdateConcurrencyException)
+                {
+                    if (!ProposalExists(proposal.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(proposal);
+        }
 
-        //        var proposal = await _repository.Proposals
-        //            .FirstOrDefaultAsync(m => m.Id == id);
-        //        if (proposal == null)
-        //        {
-        //            return NotFound();
-        //        }
+        // GET: Proposals/Delete/5
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
-        //        return View(proposal);
-        //    }
+            var proposal = _repository.GetProposal(id);
 
-        //    // POST: Proposals/Delete/5
-        //    [HttpPost, ActionName("Delete")]
-        //    [ValidateAntiForgeryToken]
-        //    public async Task<IActionResult> DeleteConfirmed(int id)
-        //    {
-        //        var proposal = await _repository.Proposals.FindAsync(id);
-        //        _repository.Proposals.Remove(proposal);
-        //        await _repository.SaveChangesAsync();
-        //        return RedirectToAction(nameof(Index));
-        //    }
+            if (proposal == null)
+            {
+                return NotFound();
+            }
 
-        //    private bool ProposalExists(int id)
-        //    {
-        //        return _repository.Proposals.Any(e => e.Id == id);
-        //    }
-        //}
+            return View(proposal);
+        }
+
+        //POST: Proposals/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            await _repository.DeleteProposalAsync(id);
+            return RedirectToAction(nameof(Index));
+        }
+
+        private bool ProposalExists(int id)
+        {
+            return _repository.Proposals.Any(e => e.Id == id);
+        }
     }
 }

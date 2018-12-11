@@ -66,7 +66,7 @@ namespace FinalProject
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Welcome}/{action=Index}/{id?}");
+                    template: "{controller=Proposals}/{action=Index}/{id?}");
             });
             EnsureDatabaseUpdated(app);
         }
