@@ -19,6 +19,7 @@ namespace FinalProject.Services
 
         public IQueryable<Image> Images => _flowerAppContext.Images;
         public IQueryable<Proposal> Proposals => _flowerAppContext.Proposals;
+        public IQueryable<ProposalItem> ProposalItems => _flowerAppContext.ProposalItems;
         public IQueryable<Customer> Customers => _flowerAppContext.Customers;
         public IQueryable<Designer> Designers => _flowerAppContext.Designers;
 
@@ -57,7 +58,19 @@ namespace FinalProject.Services
             _flowerAppContext.Proposals.Remove(proposal);
             return _flowerAppContext.SaveChangesAsync();
         }
+
+        public List<ProposalItem> GetProposalItemsForProposal(int id)
+        {
+            return _flowerAppContext.Proposals.FirstOrDefault(m => m.Id == id).ProposalItems;
+                //ProposalItems
+                //.Where(p => p.ProposalId == id)
+                //.ToList();
+            //do I need an .orderby or .include?
+
+        }
         #endregion
+
+
 
         public void Dispose()
         {
