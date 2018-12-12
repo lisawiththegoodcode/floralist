@@ -4,14 +4,16 @@ using FinalProject.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace FinalProject.Migrations.FlowerApp
+namespace FinalProject.Migrations
 {
     [DbContext(typeof(FlowerAppContext))]
-    partial class FlowerAppContextModelSnapshot : ModelSnapshot
+    [Migration("20181211062721_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,7 +33,8 @@ namespace FinalProject.Migrations.FlowerApp
 
                     b.Property<string>("PhoneNumber");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasAnnotation("SqlServer:Clustered", true);
 
                     b.ToTable("Customers");
                 });
@@ -48,7 +51,8 @@ namespace FinalProject.Migrations.FlowerApp
 
                     b.Property<string>("PhoneNumber");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasAnnotation("SqlServer:Clustered", true);
 
                     b.ToTable("Designers");
                 });
@@ -63,11 +67,25 @@ namespace FinalProject.Migrations.FlowerApp
 
                     b.Property<string>("FileName");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasAnnotation("SqlServer:Clustered", true);
 
                     b.HasIndex("DesignerId");
 
                     b.ToTable("Images");
+                });
+
+            modelBuilder.Entity("FinalProject.Models.ImageTag", b =>
+                {
+                    b.Property<int>("ImageId");
+
+                    b.Property<int>("TagId");
+
+                    b.HasKey("ImageId", "TagId");
+
+                    b.HasIndex("TagId");
+
+                    b.ToTable("ImageTags");
                 });
 
             modelBuilder.Entity("FinalProject.Models.Proposal", b =>
@@ -87,9 +105,11 @@ namespace FinalProject.Migrations.FlowerApp
                     b.HasKey("Id")
                         .HasAnnotation("SqlServer:Clustered", true);
 
-                    b.HasIndex("CustomerId");
+                    b.HasIndex("CustomerId")
+                        .HasName("IX_Proposal_Customer");
 
-                    b.HasIndex("DesignerId");
+                    b.HasIndex("DesignerId")
+                        .HasName("IX_Proposal_Designer");
 
                     b.ToTable("Proposals");
                 });
@@ -102,15 +122,18 @@ namespace FinalProject.Migrations.FlowerApp
 
                     b.Property<string>("Caption");
 
-                    b.Property<int?>("ImageId");
+                    b.Property<int>("ImageId");
 
-                    b.Property<int?>("ProposalId");
+                    b.Property<int>("ProposalId");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasAnnotation("SqlServer:Clustered", true);
 
-                    b.HasIndex("ImageId");
+                    b.HasIndex("ImageId")
+                        .HasName("IX_ProposalItem_Image");
 
-                    b.HasIndex("ProposalId");
+                    b.HasIndex("ProposalId")
+                        .HasName("IX_ProposalItem_Proposal");
 
                     b.ToTable("ProposalItems");
                 });
@@ -121,15 +144,12 @@ namespace FinalProject.Migrations.FlowerApp
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("ImageId");
-
                     b.Property<string>("Name");
 
                     b.Property<string>("Type");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("ImageId");
+                    b.HasKey("Id")
+                        .HasAnnotation("SqlServer:Clustered", true);
 
                     b.ToTable("Tags");
                 });
@@ -141,15 +161,28 @@ namespace FinalProject.Migrations.FlowerApp
                         .HasForeignKey("DesignerId");
                 });
 
+            modelBuilder.Entity("FinalProject.Models.ImageTag", b =>
+                {
+                    b.HasOne("FinalProject.Models.Image", "Image")
+                        .WithMany("ImageTags")
+                        .HasForeignKey("ImageId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("FinalProject.Models.Tag", "Tag")
+                        .WithMany("ImageTags")
+                        .HasForeignKey("TagId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("FinalProject.Models.Proposal", b =>
                 {
                     b.HasOne("FinalProject.Models.Customer", "Customer")
-                        .WithMany()
+                        .WithMany("Proposals")
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("FinalProject.Models.Designer", "Designer")
-                        .WithMany()
+                        .WithMany("Proposals")
                         .HasForeignKey("DesignerId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
@@ -157,19 +190,14 @@ namespace FinalProject.Migrations.FlowerApp
             modelBuilder.Entity("FinalProject.Models.ProposalItem", b =>
                 {
                     b.HasOne("FinalProject.Models.Image", "Image")
-                        .WithMany()
-                        .HasForeignKey("ImageId");
+                        .WithMany("ProposalItems")
+                        .HasForeignKey("ImageId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("FinalProject.Models.Proposal", "Proposal")
                         .WithMany("ProposalItems")
-                        .HasForeignKey("ProposalId");
-                });
-
-            modelBuilder.Entity("FinalProject.Models.Tag", b =>
-                {
-                    b.HasOne("FinalProject.Models.Image")
-                        .WithMany("Tags")
-                        .HasForeignKey("ImageId");
+                        .HasForeignKey("ProposalId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

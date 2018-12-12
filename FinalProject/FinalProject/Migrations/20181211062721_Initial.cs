@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace FinalProject.Migrations.FlowerApp
+namespace FinalProject.Migrations
 {
-    public partial class addedbaseonmodelcreatingtoOnModelCreating : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -19,7 +19,8 @@ namespace FinalProject.Migrations.FlowerApp
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Customers", x => x.Id);
+                    table.PrimaryKey("PK_Customers", x => x.Id)
+                        .Annotation("SqlServer:Clustered", true);
                 });
 
             migrationBuilder.CreateTable(
@@ -34,7 +35,23 @@ namespace FinalProject.Migrations.FlowerApp
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Designers", x => x.Id);
+                    table.PrimaryKey("PK_Designers", x => x.Id)
+                        .Annotation("SqlServer:Clustered", true);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Tags",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Type = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tags", x => x.Id)
+                        .Annotation("SqlServer:Clustered", true);
                 });
 
             migrationBuilder.CreateTable(
@@ -48,7 +65,8 @@ namespace FinalProject.Migrations.FlowerApp
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Images", x => x.Id);
+                    table.PrimaryKey("PK_Images", x => x.Id)
+                        .Annotation("SqlServer:Clustered", true);
                     table.ForeignKey(
                         name: "FK_Images_Designers_DesignerId",
                         column: x => x.DesignerId,
@@ -87,24 +105,27 @@ namespace FinalProject.Migrations.FlowerApp
                 });
 
             migrationBuilder.CreateTable(
-                name: "Tags",
+                name: "ImageTags",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Type = table.Column<string>(nullable: true),
-                    Name = table.Column<string>(nullable: true),
-                    ImageId = table.Column<int>(nullable: true)
+                    ImageId = table.Column<int>(nullable: false),
+                    TagId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Tags", x => x.Id);
+                    table.PrimaryKey("PK_ImageTags", x => new { x.ImageId, x.TagId });
                     table.ForeignKey(
-                        name: "FK_Tags_Images_ImageId",
+                        name: "FK_ImageTags_Images_ImageId",
                         column: x => x.ImageId,
                         principalTable: "Images",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ImageTags_Tags_TagId",
+                        column: x => x.TagId,
+                        principalTable: "Tags",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -113,25 +134,26 @@ namespace FinalProject.Migrations.FlowerApp
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    ImageId = table.Column<int>(nullable: true),
+                    ImageId = table.Column<int>(nullable: false),
                     Caption = table.Column<string>(nullable: true),
-                    ProposalId = table.Column<int>(nullable: true)
+                    ProposalId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProposalItems", x => x.Id);
+                    table.PrimaryKey("PK_ProposalItems", x => x.Id)
+                        .Annotation("SqlServer:Clustered", true);
                     table.ForeignKey(
                         name: "FK_ProposalItems_Images_ImageId",
                         column: x => x.ImageId,
                         principalTable: "Images",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_ProposalItems_Proposals_ProposalId",
                         column: x => x.ProposalId,
                         principalTable: "Proposals",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -140,33 +162,36 @@ namespace FinalProject.Migrations.FlowerApp
                 column: "DesignerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProposalItems_ImageId",
+                name: "IX_ImageTags_TagId",
+                table: "ImageTags",
+                column: "TagId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProposalItem_Image",
                 table: "ProposalItems",
                 column: "ImageId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProposalItems_ProposalId",
+                name: "IX_ProposalItem_Proposal",
                 table: "ProposalItems",
                 column: "ProposalId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Proposals_CustomerId",
+                name: "IX_Proposal_Customer",
                 table: "Proposals",
                 column: "CustomerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Proposals_DesignerId",
+                name: "IX_Proposal_Designer",
                 table: "Proposals",
                 column: "DesignerId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Tags_ImageId",
-                table: "Tags",
-                column: "ImageId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "ImageTags");
+
             migrationBuilder.DropTable(
                 name: "ProposalItems");
 
@@ -174,10 +199,10 @@ namespace FinalProject.Migrations.FlowerApp
                 name: "Tags");
 
             migrationBuilder.DropTable(
-                name: "Proposals");
+                name: "Images");
 
             migrationBuilder.DropTable(
-                name: "Images");
+                name: "Proposals");
 
             migrationBuilder.DropTable(
                 name: "Customers");

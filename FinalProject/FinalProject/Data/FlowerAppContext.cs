@@ -1,4 +1,6 @@
 ﻿using FinalProject.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -7,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace FinalProject.Data
 {
-    public class FlowerAppContext : DbContext
+    public class FlowerAppContext : IdentityDbContext<IdentityUser>
     {
         public FlowerAppContext(DbContextOptions<FlowerAppContext> options) : base(options)
         {
@@ -19,7 +21,7 @@ namespace FinalProject.Data
             //can call below to have base DbContext class implement it's modelcreating method
             base.OnModelCreating(modelBuilder);
             //this applys the default/convention mapping ie helps with foriegn keys, creating entity columns correctly
-            
+
 
             //PROPOSAL KEY WITH IDENTITY SETUP
             modelBuilder.Entity<Proposal>().HasKey(x => x.Id)
@@ -54,6 +56,9 @@ namespace FinalProject.Data
                 .ForSqlServerIsClustered();
             modelBuilder.Entity<Designer>().Property(x => x.Id)
                 .UseSqlServerIdentityColumn();
+            modelBuilder.Entity<Designer>()
+                .HasMany(x => x.Proposals)
+                .WithOne(x => x.Designer);
 
             //PROPOSALITEM KEY WITH IDENTITY SETUP
             modelBuilder.Entity<ProposalItem>().HasKey(x => x.Id)

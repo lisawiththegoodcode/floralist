@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FinalProject.Migrations
 {
-    public partial class AddedIdentity : Migration
+    public partial class movedidentitytomaindbcontext : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
