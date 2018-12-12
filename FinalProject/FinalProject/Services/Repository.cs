@@ -65,7 +65,7 @@ namespace FinalProject.Services
                 //ProposalItems
                 //.Where(p => p.ProposalId == id)
                 //.ToList();
-            //do I need an .orderby or .include?
+            //maybe add an .orderby or .include?
 
         }
         #endregion
