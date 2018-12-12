@@ -4,8 +4,6 @@
 @{
     var customerItems = repository.Customers.Select(x => new SelectListItem(x.Name, x.Id.ToString()));
     var designerItems = repository.Designers.Select(x => new SelectListItem(x.Name, x.Id.ToString()));
-    var proposalItems = repository.GetProposalItemsForProposal(Model.Id);
-
 
     ViewData["Title"] = "Proposals";
 }
@@ -46,38 +44,6 @@
                     <input asp-for="Description" class="form-control" />
                     <span asp-validation-for="Description" class="text-danger"></span>
                 </div>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>
-                                Image
-                            </th>
-                            <th>
-                                Caption
-                            </th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in proposalItems)
-                        {
-                            <tr>
-                                <td>
-                                    <img src="~/images/@item.Image.FileName" width=200 height=200 style="object-fit:cover" />
-                                    @Html.DisplayFor(modelItem => item.Image.FileName)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Caption)
-                                </td>
-                                <td>
-                                    <!-- NOTE these don't work properly yet -->
-                                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
                 <div class="form-group">
                     <input type="submit" value="Save" class="btn btn-default" />
                 </div>
