@@ -31,7 +31,7 @@ namespace FinalProject
         {
             services.AddScoped<IRepository, Repository>();
             services.AddScoped<FlowerAppContext>();
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
+            services.AddAuthentication().AddCookie();
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -58,7 +58,7 @@ namespace FinalProject
                 app.UseHsts();
             }
 
-    app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseAuthentication();
@@ -79,12 +79,8 @@ namespace FinalProject
             using (var serviceScope = scopeFactory.CreateScope())
             using (var context = serviceScope.ServiceProvider
                 .GetService<FlowerAppContext>())
-            using (var identityContext = serviceScope.ServiceProvider
-                .GetService<FinalProjectIdentityContext>())
-
             {
                 context.Database.Migrate();
-                identityContext.Database.Migrate();
             }
         }
     }

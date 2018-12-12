@@ -23,30 +23,39 @@ namespace FinalProject.Services
         public IQueryable<Designer> Designers => _flowerAppContext.Designers;
 
         #region Proposals Methods
-        public async Task AddProposalAsync(Proposal proposal)
+        public Task AddProposalAsync(Proposal proposal)
         {
-            await _flowerAppContext.Proposals.AddAsync(proposal);
-            await _flowerAppContext.SaveChangesAsync();
+            _flowerAppContext.Proposals.Add(proposal);
+            return _flowerAppContext.SaveChangesAsync();
         }
-        public Proposal GetProposal(int? id)
+
+        public Task<Proposal> GetProposalAsync(int? id)
         {
             return _flowerAppContext.Proposals
                 .Include(x => x.Customer)
                 .Include(x => x.Designer)
-                .FirstOrDefault(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
         }
 
-        public async Task UpdateProposalAsync(int id, Proposal proposal)
+        //public Proposal GetProposal(int? id)
+        //{
+        //    return _flowerAppContext.Proposals
+        //        .Include(x => x.Customer)
+        //        .Include(x => x.Designer)
+        //        .FirstOrDefault(m => m.Id == id);
+        //}
+
+        public Task UpdateProposalAsync(int id, Proposal proposal)
         {
-            proposal.Id = id;
+            //proposal.Id = id;
             _flowerAppContext.Proposals.Update(proposal);
-            await _flowerAppContext.SaveChangesAsync();
+            return _flowerAppContext.SaveChangesAsync();
         }
-        public async Task DeleteProposalAsync(int id)
+        public Task DeleteProposalAsync(int id)
         {
             var proposal = _flowerAppContext.Proposals.FirstOrDefault(m => m.Id == id);
             _flowerAppContext.Proposals.Remove(proposal);
-            await _flowerAppContext.SaveChangesAsync();
+            return _flowerAppContext.SaveChangesAsync();
         }
         #endregion
 

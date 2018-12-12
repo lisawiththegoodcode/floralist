@@ -48,7 +48,7 @@ namespace FinalProject.Controllers
                 return NotFound();
             }
 
-            var proposal = _repository.GetProposal(id);
+            var proposal = await _repository.GetProposalAsync(id);
 
             if (proposal == null)
             {
@@ -87,7 +87,7 @@ namespace FinalProject.Controllers
                 return NotFound();
             }
 
-            var proposal = _repository.GetProposal(id);
+            var proposal = await _repository.GetProposalAsync(id);
 
             if (proposal == null)
             {
@@ -138,7 +138,7 @@ namespace FinalProject.Controllers
                 return NotFound();
             }
 
-            var proposal = _repository.GetProposal(id);
+            var proposal = await _repository.GetProposalAsync(id);
 
             if (proposal == null)
             {

@@ -14,7 +14,8 @@ namespace FinalProject.Services
         IQueryable<Designer> Designers { get; }
 
         Task AddProposalAsync(Proposal proposal);
-        Proposal GetProposal(int? id);
+        //Proposal GetProposal(int? id);
+        Task<Proposal> GetProposalAsync(int? id);
         Task UpdateProposalAsync(int id, Proposal proposal);
         Task DeleteProposalAsync(int id);
     }
