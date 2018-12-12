@@ -7,24 +7,60 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FinalProject.Data;
 using FinalProject.Models;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
 
 namespace FinalProject.Controllers
 {
     public class ImagesController : Controller
     {
         private readonly FlowerAppContext _context;
+        private readonly IHostingEnvironment _hostingEnvironment;
 
-        public ImagesController(FlowerAppContext context)
+        public ImagesController(FlowerAppContext context, IHostingEnvironment hostingEnvironment)
         {
             _context = context;
+            _hostingEnvironment = hostingEnvironment;
         }
 
         // GET: Images
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Images.ToListAsync());
+            return View();
+            //return View(await _context.Images.ToListAsync());
         }
 
+        [HttpPost]
+        public async Task<IActionResult> UploadImages(string fileName, IFormFile files)
+        {
+            ViewData["fName"] = fileName;
+
+            
+
+            //foreach (var formFile in files)
+            //{
+                if (files != null)
+                {
+                    var filePath = Path.Combine(_hostingEnvironment.WebRootPath + "/images/", Path.GetFileName(files.FileName));
+
+                //files.CopyTo(new FileStream(filePath, FileMode.Create));
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await files.CopyToAsync(stream);
+                }
+
+                    ViewData["filePath"] = "/images/"+ Path.GetFileName(files.FileName);
+                }
+            //}
+
+            // process uploaded files
+            // Don't rely on or trust the FileName property without validation.
+
+            //return Ok(new { count = files.Count, size, filePath });
+
+            return View();
+        }
         // GET: Images/Details/5
         public async Task<IActionResult> Details(int? id)
         {
