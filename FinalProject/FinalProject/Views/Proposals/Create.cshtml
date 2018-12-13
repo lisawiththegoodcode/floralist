@@ -4,7 +4,6 @@
 @{
     var customerItems = repository.Customers.Select(x => new SelectListItem(x.Name, x.Id.ToString()));
     var designerItems = repository.Designers.Select(x => new SelectListItem(x.Name, x.Id.ToString()));
-    var proposalItems = repository.GetProposalItemsForProposal(Model.Id);
 
     ViewData["Title"] = "Proposals";
 }
@@ -44,50 +43,12 @@
                     <br />
                     <a asp-controller="ProposalItemsController" asp-action="Create">Add New Image</a>
 
-@*                <p>*@
-                    <!-- NOTE: we send the proposalId along to the search page so we know
-                which proposal we're adding items to -->
-                    @*@Html.ActionLink("Add Item", "SearchImages", new { proposalId = Model.Id })
-                 </p>*@
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>
-                                    Image
-                                </th>
-                                <th>
-                                    Caption
-                                </th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in proposalItems)
-                            {
-                                <tr>
-                                    <td>
-                                        <img src="~/images/@item.Image.FileName" width=200 height=200 style="object-fit:cover"/>
-                                        @Html.DisplayFor(modelItem => item.Image.FileName)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Caption)
-                                    </td>
-                                    <td>
-                                        <!-- NOTE these don't work properly yet -->
-                                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
+            </form>
         </div>
-
-        <div class="form-group">
-            <input type="submit" value="Create" class="btn btn-default" />
-        </div>
-        </form>
-    </div>
     </div>
 
     <div>

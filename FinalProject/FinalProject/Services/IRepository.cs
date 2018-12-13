@@ -14,6 +14,8 @@ namespace FinalProject.Services
         IQueryable<Customer> Customers { get; }
         IQueryable<Designer> Designers { get; }
 
+        void AddProposalItem(int proposalId, ProposalItem proposalItem);
+
         Task AddProposalAsync(Proposal proposal);
         //Proposal GetProposal(int? id);
         Task<Proposal> GetProposalAsync(int? id);
