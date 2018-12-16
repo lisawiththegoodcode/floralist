@@ -1,4 +1,4 @@
-﻿@model FinalProject.ViewModels.AddProposalItem
+﻿@*@model FinalProject.ViewModels.AddProposalItem
 
 @{
     ViewData["Title"] = "AddProposalItem";
@@ -15,9 +15,7 @@
             </div>
             <div class="form-group">
                 <input type="hidden" asp-for="ImageId" />
-@*                <input type="hidden" asp-for="Image" />*@
                 <input type="hidden" asp-for="ProposalId" />
-                @*<input type="hidden" asp-for="Proposal" />*@
                 <label asp-for="Caption" class="control-label"></label>
                 <input asp-for="Caption" class="form-control" />
                 <span asp-validation-for="Caption" class="text-danger"></span>
@@ -35,5 +33,5 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+}*@
 

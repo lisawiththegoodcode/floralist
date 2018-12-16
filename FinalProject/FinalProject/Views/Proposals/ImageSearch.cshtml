@@ -50,7 +50,7 @@
                     </td>
                     <td>
                         @* get this committed and working as is, and then try to transition to controller=ProposalItems and asp-action=Create *@
-                        <a asp-action="AddProposalItem" asp-route-imageId="@item.Id" asp-route-proposalId="@Model.ProposalId">Add to Proposal</a> |
+                        <a asp-controller="ProposalItems" asp-action="Create" asp-route-imageId="@item.Id" asp-route-proposalId="@Model.ProposalId">Add to Proposal</a> |
                     </td>
                 </tr>
                 }

@@ -41,10 +41,9 @@
                     <span asp-validation-for="Description" class="text-danger"></span>
                 </div>
                 <div class="form-group">
+                    <label class="control-label">Images</label>
                     <p>
-                        <!-- NOTE: we send the proposalId along to the search page so we know
-            which proposal we're adding items to -->
-                        @Html.ActionLink("Add Item", "ImageSearch", new { proposalId = Model.Id })
+                        @Html.ActionLink("Add Image", "ImageSearch", new { proposalId = Model.Id })
                     </p>
                     <table class="table">
                         <thead>
@@ -59,20 +58,32 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var item in Model.ProposalItems)
+                            @*@foreach (var item in Model.ProposalItems)*@
+                            @for (var i = 0; i < Model.ProposalItems.Count; i++)
                             {
                                 <tr>
                                     <td>
-                                        <img src="~/images/@item.Image.FileName" width=200 height=200 style="object-fit:cover" />
+                                        <img src="~/images/@Model.ProposalItems[i].Image.FileName" width=200 height=200 style="object-fit:cover" />
                                         @*@Html.DisplayFor(modelItem => item.Image.FileName)*@
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.Caption)
+                                        @*<div class="form-group">*@
+                                        <label asp-for="@Model.ProposalItems[i].Caption" class="control-label"></label>
+                                        <input asp-for="@Model.ProposalItems[i].Caption" class="form-control" />
+                                        <span asp-validation-for="@Model.ProposalItems[i].Caption" class="text-danger"></span>
+                                        <input type="hidden" asp-for="@Model.ProposalItems[i].Id" />
+                                        <input type="hidden" asp-for="@Model.ProposalItems[i].ProposalId" />
+                                        <input type="hidden" asp-for="@Model.ProposalItems[i].ImageId" />
+
+                                        @*</div>*@
+                                        @*<input  value="@item.Caption" />*@
+                                        @*@Html.DisplayFor(modelItem => item.Caption)*@
+                                        @*@Html.TextBoxFor(X => Model.ProposalItems[i].Caption, new { @class="form-control" })*@
                                     </td>
                                     <td>
                                         <!-- NOTE these don't work properly yet -->
-                                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                                        @*@Html.ActionLink("Edit", "Edit", "ProposalItems", new { id = item.Id }) |
+                                        @Html.ActionLink("Delete", "Delete", "ProposalItems", new { id = item.Id })*@
                                     </td>
                                 </tr>
                             }

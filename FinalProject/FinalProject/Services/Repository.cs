@@ -22,33 +22,25 @@ namespace FinalProject.Services
         public IQueryable<ProposalItem> ProposalItems => _flowerAppContext.ProposalItems;
         public IQueryable<Customer> Customers => _flowerAppContext.Customers;
         public IQueryable<Designer> Designers => _flowerAppContext.Designers;
-
-        public void AddProposalItem(int proposalId, ProposalItem proposalItem)
+        
+        #region ProposalItem Methods
+        public Task AddProposalItemAsync(int proposalId, ProposalItem proposalItem)
         {
-            // get the proposal that we're going to add the item to
-            //var proposal = this.Proposals.FirstOrDefault(p => p.Id == proposalId);
-            // IGNORE this next line.  It's just manually attaching the actual image object
-            // because I'm using a fake repository. EF would do this for you based on
-            // the ImageId.
-            //proposalItem.Image = _images.FirstOrDefault(i => i.Id == proposalItem.ImageId);
-            // Add the new item to the proposal.  Possibly SaveChanges() here, if using EF.
-            //proposal.ProposalItems.Add(proposalItem);
 
-            //need to attach proposalitem to proposal
-            //if this doesn't then, I should get the proposal, call proposal.proposalItems.Add(proposalItem), 
-            //then save changes. attaching the proposal item to proposal and then saving the whole proposal object
+            //var proposal = _flowerAppContext.Proposals
+            //    .Include(x => x.Customer)
+            //    .Include(x => x.Designer)
+            //    .Include(x => x.ProposalItems)
+            //        .ThenInclude(x=>x.Image)
+            //    .FirstOrDefault(m => m.Id == proposalId);
 
-            //NEED SOME HELP WITH THIS ONE
-            var proposal = _flowerAppContext.Proposals
-                .Include(x => x.Customer)
-                .Include(x => x.Designer)
-                .Include(x => x.ProposalItems)
-                    .ThenInclude(x=>x.Image)
-                .FirstOrDefault(m => m.Id == proposalId);
-            proposal.ProposalItems.Add(proposalItem);
-            //_flowerAppContext.ProposalItems.Add(proposalItem);
-            _flowerAppContext.SaveChanges();
+            //proposal.
+                
+            _flowerAppContext.ProposalItems.Add(proposalItem);
+
+            return _flowerAppContext.SaveChangesAsync();
         }
+        #endregion
 
         #region Proposals Methods
         public Task AddProposalAsync(Proposal proposal)
@@ -71,6 +63,11 @@ namespace FinalProject.Services
                     .ThenInclude(x => x.Image)
                 .FirstOrDefaultAsync(m => m.Id == id);
         }
+
+        //public Task<Proposal> GetProposalItemsAsync(int? id)
+        //{
+        //    return
+        //}
 
         //public Proposal GetProposal(int? id)
         //{
