@@ -1,0 +1,47 @@
+﻿@model FinalProject.Models.Proposal
+
+@{
+    ViewData["Title"] = "Proposals";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+
+    <div class="container">
+        <h4>@Model.Customer.Name's Proposal</h4>
+        <hr />
+        <div class="jumbotron jumbotron-fluid">
+            <div class="container">
+                <h1 class="display-4 text-center">@Model.Title</h1>
+                <p class="lead text-center">@Model.Description</p>
+            </div>
+        </div>
+        @*<div class="container">*@
+            <div class="row">
+                @foreach (var item in Model.ProposalItems)
+                {
+                    <div class="col-sm-3">
+                        <div class="card">
+                            <img id="img-sq" src="~/images/@item.Image.FileName" alt="@item.Caption" />
+                            @*<img src="~/images/@Model.ProposalItems[i].Image.FileName" width=200 height=200 style="object-fit:cover" />*@
+                            <div class="card-body">
+                                <p class="card-text">@item.Caption</p>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        @*</div>*@
+    </div>
+    <div>
+        <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+        <a asp-action="Index">Back to List</a>
+    </div>
+</body>
+</html>

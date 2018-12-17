@@ -81,9 +81,10 @@
                                         @*@Html.TextBoxFor(X => Model.ProposalItems[i].Caption, new { @class="form-control" })*@
                                     </td>
                                     <td>
+                                        <a asp-action="Delete" asp-controller="ProposalItems" asp-route-id="@Model.ProposalItems[i].Id">Delete</a>
+
                                         <!-- NOTE these don't work properly yet -->
-                                        @*@Html.ActionLink("Edit", "Edit", "ProposalItems", new { id = item.Id }) |
-                                        @Html.ActionLink("Delete", "Delete", "ProposalItems", new { id = item.Id })*@
+                                        @*@Html.ActionLink("Delete", "Delete", "ProposalItems", new { id = Model.ProposalItems[i].Id })*@
                                     </td>
                                 </tr>
                             }

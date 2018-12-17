@@ -88,7 +88,7 @@ namespace FinalProject.Controllers
         }
 
         // GET: Proposals/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Preview(int? id)
         {
             if (id == null)
             {

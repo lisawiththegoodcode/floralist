@@ -28,6 +28,12 @@ body {
     margin: 15px;
 }
 
+#img-sq {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+}
+
 /* Hide/rearrange for smaller screens */
 @media screen and (max-width: 767px) {
     /* Hide captions */
