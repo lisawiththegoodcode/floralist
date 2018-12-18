@@ -1,10 +1,15 @@
 ﻿
-@{
-    ViewData["Title"] = "UploadImages";
-}
 
-<h2>UploadImage</h2>
-<label>@ViewData["fName"]</label>
-@*<label>@ViewData["filepath"]</label>*@
-<img src="@ViewData["filePath"]" height="42" width="42"/>
+@model FinalProject.Models.Image
+    @{
+        ViewData["Title"] = "UploadImages";
+    }
+
+    <h2>UploadImage</h2>
+    <label>@ViewData["fName"]</label>
+    <label>@ViewData["filepath"]</label>
+    <img src="@ViewData["filepath"]" height="42" width="42" />
+<img src="/Images/Raw/17" height="42" width="42" />
+
+
 

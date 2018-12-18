@@ -1,11 +1,32 @@
 ﻿@model IEnumerable<FinalProject.Models.Image>
 
 @{
-    ViewData["Title"] = "Index";
+    Layout = null;
 }
 
-<h2>Index</h2>
+<form method="post" enctype="multipart/form-data" asp-controller="Images" asp-action="UploadImages">
+    <div class="form-group">
+        <div class="col-md-10">
+            <p>Upload one or more files using this form:</p>
+            <input type="file" name="files" multiple /><br />
+            <input type="text" name="FileName"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-10">
+            <input type="submit" value="Upload" />
+        </div>
+    </div>
+</form>
 
+@*<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
 <p>
     <a asp-action="Create">Create New</a>
 </p>
@@ -14,9 +35,6 @@
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.FileName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FileImage)
             </th>
             <th></th>
         </tr>
@@ -28,11 +46,6 @@
                 @Html.DisplayFor(modelItem => item.FileName)
             </td>
             <td>
-                @*@Html.DisplayFor(modelItem => item.FileImage)*@
-                <img src="/Images/Raw/@item.Id" height="42" width="42" />
-
-            </td>
-            <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
@@ -41,3 +54,5 @@
 }
     </tbody>
 </table>
+</body>
+</html>*@

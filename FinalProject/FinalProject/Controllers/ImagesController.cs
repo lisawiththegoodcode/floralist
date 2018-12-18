@@ -10,73 +10,29 @@ using FinalProject.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
+using FinalProject.Services;
+using Microsoft.Net.Http.Headers;
+using Microsoft.Extensions.Primitives;
 
 namespace FinalProject.Controllers
 {
     public class ImagesController : Controller
     {
-        private readonly FlowerAppContext _context;
-        private readonly IHostingEnvironment _hostingEnvironment;
+        private readonly IRepository _repository;
 
-        public ImagesController(FlowerAppContext context, IHostingEnvironment hostingEnvironment)
+        // private readonly IHostingEnvironment _hostingEnvironment;
+
+        public ImagesController(IRepository repository)
         {
-            _context = context;
-            _hostingEnvironment = hostingEnvironment;
+            _repository = repository;
+
+
         }
 
         // GET: Images
         public async Task<IActionResult> Index()
         {
-            return View();
-            //return View(await _context.Images.ToListAsync());
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> UploadImages(string fileName, IFormFile files)
-        {
-            ViewData["fName"] = fileName;
-
-            
-
-            //foreach (var formFile in files)
-            //{
-                if (files != null)
-                {
-                    var filePath = Path.Combine(_hostingEnvironment.WebRootPath + "/images/", Path.GetFileName(files.FileName));
-
-                //files.CopyTo(new FileStream(filePath, FileMode.Create));
-                using (var stream = new FileStream(filePath, FileMode.Create))
-                {
-                    await files.CopyToAsync(stream);
-                }
-
-                    ViewData["filePath"] = "/images/"+ Path.GetFileName(files.FileName);
-                }
-            //}
-
-            // process uploaded files
-            // Don't rely on or trust the FileName property without validation.
-
-            //return Ok(new { count = files.Count, size, filePath });
-
-            return View();
-        }
-        // GET: Images/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var image = await _context.Images
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (image == null)
-            {
-                return NotFound();
-            }
-
-            return View(image);
+            return View(await _repository.Images.ToListAsync());
         }
 
         // GET: Images/Create
@@ -90,67 +46,97 @@ namespace FinalProject.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FileName")] Image image)
+        public async Task<IActionResult> Create([Bind()] Image image, IFormFile files)
         {
+            if (files == null || files.Length == 0)
+                return Content("file not selected");
+
             if (ModelState.IsValid)
             {
-                _context.Add(image);
-                await _context.SaveChangesAsync();
+                using (var stream = new MemoryStream())
+                {
+                    await files.CopyToAsync(stream);
+                    image.FileImage = stream.ToArray();
+
+                }
+
+                image.FileName = Path.GetFileName(files.FileName);
+
+                await _repository.AddImageAsync(image);
                 return RedirectToAction(nameof(Index));
             }
             return View(image);
         }
 
-        // GET: Images/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+        
+       // GET: Images/Details/5
+        //public async Task<IActionResult> Details(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            var image = await _context.Images.FindAsync(id);
-            if (image == null)
-            {
-                return NotFound();
-            }
-            return View(image);
-        }
+        //    var image = await _repository.Images
+        //        .FirstOrDefaultAsync(m => m.Id == id);
+        //    if (image == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    return View(image);
+        //}
+
+        //// GET: Images/Edit/5
+        //public async Task<IActionResult> Edit(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    var image = await _repository.Images.FindAsync(id);
+        //    if (image == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return View(image);
+        //}
 
         // POST: Images/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,FileName")] Image image)
-        {
-            if (id != image.Id)
-            {
-                return NotFound();
-            }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Edit(int id, [Bind("Id,FileName")] Image image)
+        //{
+        //    if (id != image.Id)
+        //    {
+        //        return NotFound();
+        //    }
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(image);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ImageExists(image.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(image);
-        }
+        //    if (ModelState.IsValid)
+        //    {
+        //        try
+        //        {
+        //            _repository.Update(image);
+        //            await _repository.SaveChangesAsync();
+        //        }
+        //        catch (DbUpdateConcurrencyException)
+        //        {
+        //            if (!ImageExists(image.Id))
+        //            {
+        //                return NotFound();
+        //            }
+        //            else
+        //            {
+        //                throw;
+        //            }
+        //        }
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    return View(image);
+        //}
 
         // GET: Images/Delete/5
         public async Task<IActionResult> Delete(int? id)
@@ -160,7 +146,7 @@ namespace FinalProject.Controllers
                 return NotFound();
             }
 
-            var image = await _context.Images
+            var image = await _repository.Images
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (image == null)
             {
@@ -175,15 +161,25 @@ namespace FinalProject.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var image = await _context.Images.FindAsync(id);
-            _context.Images.Remove(image);
-            await _context.SaveChangesAsync();
+
+            await _repository.DeleteImageAsync(id);
             return RedirectToAction(nameof(Index));
         }
 
         private bool ImageExists(int id)
         {
-            return _context.Images.Any(e => e.Id == id);
+            return _repository.Images.Any(e => e.Id == id);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Raw(int id)
+        {
+            var image = _repository.Images.FirstOrDefault(f => f.Id == id);
+            var extension = new FileInfo(image.FileName).Extension.Replace(".", "");
+            return File(image?.FileImage, $"image/{extension}");
+        }
+
+        
     }
+
 }

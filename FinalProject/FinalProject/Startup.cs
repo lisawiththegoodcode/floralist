@@ -80,12 +80,11 @@ namespace FinalProject
             using (var context = serviceScope.ServiceProvider
                 .GetService<FlowerAppContext>())
             {
-<<<<<<< HEAD
                 //context.Database.Migrate();
                 //identityContext.Database.Migrate();
-=======
+
                 context.Database.Migrate();
->>>>>>> 289746a8553046da03837b840aa5e4af6cd4f0d3
+
             }
         }
     }

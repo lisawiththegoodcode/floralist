@@ -22,6 +22,19 @@ namespace FinalProject.Services
         public IQueryable<Customer> Customers => _flowerAppContext.Customers;
         public IQueryable<Designer> Designers => _flowerAppContext.Designers;
 
+        public Task AddImageAsync(Image image)
+        {
+            _flowerAppContext.Images.Add(image);
+            return _flowerAppContext.SaveChangesAsync();
+        }
+
+        public Task DeleteImageAsync(int id)
+        {
+            var image = _flowerAppContext.Images.FirstOrDefault(m => m.Id == id);
+            _flowerAppContext.Images.Remove(image);
+            return _flowerAppContext.SaveChangesAsync();
+        }
+
         #region Proposals Methods
         public Task AddProposalAsync(Proposal proposal)
         {

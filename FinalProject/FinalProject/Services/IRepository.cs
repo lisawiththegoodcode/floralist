@@ -13,6 +13,8 @@ namespace FinalProject.Services
         IQueryable<Customer> Customers { get; }
         IQueryable<Designer> Designers { get; }
 
+        Task AddImageAsync(Image image);
+        Task DeleteImageAsync(int id);
         Task AddProposalAsync(Proposal proposal);
         //Proposal GetProposal(int? id);
         Task<Proposal> GetProposalAsync(int? id);
