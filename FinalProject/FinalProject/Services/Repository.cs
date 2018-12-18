@@ -53,6 +53,7 @@ namespace FinalProject.Services
         #region Proposals Methods
         public Task AddProposalAsync(Proposal proposal)
         {
+            proposal.IsShared = false;
             _flowerAppContext.Proposals.Add(proposal);
             return _flowerAppContext.SaveChangesAsync();
         }
@@ -67,12 +68,21 @@ namespace FinalProject.Services
                 .FirstOrDefaultAsync(m => m.Id == id);
         }
 
-        public Task UpdateProposalAsync(int id, Proposal proposal)
+        public async Task UpdateProposalAsync(int id)
         {
-            //proposal.Id = id;
+            var proposal = await GetProposalAsync(id);
             _flowerAppContext.Proposals.Update(proposal);
-            return _flowerAppContext.SaveChangesAsync();
+            await _flowerAppContext.SaveChangesAsync();
         }
+
+        public async Task ShareProposalAsync(int id)
+        {
+            var proposal = await GetProposalAsync(id);
+            proposal.IsShared = proposal.IsShared ? false : true;
+            _flowerAppContext.Proposals.Update(proposal);
+            await _flowerAppContext.SaveChangesAsync();
+        }
+
         public Task DeleteProposalAsync(int id)
         {
             var proposal = _flowerAppContext.Proposals

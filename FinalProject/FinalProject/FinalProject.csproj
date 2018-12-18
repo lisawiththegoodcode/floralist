@@ -19,6 +19,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="Views\Proposals\Share.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Views\Proposals\ImageSearch.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

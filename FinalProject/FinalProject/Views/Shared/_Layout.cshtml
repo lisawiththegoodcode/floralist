@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - FLORALIST</title>
+    <title>@ViewData["Title"] | FloraList</title>
 
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
@@ -26,13 +26,13 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">FLORALIST</a>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">FloraList</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Proposals" asp-action="Index">Proposals</a></li>
-                    <li><a asp-area="" asp-controller="Images" asp-action="Index">Images</a></li>
-                    <li><a asp-area="" asp-controller="Customers" asp-action="Index">Customers</a></li>
+                    <li><a asp-area="" asp-controller="Proposals" asp-action="Index">My Proposals</a></li>
+                    <li><a asp-area="" asp-controller="Images" asp-action="Index">Image Library</a></li>
+                    <li><a asp-area="" asp-controller="Customers" asp-action="Index">Customer Directory</a></li>
                 </ul>
                 <partial name="_LoginPartial" />
             </div>

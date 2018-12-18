@@ -23,9 +23,6 @@ namespace FinalProject.Models
         //for each has many, requires a list
         public List<ProposalItem> ProposalItems { get; set; }
 
-        //Also adding a proposal item object, because the creation of a proposal requires the creation of a proposal item
-        //public int ProposalItemId { get; set; }
-        //public ProposalItem ProposalItem { get; set; }
-        //don't think this is necessary bc the foreign key is established on the proposal item
+        public bool IsShared { get; set; }
     }
 }

@@ -21,12 +21,17 @@ namespace FinalProject.Controllers
 
         public IActionResult Index()
         {
-            var vm = new ImageSearch
+            var vm = new DesignerHome
             {
-                // search for images if there is search text
-                Images = _repository.Images.ToList()
+                Images = _repository.Images.ToList(),
+                Proposals = _repository.Proposals.ToList(),
+                Customers = _repository.Customers.ToList(),
+                //TODO: THIS IS HARDCODED RIGHT NOW, NEED TO FIGURE OUT LOGIC TO POPULATE NAME BASED ON WHO IS LOGGED IN
+                Designer = _repository.Designers.FirstOrDefault(m => m.Id == 1)
+
             };
             return View(vm);
+            //return View();
         }
 
         public IActionResult About()

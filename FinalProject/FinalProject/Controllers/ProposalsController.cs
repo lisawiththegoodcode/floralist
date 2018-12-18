@@ -35,55 +35,69 @@ namespace FinalProject.Controllers
                     : await _repository.Images.Where(i => i.FileName.Contains(searchString)).ToListAsync()
             };
             return View(vm);
-
-            //var searchResults = _repository.Images;
-
-            //if (!String.IsNullOrEmpty(searchString))
-            //{
-            //    searchResults = searchResults.Where(x => x.FileName == searchString);
-            //}
-            //return View(await searchResults.ToListAsync());
         }
 
-        //public ActionResult AddProposalItem(int imageId, int proposalId)
-        //{
-        //    // create an AddProposalItem view model to hold info for the view
-        //    var vm = new AddProposalItem
-        //    {
-        //        ProposalId = proposalId,
-        //        ImageId = imageId,
-        //        // get the image object by id
-        //        Image = _repository.Images.FirstOrDefault(i => i.Id == imageId),
-        //        Caption = ""
-        //    };
-        //    // pass the view model to the view
-        //    return View(vm);
-        //}
+        //GET: Proposals/Share/5
+        public async Task<IActionResult> Share(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult AddProposalItem(int id, AddProposalItem vm)
-        //{
-        //    // create a new proposalItem model and fill in the image id, caption, etc
-        //    var newProposalItem = new ProposalItem
-        //    {
-        //        ImageId = vm.ImageId,
-        //        ProposalId = vm.ProposalId,
-        //        Caption = vm.Caption
-        //    };
-        //    // add it to the proposal
-        //    _repository.AddProposalItem(vm.ProposalId, newProposalItem);
+            var proposal = await _repository.GetProposalAsync(id);
 
-        //    // redirect to the Proposal Edit page
-        //    return RedirectToAction("Edit", new { id = vm.ProposalId });
-        //}
+            if (proposal == null)
+            {
+                return NotFound();
+            }
+            return View(proposal);
+        }
+
+        // POST: Proposals/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Share(int id, Proposal proposal)
+        {
+            if (id != proposal.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    await _repository.ShareProposalAsync(id);
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!ProposalExists(proposal.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(proposal);
+        }
 
         // GET: Proposals
         public async Task<IActionResult> Index()
         {
+            //gonna need something like this to control who sees what data
+            //var userId = userManager.getUserId();
+
             return View(await _repository.Proposals
                 .Include(x => x.Customer)
                 .Include(x => x.Designer)
+                //.Where(x=> x.Designer.UserId == userId)
                 .ToListAsync());
         }
 
@@ -120,7 +134,7 @@ namespace FinalProject.Controllers
         {
             if (ModelState.IsValid)
             {
-                //THIS IS A WORKAROUND. NEED TO GET THIS TO DEFAULT TO THE CURRENTLY LOGGED IN DESIGNER
+                //TODO: THIS IS A WORKAROUND. NEED TO GET THIS TO DEFAULT TO THE CURRENTLY LOGGED IN DESIGNER
                 proposal.DesignerId = 1;
                 await _repository.AddProposalAsync(proposal);
 
@@ -151,7 +165,7 @@ namespace FinalProject.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,CustomerId,ProposalItems")] Proposal proposal)
+        public async Task<IActionResult> Edit(int id, Proposal proposal)
         {
             if (id != proposal.Id)
             {
@@ -162,9 +176,7 @@ namespace FinalProject.Controllers
             {
                 try
                 {
-                    //THIS IS A WORKAROUND. NEED TO GET THIS TO DEFAULT TO THE CURRENTLY LOGGED IN DESIGNER
-                    proposal.DesignerId = 1;
-                    await _repository.UpdateProposalAsync(id, proposal);
+                    await _repository.UpdateProposalAsync(id);
                 }
                 catch(DbUpdateConcurrencyException)
                 {

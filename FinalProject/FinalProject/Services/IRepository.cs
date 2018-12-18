@@ -20,7 +20,8 @@ namespace FinalProject.Services
 
         Task AddProposalAsync(Proposal proposal);
         Task<Proposal> GetProposalAsync(int? id);
-        Task UpdateProposalAsync(int id, Proposal proposal);
+        Task UpdateProposalAsync(int id);
+        Task ShareProposalAsync(int id);
         Task DeleteProposalAsync(int id);
         List<ProposalItem> GetProposalItemsForProposal(int id);
     }
