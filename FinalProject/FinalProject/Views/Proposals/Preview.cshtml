@@ -41,6 +41,7 @@
     </div>
     <div>
         <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+        <a asp-action="Share" asp-route-id="@Model.Id">@(Model.IsShared ? "Unshare" : "Share")</a> |
         <a asp-action="Index">Back to List</a>
     </div>
 </body>
