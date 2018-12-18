@@ -68,11 +68,10 @@ namespace FinalProject.Services
                 .FirstOrDefaultAsync(m => m.Id == id);
         }
 
-        public async Task UpdateProposalAsync(int id)
+        public Task UpdateProposalAsync(int id, Proposal proposal)
         {
-            var proposal = await GetProposalAsync(id);
             _flowerAppContext.Proposals.Update(proposal);
-            await _flowerAppContext.SaveChangesAsync();
+            return _flowerAppContext.SaveChangesAsync();
         }
 
         public async Task ShareProposalAsync(int id)

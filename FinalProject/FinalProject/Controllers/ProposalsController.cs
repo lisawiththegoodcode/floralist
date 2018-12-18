@@ -176,7 +176,7 @@ namespace FinalProject.Controllers
             {
                 try
                 {
-                    await _repository.UpdateProposalAsync(id);
+                    await _repository.UpdateProposalAsync(id, proposal);
                 }
                 catch(DbUpdateConcurrencyException)
                 {

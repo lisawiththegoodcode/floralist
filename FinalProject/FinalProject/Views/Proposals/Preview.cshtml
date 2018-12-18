@@ -15,6 +15,10 @@
 
     <div class="container">
         <h4>@Model.Customer.Name's Proposal</h4>
+        <form asp-action="Share">
+            <input type="hidden" asp-for="Id" />
+            <input type="submit" value="@(Model.IsShared ? "Unshare" : "Share")" class="btn btn-default" />
+        </form>
         <hr />
         <div class="jumbotron jumbotron-fluid">
             <div class="container">
@@ -23,25 +27,24 @@
             </div>
         </div>
         @*<div class="container">*@
-            <div class="row">
-                @foreach (var item in Model.ProposalItems)
-                {
-                    <div class="col-sm-3">
-                        <div class="card">
-                            <img id="img-sq" src="~/images/@item.Image.FileName" alt="@item.Caption" />
-                            @*<img src="~/images/@Model.ProposalItems[i].Image.FileName" width=200 height=200 style="object-fit:cover" />*@
-                            <div class="card-body">
-                                <p class="card-text">@item.Caption</p>
-                            </div>
+        <div class="row">
+            @foreach (var item in Model.ProposalItems)
+            {
+                <div class="col-sm-3">
+                    <div class="card">
+                        <img id="img-sq" src="~/images/@item.Image.FileName" alt="@item.Caption" />
+                        @*<img src="~/images/@Model.ProposalItems[i].Image.FileName" width=200 height=200 style="object-fit:cover" />*@
+                        <div class="card-body">
+                            <p class="card-text">@item.Caption</p>
                         </div>
                     </div>
-                }
-            </div>
+                </div>
+            }
+        </div>
         @*</div>*@
     </div>
     <div>
         <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-        <a asp-action="Share" asp-route-id="@Model.Id">@(Model.IsShared ? "Unshare" : "Share")</a> |
         <a asp-action="Index">Back to List</a>
     </div>
 </body>

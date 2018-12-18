@@ -17,7 +17,6 @@
     <h4>Are you sure you want to @(Model.IsShared ? "unshare" : "share") this proposal with @Model.Customer.Name?</h4>
     <form asp-action="Share">
         <input type="hidden" asp-for="Id" />
-        <input type="hidden" asp-for="CustomerId" />
         <input type="submit" value="@(Model.IsShared ? "Unshare" : "Share")" class="btn btn-default" />
     </form>
     <hr />
