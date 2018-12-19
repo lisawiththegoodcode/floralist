@@ -46,7 +46,7 @@
                         @Html.DisplayFor(modelItem => item.FileName)
                     </td>
                     <td>
-                        <img height="160" width="160" style="object-fit:cover" src="~/images/@item.FileName" />
+                        <img src="/Images/Raw/@item.Id" id="img-sq" />
                     </td>
                     <td>
                         @* get this committed and working as is, and then try to transition to controller=ProposalItems and asp-action=Create *@

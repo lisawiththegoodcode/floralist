@@ -24,5 +24,8 @@ namespace FinalProject.Services
         Task ShareProposalAsync(int id);
         Task DeleteProposalAsync(int id);
         List<ProposalItem> GetProposalItemsForProposal(int id);
+
+        Task AddImageAsync(Image image);
+        Task DeleteImageAsync(int id);
     }
 }

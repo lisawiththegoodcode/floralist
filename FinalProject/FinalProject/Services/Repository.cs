@@ -3,6 +3,7 @@ using FinalProject.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -101,6 +102,22 @@ namespace FinalProject.Services
             .ToList();
             //maybe add an .orderby or .include?
 
+        }
+        #endregion
+
+        #region Image Methods
+        public Task AddImageAsync(Image image)
+        {
+            image.DesignerId = 1;
+            _flowerAppContext.Images.Add(image);
+            return _flowerAppContext.SaveChangesAsync();
+        }
+
+        public Task DeleteImageAsync(int id)
+        {
+            var image = _flowerAppContext.Images.FirstOrDefault(m => m.Id == id);
+            _flowerAppContext.Images.Remove(image);
+            return _flowerAppContext.SaveChangesAsync();
         }
         #endregion
 

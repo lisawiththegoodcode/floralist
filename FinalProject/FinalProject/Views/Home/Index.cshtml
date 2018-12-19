@@ -10,15 +10,15 @@
             <img id="img-carousel" class="img-responsive" />
             <div class="carousel-caption" role="option">
                 <p>
-                    Welcome Designer!
+                    Welcome to Floralist!
                 </p>
             </div>
         </div>
         @foreach (var item in Model.Images)
         {
-            <div class="item">
-                <img src="~/images/@item.FileName" class="img-responsive" id="img-carousel" />
-            </div>
+        <div class="item">
+            <img src="/Images/Raw/@item.Id" class="img-responsive" id="img-carousel" />
+        </div>
         }
     </div>
 </div>

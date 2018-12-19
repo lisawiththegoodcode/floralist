@@ -11,7 +11,7 @@
         <form asp-action="Create" asp-route-imageId="Model.ImageId" asp-route-proposalId="@Model.ProposalId" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <img src="~/images/@Model.Image.FileName" width=200 height=200 style="object-fit:cover" />
+                <img src="/Images/Raw/@Model.Image.Id" id="img-sq" />
             </div>
             <div class="form-group">
                 <input type="hidden" asp-for="ImageId" />
