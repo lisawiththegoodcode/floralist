@@ -108,7 +108,7 @@ namespace FinalProject.Services
         #region Image Methods
         public Task AddImageAsync(Image image)
         {
-            image.DesignerId = 1;
+            //image.DesignerId = 1;
             _flowerAppContext.Images.Add(image);
             return _flowerAppContext.SaveChangesAsync();
         }
