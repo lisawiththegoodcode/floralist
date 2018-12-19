@@ -1,7 +1,7 @@
 ﻿@model FinalProject.Models.ProposalItem
 
 @{
-    Layout = null;
+    ViewData["Title"] = "ProposalItems";
 }
 
 <!DOCTYPE html>
@@ -13,24 +13,25 @@
 </head>
 <body>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>ProposalItem</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Caption)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Caption)
-        </dd>
-    </dl>
-    
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Delete" class="btn btn-default" /> |
-        <a asp-action="Index">Back to List</a>
-    </form>
-</div>
+    <h3>Are you sure you want to delete this?</h3>
+    <div>
+        <h4>ProposalItem</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Caption)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Caption)
+            </dd>
+        </dl>
+
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="ProposalId" />
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            <a asp-action="Index">Back to List</a>
+        </form>
+    </div>
 </body>
 </html>

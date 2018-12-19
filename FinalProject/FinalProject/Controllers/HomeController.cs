@@ -5,14 +5,33 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using FinalProject.Models;
+using FinalProject.ViewModels;
+using FinalProject.Services;
 
 namespace FinalProject.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IRepository _repository;
+
+        public HomeController(IRepository repository)
+        {
+            _repository = repository;
+        }
+
         public IActionResult Index()
         {
-            return View();
+            var vm = new DesignerHome
+            {
+                Images = _repository.Images.ToList(),
+                Proposals = _repository.Proposals.ToList(),
+                Customers = _repository.Customers.ToList(),
+                //TODO: THIS IS HARDCODED RIGHT NOW, NEED TO FIGURE OUT LOGIC TO POPULATE NAME BASED ON WHO IS LOGGED IN
+                Designer = _repository.Designers.FirstOrDefault(m => m.Id == 1)
+
+            };
+            return View(vm);
+            //return View();
         }
 
         public IActionResult About()

@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using FinalProject.Data;
 using FinalProject.Models;
 using FinalProject.Services;
+using FinalProject.ViewModels;
 
 namespace FinalProject.Controllers
 {
@@ -20,28 +21,88 @@ namespace FinalProject.Controllers
             _repository = repository;
         }
 
-        public async Task<IActionResult> ImageSearch(string searchString)
+        public async Task<IActionResult> ImageSearch(int proposalId, string searchString)
         {
-            var searchResults = _repository.Images;
-
-            if (!String.IsNullOrEmpty(searchString))
+            //queryable query the image table
+            //deferred execution when using linq. building up the query, calling to list is telling linq im done and to build the results
+            var vm = new ImageSearch
             {
-                searchResults = searchResults.Where(x => x.FileName == searchString);
+                ProposalId = proposalId,
+                SearchString = searchString,
+                // search for images if there is search text
+                Images = String.IsNullOrEmpty(searchString)
+                    ? await _repository.Images.ToListAsync()
+                    : await _repository.Images.Where(i => i.FileName.Contains(searchString)).ToListAsync()
+            };
+            return View(vm);
+        }
+
+        //GET: Proposals/Share/5
+        public async Task<IActionResult> Share(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
             }
-            return View(await searchResults.ToListAsync());
+
+            var proposal = await _repository.GetProposalAsync(id);
+
+            if (proposal == null)
+            {
+                return NotFound();
+            }
+            return View(proposal);
+        }
+
+        // POST: Proposals/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Share(int id, Proposal proposal)
+        {
+            if (id != proposal.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    await _repository.ShareProposalAsync(id);
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!ProposalExists(proposal.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(proposal);
         }
 
         // GET: Proposals
         public async Task<IActionResult> Index()
         {
+            //gonna need something like this to control who sees what data
+            //var userId = userManager.getUserId();
+
             return View(await _repository.Proposals
                 .Include(x => x.Customer)
                 .Include(x => x.Designer)
+                //.Where(x=> x.Designer.UserId == userId)
                 .ToListAsync());
         }
 
         // GET: Proposals/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Preview(int? id)
         {
             if (id == null)
             {
@@ -69,12 +130,15 @@ namespace FinalProject.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Description,CustomerId,DesignerId")] Proposal proposal)
+        public async Task<IActionResult> Create([Bind("Id,Title,Description,CustomerId,ProposalItems")] Proposal proposal)
         {
             if (ModelState.IsValid)
             {
+                //TODO: THIS IS A WORKAROUND. NEED TO GET THIS TO DEFAULT TO THE CURRENTLY LOGGED IN DESIGNER
+                proposal.DesignerId = 1;
                 await _repository.AddProposalAsync(proposal);
-                return RedirectToAction(nameof(Index));
+
+                return RedirectToAction(nameof(ImageSearch), new { proposalId = proposal.Id, searchString = "" });
             }
             return View(proposal);
         }
@@ -101,7 +165,7 @@ namespace FinalProject.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,CustomerId,DesignerId")] Proposal proposal)
+        public async Task<IActionResult> Edit(int id, Proposal proposal)
         {
             if (id != proposal.Id)
             {

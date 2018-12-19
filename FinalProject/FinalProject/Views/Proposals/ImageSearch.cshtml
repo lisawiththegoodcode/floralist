@@ -1,4 +1,6 @@
-﻿@model IEnumerable<FinalProject.Models.Image>
+﻿@*@model IEnumerable<FinalProject.Models.Image>*@
+
+@model FinalProject.ViewModels.ImageSearch
 
 @{
     ViewData["Title"] = "ImageSearch";
@@ -17,11 +19,12 @@
     <hr />
     <div class="row">
         <div class="col-md-4">
-            <form asp-controller="Proposals" asp-action="ImageSearch">
+            <form asp-controller="Proposals" asp-action="ImageSearch" method="get">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
-                    <label @*asp-for="Search" *@ class="control-label">Search</label>
+                    <label class="control-label">Search</label>
                     <input type="text" name="SearchString" />
+                    <input type="hidden" name="ProposalId" value="@Model.ProposalId"/>
                     <input type="submit" value="Search" class="form-control" />
                 </div>
             </form>
@@ -30,28 +33,27 @@
             <thead>
                 <tr>
                     <th>
-                        @Html.DisplayNameFor(model => model.FileName)
+                        Filename
                     </th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model)
-            {
+                @foreach (var item in Model.Images)
+                {
                 <tr>
                     <td>
                         @Html.DisplayFor(modelItem => item.FileName)
                     </td>
                     <td>
-                        <img height="120" width="160" src="~/images/@item.FileName"/>
+                        <img src="/Images/Raw/@item.Id" id="img-sq" />
                     </td>
                     <td>
-                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        @* get this committed and working as is, and then try to transition to controller=ProposalItems and asp-action=Create *@
+                        <a asp-controller="ProposalItems" asp-action="Create" asp-route-imageId="@item.Id" asp-route-proposalId="@Model.ProposalId">Add to Proposal</a> |
                     </td>
                 </tr>
-            }
+                }
             </tbody>
         </table>
     </div>

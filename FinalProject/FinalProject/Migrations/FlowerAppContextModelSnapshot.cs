@@ -100,6 +100,8 @@ namespace FinalProject.Migrations
 
                     b.Property<int>("DesignerId");
 
+                    b.Property<bool>("IsShared");
+
                     b.Property<string>("Title");
 
                     b.HasKey("Id")

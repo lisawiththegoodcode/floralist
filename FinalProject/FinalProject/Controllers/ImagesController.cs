@@ -14,6 +14,7 @@ using FinalProject.Services;
 using Microsoft.Net.Http.Headers;
 using Microsoft.Extensions.Primitives;
 
+
 namespace FinalProject.Controllers
 {
     public class ImagesController : Controller
@@ -26,7 +27,6 @@ namespace FinalProject.Controllers
         {
             _repository = repository;
 
-
         }
 
         // GET: Images
@@ -34,6 +34,7 @@ namespace FinalProject.Controllers
         {
             return View(await _repository.Images.ToListAsync());
         }
+
 
         // GET: Images/Create
         public IActionResult Create()
@@ -46,6 +47,7 @@ namespace FinalProject.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+
         public async Task<IActionResult> Create([Bind()] Image image, IFormFile files)
         {
             if (files == null || files.Length == 0)
@@ -60,6 +62,7 @@ namespace FinalProject.Controllers
 
                 }
 
+               
                 image.FileName = Path.GetFileName(files.FileName);
 
                 await _repository.AddImageAsync(image);
@@ -67,6 +70,22 @@ namespace FinalProject.Controllers
             }
             return View(image);
         }
+
+        // GET: Images/Edit/5
+        //public async Task<IActionResult> Edit(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    var image = await _context.Images.FindAsync(id);
+        //    if (image == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return View(image);
+        //}
 
         
        // GET: Images/Details/5
@@ -121,6 +140,7 @@ namespace FinalProject.Controllers
         //        {
         //            _repository.Update(image);
         //            await _repository.SaveChangesAsync();
+
         //        }
         //        catch (DbUpdateConcurrencyException)
         //        {
@@ -169,7 +189,7 @@ namespace FinalProject.Controllers
         private bool ImageExists(int id)
         {
             return _repository.Images.Any(e => e.Id == id);
-        }
+        
 
         [HttpGet]
         public async Task<IActionResult> Raw(int id)

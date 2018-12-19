@@ -29,11 +29,6 @@
                     <span asp-validation-for="CustomerId" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Designer" class="control-label"></label>
-                    <select asp-for="DesignerId" asp-items="@designerItems" class="form-control"></select>
-                    <span asp-validation-for="DesignerId" class="text-danger"></span>
-                </div>
-                <div class="form-group">
                     <label asp-for="Title" class="control-label"></label>
                     <input asp-for="Title" class="form-control" />
                     <span asp-validation-for="Title" class="text-danger"></span>
@@ -43,8 +38,16 @@
                     <input asp-for="Description" class="form-control" />
                     <span asp-validation-for="Description" class="text-danger"></span>
                 </div>
+                @*<div class="form-group">
+                    <label class="control-label">Images</label>
+                    <br />
+                    <a asp-controller="ProposalItemsController" asp-action="Create">Add New Image</a>*@
+                @*//HTML ACTION LINK VS ANCHOR WITH TAG HELPERS?
+                //TRIGGER ADD PROPOSAL ITEMS VIEW ON SUBMIT BUTTON BELOW? (RENAME NEXT?)*@
+
+
                 <div class="form-group">
-                    <input type="submit" value="Create" class="btn btn-default" />
+                    <input type="submit" value="Save & Add Images" class="btn btn-default" />
                 </div>
             </form>
         </div>

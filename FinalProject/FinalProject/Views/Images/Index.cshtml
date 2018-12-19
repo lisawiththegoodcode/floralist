@@ -1,11 +1,14 @@
 ﻿@model IEnumerable<FinalProject.Models.Image>
 
 @{
+
     ViewData["Title"] = "Index";
+
 }
 
 <h2>Index</h2>
 
+<<<<<<< HEAD
 <p>
     <a asp-action="Create">Create New</a>
 </p>
@@ -41,3 +44,49 @@
 }
     </tbody>
 </table>
+=======
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <h2>Index</h2>
+
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Image
+                </th>
+                <th>
+                    Tags
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <img src="/Images/Raw/@item.Id" id="img-sq"/>
+                    </td>
+                    <td>
+                        @* Placeholder for tags *@
+                    </td>
+                    <td>
+                        <a>Add Tags</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>
+
