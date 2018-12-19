@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FinalProject.Migrations
 {
     [DbContext(typeof(FlowerAppContext))]
-    [Migration("20181219211539_AddedBytePropertyToImageModel")]
-    partial class AddedBytePropertyToImageModel
+    [Migration("20181219214143_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
