@@ -12,7 +12,7 @@ namespace FinalProject.Models
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
         public List<Proposal> Proposals { get; set; }
-
+        public string UserId { get; set; }
 
         //might want a list of customers, but it's not necessaru
         //come back and add list of customers if I want to use this data
