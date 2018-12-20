@@ -65,7 +65,9 @@ namespace FinalProject.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("DesignerId");
+                    b.Property<int>("DesignerId");
+
+                    b.Property<byte[]>("FileImage");
 
                     b.Property<byte[]>("FileImage");
 
@@ -329,7 +331,8 @@ namespace FinalProject.Migrations
                 {
                     b.HasOne("FinalProject.Models.Designer", "Designer")
                         .WithMany()
-                        .HasForeignKey("DesignerId");
+                        .HasForeignKey("DesignerId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("FinalProject.Models.ImageTag", b =>

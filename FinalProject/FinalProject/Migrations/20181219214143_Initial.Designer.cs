@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FinalProject.Migrations
 {
     [DbContext(typeof(FlowerAppContext))]
-    [Migration("20181212021336_moved identity to main dbcontext")]
-    partial class movedidentitytomaindbcontext
+    [Migration("20181219214143_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -63,7 +63,9 @@ namespace FinalProject.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("DesignerId");
+                    b.Property<int>("DesignerId");
+
+                    b.Property<byte[]>("FileImage");
 
                     b.Property<string>("FileName");
 
@@ -99,6 +101,8 @@ namespace FinalProject.Migrations
                     b.Property<string>("Description");
 
                     b.Property<int>("DesignerId");
+
+                    b.Property<bool>("IsShared");
 
                     b.Property<string>("Title");
 
@@ -323,7 +327,8 @@ namespace FinalProject.Migrations
                 {
                     b.HasOne("FinalProject.Models.Designer", "Designer")
                         .WithMany()
-                        .HasForeignKey("DesignerId");
+                        .HasForeignKey("DesignerId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("FinalProject.Models.ImageTag", b =>
