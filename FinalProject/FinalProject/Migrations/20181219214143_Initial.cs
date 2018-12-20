@@ -302,6 +302,8 @@ namespace FinalProject.Migrations
                         principalTable: "Proposals",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.NoAction);
+                    //previously .Cascade which means delete when parent is deleted
+                    //might want this but it wasn't working
                 });
 
             migrationBuilder.CreateIndex(

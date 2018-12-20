@@ -23,7 +23,21 @@ namespace FinalProject.Services
         public IQueryable<ProposalItem> ProposalItems => _flowerAppContext.ProposalItems;
         public IQueryable<Customer> Customers => _flowerAppContext.Customers;
         public IQueryable<Designer> Designers => _flowerAppContext.Designers;
-        
+
+        #region Designer Methods
+        public Task AddDesignerAsync(Designer designer)
+        {
+            _flowerAppContext.Designers.Add(designer);
+            return _flowerAppContext.SaveChangesAsync();
+        }
+
+        public Designer GetDesignerForCurrentUserId(string userId)
+        {
+           return  _flowerAppContext.Designers.FirstOrDefault(m => m.UserId == userId);
+        }
+
+        #endregion
+
         #region ProposalItem Methods
         public Task AddProposalItemAsync(int proposalId, ProposalItem proposalItem)
         {
@@ -126,6 +140,14 @@ namespace FinalProject.Services
         public void Dispose()
         {
             _flowerAppContext?.Dispose();
+        }
+
+        public int GetDesignerIdForUserId(string userId)
+        {
+                var designer = GetDesignerForCurrentUserId(userId);
+            //implement the get designer for curr user code here
+                return designer.Id;
+    
         }
     }
 }

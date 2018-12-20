@@ -9,6 +9,7 @@ using FinalProject.Data;
 using FinalProject.Models;
 using FinalProject.Services;
 using FinalProject.ViewModels;
+using Shared.Web.MvcExtensions;
 
 namespace FinalProject.Controllers
 {
@@ -97,7 +98,7 @@ namespace FinalProject.Controllers
             return View(await _repository.Proposals
                 .Include(x => x.Customer)
                 .Include(x => x.Designer)
-                //.Where(x=> x.Designer.UserId == userId)
+                .Where(x => x.Designer.UserId == User.GetUserId())
                 .ToListAsync());
         }
 
@@ -135,7 +136,7 @@ namespace FinalProject.Controllers
             if (ModelState.IsValid)
             {
                 //TODO: THIS IS A WORKAROUND. NEED TO GET THIS TO DEFAULT TO THE CURRENTLY LOGGED IN DESIGNER
-                proposal.DesignerId = 1;
+                proposal.DesignerId = _repository.GetDesignerIdForUserId(User.GetUserId());
                 await _repository.AddProposalAsync(proposal);
 
                 return RedirectToAction(nameof(ImageSearch), new { proposalId = proposal.Id, searchString = "" });
@@ -225,5 +226,6 @@ namespace FinalProject.Controllers
         {
             return _repository.Proposals.Any(e => e.Id == id);
         }
+
     }
 }
