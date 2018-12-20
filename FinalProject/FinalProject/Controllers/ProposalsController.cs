@@ -32,8 +32,11 @@ namespace FinalProject.Controllers
                 SearchString = searchString,
                 // search for images if there is search text
                 Images = String.IsNullOrEmpty(searchString)
-                    ? await _repository.Images.ToListAsync()
-                    : await _repository.Images.Where(i => i.FileName.Contains(searchString)).ToListAsync()
+                    ? await _repository.GetImagesForDesignerAsync(User.GetUserId())
+                    : await _repository.Images
+                    .Where(i => i.DesignerId == _repository.GetDesignerIdForUserId(User.GetUserId()))
+                    .Where(i => i.FileName.Contains(searchString))
+                    .ToListAsync()
             };
             return View(vm);
         }
@@ -52,6 +55,12 @@ namespace FinalProject.Controllers
             {
                 return NotFound();
             }
+
+            if (UserUnauthorizedToView(proposal.Designer.UserId))
+            {
+                return NotFound();
+            }
+
             return View(proposal);
         }
 
@@ -63,6 +72,11 @@ namespace FinalProject.Controllers
         public async Task<IActionResult> Share(int id, Proposal proposal)
         {
             if (id != proposal.Id)
+            {
+                return NotFound();
+            }
+
+            if (UserUnauthorizedToView(proposal.Designer.UserId))
             {
                 return NotFound();
             }
@@ -95,11 +109,14 @@ namespace FinalProject.Controllers
             //gonna need something like this to control who sees what data
             //var userId = userManager.getUserId();
 
-            return View(await _repository.Proposals
-                .Include(x => x.Customer)
-                .Include(x => x.Designer)
-                .Where(x => x.Designer.UserId == User.GetUserId())
-                .ToListAsync());
+            //return View(await _repository.Proposals
+            //    .Include(x => x.Customer)
+            //    .Include(x => x.Designer)
+            //    .Where(x => x.Designer.UserId == User.GetUserId())
+            //    .ToListAsync());
+
+            return View(await _repository.GetProposalsForDesignerAsync(User.GetUserId()));
+
         }
 
         // GET: Proposals/Details/5
@@ -113,6 +130,11 @@ namespace FinalProject.Controllers
             var proposal = await _repository.GetProposalAsync(id);
 
             if (proposal == null)
+            {
+                return NotFound();
+            }
+
+            if (UserUnauthorizedToView(proposal.Designer.UserId))
             {
                 return NotFound();
             }
@@ -135,7 +157,6 @@ namespace FinalProject.Controllers
         {
             if (ModelState.IsValid)
             {
-                //TODO: THIS IS A WORKAROUND. NEED TO GET THIS TO DEFAULT TO THE CURRENTLY LOGGED IN DESIGNER
                 proposal.DesignerId = _repository.GetDesignerIdForUserId(User.GetUserId());
                 await _repository.AddProposalAsync(proposal);
 
@@ -158,6 +179,12 @@ namespace FinalProject.Controllers
             {
                 return NotFound();
             }
+
+            if (UserUnauthorizedToView(proposal.Designer.UserId))
+            {
+                return NotFound();
+            }
+
             return View(proposal);
         }
 
@@ -169,6 +196,11 @@ namespace FinalProject.Controllers
         public async Task<IActionResult> Edit(int id, Proposal proposal)
         {
             if (id != proposal.Id)
+            {
+                return NotFound();
+            }
+
+            if (UserUnauthorizedToView(proposal.Designer.UserId))
             {
                 return NotFound();
             }
@@ -210,6 +242,11 @@ namespace FinalProject.Controllers
                 return NotFound();
             }
 
+            if (UserUnauthorizedToView(proposal.Designer.UserId))
+            {
+                return NotFound();
+            }
+
             return View(proposal);
         }
 
@@ -225,6 +262,11 @@ namespace FinalProject.Controllers
         private bool ProposalExists(int id)
         {
             return _repository.Proposals.Any(e => e.Id == id);
+        }
+
+        private bool UserUnauthorizedToView(string id)
+        {
+            return id != User.GetUserId();
         }
 
     }

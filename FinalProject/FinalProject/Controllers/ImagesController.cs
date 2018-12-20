@@ -10,6 +10,7 @@ using FinalProject.Models;
 using FinalProject.Services;
 using Microsoft.AspNetCore.Http;
 using System.IO;
+using Shared.Web.MvcExtensions;
 
 namespace FinalProject.Controllers
 {
@@ -25,26 +26,8 @@ namespace FinalProject.Controllers
         // GET: Images
         public async Task<IActionResult> Index()
         {
-            return View(await _repository.Images.ToListAsync());
+            return View(await _repository.GetImagesForDesignerAsync(User.GetUserId()));
         }
-
-        // GET: Images/Details/5
-        //public async Task<IActionResult> Details(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var image = await _context.Images
-        //        .FirstOrDefaultAsync(m => m.Id == id);
-        //    if (image == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return View(image);
-        //}
 
         // GET: Images/Create
         public IActionResult Create()
@@ -71,63 +54,13 @@ namespace FinalProject.Controllers
                 }
 
                 image.FileName = Path.GetFileName(files.FileName);
+                image.DesignerId = _repository.GetDesignerIdForUserId(User.GetUserId());
 
                 await _repository.AddImageAsync(image);
                 return RedirectToAction(nameof(Index));
             }
             return View(image);
         }
-
-        // GET: Images/Edit/5
-        //public async Task<IActionResult> Edit(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var image = await _context.Images.FindAsync(id);
-        //    if (image == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    return View(image);
-        //}
-
-        // POST: Images/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Edit(int id, [Bind("Id,FileName")] Image image)
-        //{
-        //    if (id != image.Id)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    if (ModelState.IsValid)
-        //    {
-        //        try
-        //        {
-        //            _context.Update(image);
-        //            await _context.SaveChangesAsync();
-        //        }
-        //        catch (DbUpdateConcurrencyException)
-        //        {
-        //            if (!ImageExists(image.Id))
-        //            {
-        //                return NotFound();
-        //            }
-        //            else
-        //            {
-        //                throw;
-        //            }
-        //        }
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    return View(image);
-        //}
 
         // GET: Images/Delete/5
         public async Task<IActionResult> Delete(int? id)
@@ -138,7 +71,9 @@ namespace FinalProject.Controllers
             }
 
             var image = await _repository.Images
+                .Where(i=>i.DesignerId == _repository.GetDesignerIdForUserId(User.GetUserId()))
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (image == null)
             {
                 return NotFound();

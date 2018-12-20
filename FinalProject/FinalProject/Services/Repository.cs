@@ -30,12 +30,11 @@ namespace FinalProject.Services
             _flowerAppContext.Designers.Add(designer);
             return _flowerAppContext.SaveChangesAsync();
         }
-
-        public Designer GetDesignerForCurrentUserId(string userId)
+        public int GetDesignerIdForUserId(string userId)
         {
-           return  _flowerAppContext.Designers.FirstOrDefault(m => m.UserId == userId);
+            var designer = _flowerAppContext.Designers.FirstOrDefault(m => m.UserId == userId);
+            return designer.Id;
         }
-
         #endregion
 
         #region ProposalItem Methods
@@ -110,12 +109,18 @@ namespace FinalProject.Services
 
         public List<ProposalItem> GetProposalItemsForProposal(int id)
         {
-            //return _flowerAppContext.Proposals.FirstOrDefault(m => m.Id == id).ProposalItems;
             return _flowerAppContext.ProposalItems
             .Where(p => p.ProposalId == id)
             .ToList();
-            //maybe add an .orderby or .include?
+        }
 
+        public Task<List<Proposal>> GetProposalsForDesignerAsync(string userId)
+        {
+            return _flowerAppContext.Proposals
+                .Include(x => x.Customer)
+                .Include(x => x.Designer)
+                .Where(x => x.Designer.UserId == userId)
+                .ToListAsync();
         }
         #endregion
 
@@ -133,6 +138,14 @@ namespace FinalProject.Services
             _flowerAppContext.Images.Remove(image);
             return _flowerAppContext.SaveChangesAsync();
         }
+
+        public Task<List<Image>> GetImagesForDesignerAsync(string userId)
+        {
+            return _flowerAppContext.Images
+                .Include(x => x.Designer)
+                .Where(x => x.Designer.UserId == userId)
+                .ToListAsync();
+        }
         #endregion
 
 
@@ -142,12 +155,5 @@ namespace FinalProject.Services
             _flowerAppContext?.Dispose();
         }
 
-        public int GetDesignerIdForUserId(string userId)
-        {
-                var designer = GetDesignerForCurrentUserId(userId);
-            //implement the get designer for curr user code here
-                return designer.Id;
-    
-        }
     }
 }

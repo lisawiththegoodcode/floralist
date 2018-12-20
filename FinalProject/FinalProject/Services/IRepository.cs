@@ -15,7 +15,6 @@ namespace FinalProject.Services
         IQueryable<Designer> Designers { get; }
 
         Task AddDesignerAsync(Designer designer);
-        Designer GetDesignerForCurrentUserId(string userId);
         int GetDesignerIdForUserId(string userId);
 
         Task AddProposalItemAsync(int proposalId, ProposalItem proposalItem);
@@ -28,8 +27,10 @@ namespace FinalProject.Services
         Task ShareProposalAsync(int id);
         Task DeleteProposalAsync(int id);
         List<ProposalItem> GetProposalItemsForProposal(int id);
+        Task<List<Proposal>> GetProposalsForDesignerAsync(string userId);
 
         Task AddImageAsync(Image image);
         Task DeleteImageAsync(int id);
+        Task<List<Image>> GetImagesForDesignerAsync(string userId);
     }
 }
