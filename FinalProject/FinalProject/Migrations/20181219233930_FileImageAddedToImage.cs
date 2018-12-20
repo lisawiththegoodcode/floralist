@@ -18,10 +18,10 @@ namespace FinalProject.Migrations
             //    oldClrType: typeof(int),
             //    oldNullable: true);
 
-            migrationBuilder.AddColumn<byte[]>(
-                name: "FileImage",
-                table: "Images",
-                nullable: true);
+            //migrationBuilder.AddColumn<byte[]>(
+            //    name: "FileImage",
+            //    table: "Images",
+            //    nullable: true);
 
             //migrationBuilder.AddForeignKey(
             //    name: "FK_Images_Designers_DesignerId",
@@ -38,9 +38,9 @@ namespace FinalProject.Migrations
             //    name: "FK_Images_Designers_DesignerId",
             //    table: "Images");
 
-            migrationBuilder.DropColumn(
-                name: "FileImage",
-                table: "Images");
+            //migrationBuilder.DropColumn(
+            //    name: "FileImage",
+            //    table: "Images");
 
             //migrationBuilder.AlterColumn<int>(
             //    name: "DesignerId",

@@ -301,7 +301,7 @@ namespace FinalProject.Migrations
                         column: x => x.ProposalId,
                         principalTable: "Proposals",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateIndex(

@@ -69,7 +69,7 @@ namespace FinalProject.Migrations
 
                     b.Property<byte[]>("FileImage");
 
-                    b.Property<byte[]>("FileImage");
+                    //b.Property<byte[]>("FileImage");
 
                     b.Property<string>("FileName");
 
