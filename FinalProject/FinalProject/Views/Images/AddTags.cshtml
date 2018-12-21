@@ -1,0 +1,48 @@
+﻿@model FinalProject.ViewModels.TagSearch
+
+@{
+    ViewData["Title"] = "AddTags";
+}
+
+<h2>Add Tag</h2>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-controller="Images" asp-action="AddTags" asp-route-imageId="Model.ImageId" asp-route-tagId="Model.TagId">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Tags" class="control-label"></label>
+                <select asp-for="TagId" asp-items="@Model.Tags.Select(x => new SelectListItem(x.Name, x.Id.ToString())).OrderBy(x => x.Text)" class="form-control"></select>
+                <span asp-validation-for="TagId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="hidden" asp-for="ImageId" />
+                <input type="hidden" asp-for="TagId" />
+                <input type="submit" value="Save" class="btn btn-default" />
+                OR
+                <button class="btn btn-default">
+                    @Html.ActionLink("Add New Tag", "AddNewTag", "Images", new { imageId = Model.ImageId })
+                </button>
+            </div>
+        </form>
+    </div>
+
+    @*<form as-controller="Images" asp-action="AddTags" asp-route-imageId="Model.ImageId" asp-route-tags="Model.Tags" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        //select tag from a dropdown list
+        //click add
+        //image tag gets created
+        //image tag gets added to image list of image tags
+
+
+        </form>*@
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

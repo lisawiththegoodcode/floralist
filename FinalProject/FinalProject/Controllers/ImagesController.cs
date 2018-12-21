@@ -11,6 +11,7 @@ using FinalProject.Services;
 using Microsoft.AspNetCore.Http;
 using System.IO;
 using Shared.Web.MvcExtensions;
+using FinalProject.ViewModels;
 
 namespace FinalProject.Controllers
 {
@@ -23,10 +24,49 @@ namespace FinalProject.Controllers
             _repository = repository;
         }
 
+        [HttpGet]
+        public IActionResult AddTags(int imageId)
+        {
+            var vm = new TagSearch
+            {
+                ImageId = imageId,
+                Tags = _repository.Tags.ToList()
+            };
+            // pass the view model to the view
+            return View(vm);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddTags(int imageId, int tagId)
+        {
+
+            await _repository.CreateImageTagsAsync(imageId, tagId);
+            return RedirectToAction(nameof(Index));
+        }
         // GET: Images
         public async Task<IActionResult> Index()
         {
             return View(await _repository.GetImagesForDesignerAsync(User.GetUserId()));
+        }
+
+        public IActionResult AddNewTag(int imageid)
+        {
+            var vm = new AddNewTag
+            {
+                ImageId = imageid,
+                Tag = new Tag()
+            };
+            return View(vm);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddNewTag(int imageId, Tag tag)
+        {
+            await _repository.AddTagAsync(tag);
+            await _repository.CreateImageTagsAsync(imageId, tag.Id);
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Images/Create

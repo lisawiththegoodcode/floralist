@@ -23,6 +23,7 @@ namespace FinalProject.Services
         public IQueryable<ProposalItem> ProposalItems => _flowerAppContext.ProposalItems;
         public IQueryable<Customer> Customers => _flowerAppContext.Customers;
         public IQueryable<Designer> Designers => _flowerAppContext.Designers;
+        public IQueryable<Tag> Tags => _flowerAppContext.Tags;
 
         #region Designer Methods
         public Task AddDesignerAsync(Designer designer)
@@ -142,12 +143,57 @@ namespace FinalProject.Services
         public Task<List<Image>> GetImagesForDesignerAsync(string userId)
         {
             return _flowerAppContext.Images
+                .Include(x => x.ImageTags)
+                    .ThenInclude(x => x.Tag)
                 .Include(x => x.Designer)
                 .Where(x => x.Designer.UserId == userId)
                 .ToListAsync();
         }
         #endregion
 
+        #region Tag Methods
+        public Task CreateImageTagsAsync(int imageId, int tagId)
+        {
+            //List<ImageTag> imageTags = new List<ImageTag>();
+            //foreach(var item in tags)
+            //{
+            //    ImageTag imageTag = new ImageTag{ ImageId = imageId, TagId = item.Id };
+            //    imageTags.Add(imageTag);
+            //}
+
+            //var image = _flowerAppContext.Images.FirstOrDefault(i => i.Id == imageId);
+            //image.ImageTags = imageTags;
+
+            var image = _flowerAppContext.Images
+                .Include(x=>x.ImageTags)
+                .FirstOrDefault(i => i.Id == imageId);
+
+            ImageTag imageTag = new ImageTag
+            {
+                ImageId = imageId,
+                TagId = tagId,
+            };
+
+            image.ImageTags.Add(imageTag);
+
+            _flowerAppContext.Images.Update(image);
+            return _flowerAppContext.SaveChangesAsync();
+
+        }
+
+        public Task AddTagAsync(Tag tag)
+        {
+            _flowerAppContext.Add(tag);
+            return _flowerAppContext.SaveChangesAsync();
+        }
+
+        public Task DeleteTagAsync(int id)
+        {
+            var tag = _flowerAppContext.Tags.FirstOrDefault(m => m.Id == id);
+            _flowerAppContext.Tags.Remove(tag);
+            return _flowerAppContext.SaveChangesAsync();
+        }
+        #endregion
 
 
         public void Dispose()

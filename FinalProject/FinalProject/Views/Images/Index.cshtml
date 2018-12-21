@@ -4,18 +4,10 @@
     ViewData["Title"] = "Images";
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
-</head>
-<body>
     <h2>Index</h2>
 
     <p>
-        <a asp-action="Create">Create New</a>
+        <a asp-action="Create">Upload New Image</a> 
     </p>
 
     <table class="table">
@@ -35,18 +27,21 @@
             {
                 <tr>
                     <td>
-                        <img src="/Images/Raw/@item.Id" id="img-sq"/>
+                        <img src="/Images/Raw/@item.Id" id="img-sq" />
                     </td>
                     <td>
                         @* Placeholder for tags *@
+                        @foreach (var tag in item.ImageTags)
+                        {
+
+                            <p>@tag.Tag.Type : @tag.Tag.Name</p>
+                        }
                     </td>
                     <td>
-                        <a>Add Tags</a> |
-                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        <a asp-action="AddTags" asp-route-imageId="@item.Id">Add Tags</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete Image</a>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
-</body>
-</html>
