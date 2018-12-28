@@ -189,6 +189,7 @@ namespace FinalProject.Controllers
         private bool ImageExists(int id)
         {
             return _repository.Images.Any(e => e.Id == id);
+        }
         
 
         [HttpGet]

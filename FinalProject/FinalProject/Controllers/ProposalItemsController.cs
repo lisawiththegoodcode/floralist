@@ -36,7 +36,7 @@ namespace FinalProject.Controllers
             // pass the view model to the view
             return View(vm);
         }
-
+        
         // POST: ProposalItems/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -94,5 +94,6 @@ namespace FinalProject.Controllers
         {
             return _repository.ProposalItems.Any(e => e.Id == id);
         }
+        
     }
 }
