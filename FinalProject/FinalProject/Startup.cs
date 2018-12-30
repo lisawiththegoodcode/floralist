@@ -41,7 +41,21 @@ namespace FinalProject
 
             services.AddDbContext<FlowerAppContext>(config => config.UseSqlServer(Configuration.GetConnectionString("DbConnection")));
             //services.AddDbContext<FlowerAppContext>(config => config.UseInMemoryDatabase("FlowerDb"));        
+
+            Console.WriteLine("***********************************************");
+            Console.WriteLine("***********************************************");
+            Console.WriteLine("***********************************************");
+            Console.WriteLine(Environment.GetEnvironmentVariable("SENDGRID_API"));
+            Console.WriteLine("***********************************************");
+            Console.WriteLine("***********************************************");
+            Console.WriteLine("***********************************************");
+            services
+                    .AddFluentEmail("floralisttheapp@gmail.com")
+                    .AddRazorRenderer()
+                    .AddSendGridSender(Environment.GetEnvironmentVariable("SENDGRID_API"));
+            services.AddScoped<EmailSender>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

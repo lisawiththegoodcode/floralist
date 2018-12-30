@@ -1,0 +1,29 @@
+﻿@model FinalProject.Models.Proposal
+
+@{
+    ViewData["Title"] = "Proposals";
+}
+    <div class="container">
+
+        <div class="jumbotron jumbotron-fluid">
+            <div class="container">
+                <h1 class="display-4 text-center">@Model.Title</h1>
+                <p class="lead text-center">@Model.Description</p>
+            </div>
+        </div>
+
+        <div class="row">
+            @foreach (var item in Model.ProposalItems)
+            {
+                <div class="col-sm-3">
+                    <div class="card">
+                        <img id="img-card" src="/Images/Raw/@item.Image.Id" alt="@item.Caption" />
+                        <div class="card-body">
+                            <p class="card-text">@item.Caption</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+    </div>
