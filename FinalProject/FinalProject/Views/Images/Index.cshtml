@@ -82,6 +82,8 @@
                         {
 
                             <p>@tag.Tag.Type : @tag.Tag.Name</p>
+                            <a asp-action="RemoveTag" asp-route-imageId="@item.Id" asp-route-tagId="@tag.Tag.Id">Remove</a> 
+                            //need to create the remove tag
                         }
                     </td>
                     <td>

@@ -16,10 +16,12 @@ namespace FinalProject.Controllers
     public class ProposalsController : Controller
     {
         private readonly IRepository _repository;
+        private readonly EmailSender _emailSender;
 
-        public ProposalsController(IRepository repository)
+        public ProposalsController(IRepository repository, EmailSender emailSender)
         {
             _repository = repository;
+            _emailSender = emailSender;
         }
 
         public async Task<IActionResult> ImageSearch(int proposalId, string searchString)
@@ -64,7 +66,7 @@ namespace FinalProject.Controllers
             return View(proposal);
         }
 
-        // POST: Proposals/Edit/5
+        // POST: Proposals/Share/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -76,6 +78,7 @@ namespace FinalProject.Controllers
                 return NotFound();
             }
 
+            proposal = await _repository.GetProposalAsync(id);
             if (UserUnauthorizedToView(proposal.Designer.UserId))
             {
                 return NotFound();
@@ -85,6 +88,7 @@ namespace FinalProject.Controllers
             {
                 try
                 {
+                    _emailSender.sendProposalViewEmail();
                     await _repository.ShareProposalAsync(id);
                 }
                 catch (DbUpdateConcurrencyException)
