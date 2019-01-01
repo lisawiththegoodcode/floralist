@@ -7,17 +7,17 @@ namespace FinalProject.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<byte[]>(
-                name: "FileImage",
-                table: "Images",
-                nullable: true);
+            //migrationBuilder.AddColumn<byte[]>(
+            //    name: "FileImage",
+            //    table: "Image",
+            //    nullable: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "FileImage",
-                table: "Images");
+            //migrationBuilder.DropColumn(
+            //    name: "FileImage",
+            //    table: "Image");
         }
     }
 }

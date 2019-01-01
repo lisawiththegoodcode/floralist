@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FinalProject.Migrations
 {
     [DbContext(typeof(FlowerAppContext))]
-    [Migration("20181212021336_moved identity to main dbcontext")]
-    partial class movedidentitytomaindbcontext
+    [Migration("20181220000532_AddedUserIdProperty")]
+    partial class AddedUserIdProperty
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -33,6 +33,8 @@ namespace FinalProject.Migrations
 
                     b.Property<string>("PhoneNumber");
 
+                    b.Property<string>("UserId");
+
                     b.HasKey("Id")
                         .HasAnnotation("SqlServer:Clustered", true);
 
@@ -51,6 +53,8 @@ namespace FinalProject.Migrations
 
                     b.Property<string>("PhoneNumber");
 
+                    b.Property<string>("UserId");
+
                     b.HasKey("Id")
                         .HasAnnotation("SqlServer:Clustered", true);
 
@@ -64,6 +68,8 @@ namespace FinalProject.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int?>("DesignerId");
+
+                    b.Property<byte[]>("FileImage");
 
                     b.Property<string>("FileName");
 
@@ -99,6 +105,8 @@ namespace FinalProject.Migrations
                     b.Property<string>("Description");
 
                     b.Property<int>("DesignerId");
+
+                    b.Property<bool>("IsShared");
 
                     b.Property<string>("Title");
 

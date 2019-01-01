@@ -23,7 +23,21 @@ namespace FinalProject.Services
         public IQueryable<ProposalItem> ProposalItems => _flowerAppContext.ProposalItems;
         public IQueryable<Customer> Customers => _flowerAppContext.Customers;
         public IQueryable<Designer> Designers => _flowerAppContext.Designers;
-        
+        public IQueryable<Tag> Tags => _flowerAppContext.Tags;
+
+        #region Designer Methods
+        public Task AddDesignerAsync(Designer designer)
+        {
+            _flowerAppContext.Designers.Add(designer);
+            return _flowerAppContext.SaveChangesAsync();
+        }
+        public int GetDesignerIdForUserId(string userId)
+        {
+            var designer = _flowerAppContext.Designers.FirstOrDefault(m => m.UserId == userId);
+            return designer.Id;
+        }
+        #endregion
+
         #region ProposalItem Methods
         public Task AddProposalItemAsync(int proposalId, ProposalItem proposalItem)
         {
@@ -51,18 +65,7 @@ namespace FinalProject.Services
         }
         #endregion
 
-        public Task AddImageAsync(Image image)
-        {
-            _flowerAppContext.Images.Add(image);
-            return _flowerAppContext.SaveChangesAsync();
-        }
-
-        public Task DeleteImageAsync(int id)
-        {
-            var image = _flowerAppContext.Images.FirstOrDefault(m => m.Id == id);
-            _flowerAppContext.Images.Remove(image);
-            return _flowerAppContext.SaveChangesAsync();
-        }
+       
 
         #region Proposals Methods
         public Task AddProposalAsync(Proposal proposal)
@@ -109,19 +112,98 @@ namespace FinalProject.Services
 
         public List<ProposalItem> GetProposalItemsForProposal(int id)
         {
-            //return _flowerAppContext.Proposals.FirstOrDefault(m => m.Id == id).ProposalItems;
             return _flowerAppContext.ProposalItems
             .Where(p => p.ProposalId == id)
             .ToList();
-            //maybe add an .orderby or .include?
+        }
 
+        public Task<List<Proposal>> GetProposalsForDesignerAsync(string userId)
+        {
+            return _flowerAppContext.Proposals
+                .Include(x => x.Customer)
+                .Include(x => x.Designer)
+                .Where(x => x.Designer.UserId == userId)
+                .ToListAsync();
         }
         #endregion
 
-       
+
+        #region Image Methods
+        public Task AddImageAsync(Image image)
+        {
+            //image.DesignerId = 1;
+            _flowerAppContext.Images.Add(image);
+            return _flowerAppContext.SaveChangesAsync();
+        }
+
+        public Task DeleteImageAsync(int id)
+        {
+            var image = _flowerAppContext.Images.FirstOrDefault(m => m.Id == id);
+            _flowerAppContext.Images.Remove(image);
+            return _flowerAppContext.SaveChangesAsync();
+        }
+
+        public Task<List<Image>> GetImagesForDesignerAsync(string userId)
+        {
+            return _flowerAppContext.Images
+                .Include(x => x.ImageTags)
+                    .ThenInclude(x => x.Tag)
+                .Include(x => x.Designer)
+                .Where(x => x.Designer.UserId == userId)
+                .ToListAsync();
+        }
+        #endregion
+
+        #region Tag Methods
+        public Task CreateImageTagsAsync(int imageId, int tagId)
+        {
+            //List<ImageTag> imageTags = new List<ImageTag>();
+            //foreach(var item in tags)
+            //{
+            //    ImageTag imageTag = new ImageTag{ ImageId = imageId, TagId = item.Id };
+            //    imageTags.Add(imageTag);
+            //}
+
+            //var image = _flowerAppContext.Images.FirstOrDefault(i => i.Id == imageId);
+            //image.ImageTags = imageTags;
+
+            var image = _flowerAppContext.Images
+                .Include(x=>x.ImageTags)
+                .FirstOrDefault(i => i.Id == imageId);
+
+            ImageTag imageTag = new ImageTag
+            {
+                ImageId = imageId,
+                TagId = tagId,
+            };
+
+            image.ImageTags.Add(imageTag);
+
+            _flowerAppContext.Images.Update(image);
+            return _flowerAppContext.SaveChangesAsync();
+
+        }
+
+        public Task AddTagAsync(Tag tag)
+        {
+            _flowerAppContext.Add(tag);
+            return _flowerAppContext.SaveChangesAsync();
+        }
+
+        public Task DeleteTagAsync(int id)
+        {
+            var tag = _flowerAppContext.Tags.FirstOrDefault(m => m.Id == id);
+            _flowerAppContext.Tags.Remove(tag);
+            return _flowerAppContext.SaveChangesAsync();
+        }
+        #endregion
+
+
+
         public void Dispose()
         {
             _flowerAppContext?.Dispose();
         }
+
     }
 }

@@ -9,6 +9,9 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using FinalProject.Models;
+using FinalProject.Services;
+
 
 namespace FinalProject.Areas.Identity.Pages.Account
 {
@@ -19,17 +22,19 @@ namespace FinalProject.Areas.Identity.Pages.Account
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly IRepository _repository;
 
         public RegisterModel(
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender, IRepository repository)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _repository = repository;
         }
 
         [BindProperty]
@@ -39,6 +44,18 @@ namespace FinalProject.Areas.Identity.Pages.Account
 
         public class InputModel
         {
+            [Required]
+            [Display(Name = "Name")]
+            public string Name { get; set; }
+
+            [Required]
+            [Display(Name = "Phone Number")]
+            public string PhoneNumber { get; set; }
+
+            [Required]
+            [Display(Name = "Account Type")]
+            public bool IsDesigner { get; set; }
+
             [Required]
             [EmailAddress]
             [Display(Name = "Email")]
@@ -65,11 +82,30 @@ namespace FinalProject.Areas.Identity.Pages.Account
         {
             returnUrl = returnUrl ?? Url.Content("~/");
             if (ModelState.IsValid)
-            {
+            { 
                 var user = new IdentityUser { UserName = Input.Email, Email = Input.Email };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
+                    if (Input.IsDesigner == true)
+                    {
+                        //create designer!!
+                        var designer = new Designer
+                        {
+                            Name = Input.Name,
+                            PhoneNumber = Input.PhoneNumber,
+                            Email = Input.Email,
+                            UserId = user.Id
+
+                        };
+
+                        await _repository.AddDesignerAsync(designer);
+                    } else
+                    {
+                        //create Customer!!
+                        //do similar pattern to above
+                    }
+
                     _logger.LogInformation("User created a new account with password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

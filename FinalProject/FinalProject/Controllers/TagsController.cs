@@ -7,41 +7,26 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FinalProject.Data;
 using FinalProject.Models;
+using FinalProject.Services;
+using FinalProject.ViewModels;
 
 namespace FinalProject.Controllers
 {
     public class TagsController : Controller
     {
-        private readonly FlowerAppContext _context;
+        private readonly IRepository _repository;
 
-        public TagsController(FlowerAppContext context)
+        public TagsController(IRepository repository)
         {
-            _context = context;
+            _repository = repository;
         }
 
         // GET: Tags
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Tags.ToListAsync());
+            return View(await _repository.Tags.ToListAsync());
         }
 
-        // GET: Tags/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var tag = await _context.Tags
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (tag == null)
-            {
-                return NotFound();
-            }
-
-            return View(tag);
-        }
 
         // GET: Tags/Create
         public IActionResult Create()
@@ -58,63 +43,12 @@ namespace FinalProject.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(tag);
-                await _context.SaveChangesAsync();
+                await _repository.AddTagAsync(tag);
                 return RedirectToAction(nameof(Index));
             }
             return View(tag);
         }
 
-        // GET: Tags/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var tag = await _context.Tags.FindAsync(id);
-            if (tag == null)
-            {
-                return NotFound();
-            }
-            return View(tag);
-        }
-
-        // POST: Tags/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Type,Name")] Tag tag)
-        {
-            if (id != tag.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(tag);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!TagExists(tag.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(tag);
-        }
 
         // GET: Tags/Delete/5
         public async Task<IActionResult> Delete(int? id)
@@ -124,7 +58,7 @@ namespace FinalProject.Controllers
                 return NotFound();
             }
 
-            var tag = await _context.Tags
+            var tag = await _repository.Tags
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (tag == null)
             {
@@ -139,15 +73,13 @@ namespace FinalProject.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var tag = await _context.Tags.FindAsync(id);
-            _context.Tags.Remove(tag);
-            await _context.SaveChangesAsync();
+            await _repository.DeleteTagAsync(id);
             return RedirectToAction(nameof(Index));
         }
 
         private bool TagExists(int id)
         {
-            return _context.Tags.Any(e => e.Id == id);
+            return _repository.Tags.Any(e => e.Id == id);
         }
     }
 }

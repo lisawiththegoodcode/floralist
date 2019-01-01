@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FinalProject.Migrations
 {
     [DbContext(typeof(FlowerAppContext))]
-    [Migration("20181218190357_IsSharedPropertyAddedToProposal")]
-    partial class IsSharedPropertyAddedToProposal
+    [Migration("20181219233930_FileImageAddedToImage")]
+    partial class FileImageAddedToImage
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -63,7 +63,9 @@ namespace FinalProject.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("DesignerId");
+                    b.Property<int>("DesignerId");
+
+                    b.Property<byte[]>("FileImage");
 
                     b.Property<string>("FileName");
 
@@ -325,7 +327,8 @@ namespace FinalProject.Migrations
                 {
                     b.HasOne("FinalProject.Models.Designer", "Designer")
                         .WithMany()
-                        .HasForeignKey("DesignerId");
+                        .HasForeignKey("DesignerId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("FinalProject.Models.ImageTag", b =>

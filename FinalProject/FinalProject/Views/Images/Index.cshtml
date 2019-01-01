@@ -6,9 +6,7 @@
 
 }
 
-<h2>Index</h2>
 
-<<<<<<< HEAD
 <p>
     <a asp-action="Create">Create New</a>
 </p>
@@ -51,10 +49,12 @@
     <title>Index</title>
 </head>
 <body>
+=======
+>>>>>>> f8e7298aa12a9339c59eaff085699b9865f480a4
     <h2>Index</h2>
 
     <p>
-        <a asp-action="Create">Create New</a>
+        <a asp-action="Create">Upload New Image</a> 
     </p>
 
     <table class="table">
@@ -74,19 +74,26 @@
             {
                 <tr>
                     <td>
-                        <img src="/Images/Raw/@item.Id" id="img-sq"/>
+                        <img src="/Images/Raw/@item.Id" id="img-sq" />
                     </td>
                     <td>
                         @* Placeholder for tags *@
+                        @foreach (var tag in item.ImageTags)
+                        {
+
+                            <p>@tag.Tag.Type : @tag.Tag.Name</p>
+                        }
                     </td>
                     <td>
-                        <a>Add Tags</a> |
-                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        <a asp-action="AddTags" asp-route-imageId="@item.Id">Add Tags</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete Image</a>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
+
 </body>
 </html>
+
 

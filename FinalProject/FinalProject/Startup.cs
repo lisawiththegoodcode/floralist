@@ -66,7 +66,7 @@ namespace FinalProject
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Welcome}/{action=Index}/{id?}");
             });
             EnsureDatabaseUpdated(app);
         }
@@ -82,7 +82,7 @@ namespace FinalProject
             {
                 //context.Database.Migrate();
                 //identityContext.Database.Migrate();
-
+                //context.Database.EnsureCreated();
                 context.Database.Migrate();
 
             }

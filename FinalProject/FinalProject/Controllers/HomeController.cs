@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using FinalProject.Models;
 using FinalProject.ViewModels;
 using FinalProject.Services;
+using Shared.Web.MvcExtensions;
 
 namespace FinalProject.Controllers
 {
@@ -25,9 +26,11 @@ namespace FinalProject.Controllers
             {
                 Images = _repository.Images.ToList(),
                 Proposals = _repository.Proposals.ToList(),
+                //in the repo, make a get proposals for userid returns a list of proposals for current user
                 Customers = _repository.Customers.ToList(),
+                //maybe customers are just global based on the fact that a customer has been created
                 //TODO: THIS IS HARDCODED RIGHT NOW, NEED TO FIGURE OUT LOGIC TO POPULATE NAME BASED ON WHO IS LOGGED IN
-                Designer = _repository.Designers.FirstOrDefault(m => m.Id == 1)
+                Designer = _repository.Designers.FirstOrDefault(m => m.Id == _repository.GetDesignerIdForUserId(User.GetUserId()))
 
             };
             return View(vm);

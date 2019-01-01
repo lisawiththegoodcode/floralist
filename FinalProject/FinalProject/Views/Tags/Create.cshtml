@@ -1,17 +1,10 @@
 ﻿@model FinalProject.Models.Tag
 
 @{
-    Layout = null;
+    ViewData["Title"] = "Create New Tag";
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Create</title>
-</head>
-<body>
+<h2>View</h2>
 
 <h4>Tag</h4>
 <hr />
@@ -40,8 +33,3 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
-</body>
-</html>

@@ -13,6 +13,11 @@ namespace FinalProject.Services
         IQueryable<ProposalItem> ProposalItems { get; }
         IQueryable<Customer> Customers { get; }
         IQueryable<Designer> Designers { get; }
+        IQueryable<Tag> Tags { get; }
+
+
+        Task AddDesignerAsync(Designer designer);
+        int GetDesignerIdForUserId(string userId);
 
         Task AddProposalAsync(Proposal proposal);
         Task<Proposal> GetProposalAsync(int? id);
@@ -20,8 +25,18 @@ namespace FinalProject.Services
         Task ShareProposalAsync(int id);
         Task DeleteProposalAsync(int id);
         List<ProposalItem> GetProposalItemsForProposal(int id);
+        Task<List<Proposal>> GetProposalsForDesignerAsync(string userId);
 
         Task AddImageAsync(Image image);
         Task DeleteImageAsync(int id);
+        Task<List<Image>> GetImagesForDesignerAsync(string userId);
+
+        Task CreateImageTagsAsync(int imageId, int tagId);
+        Task AddTagAsync(Tag tag);
+        Task DeleteTagAsync(int id);
+
+        Task AddProposalItemAsync(int proposalId, ProposalItem newProposalItem);
+        Task DeleteProposalItemAsync(int id);
+        Task<ProposalItem> GetProposalItemAsync(int? id);
     }
 }

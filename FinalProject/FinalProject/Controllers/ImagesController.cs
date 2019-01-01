@@ -10,10 +10,12 @@ using FinalProject.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
+
 using FinalProject.Services;
 using Microsoft.Net.Http.Headers;
 using Microsoft.Extensions.Primitives;
-
+using Shared.Web.MvcExtensions;
+using FinalProject.ViewModels;
 
 namespace FinalProject.Controllers
 {
@@ -29,10 +31,51 @@ namespace FinalProject.Controllers
 
         }
 
+        [HttpGet]
+        public IActionResult AddTags(int imageId)
+        {
+            var vm = new TagSearch
+            {
+                ImageId = imageId,
+                Tags = _repository.Tags.ToList()
+            };
+            // pass the view model to the view
+            return View(vm);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddTags(int imageId, int tagId)
+        {
+
+            await _repository.CreateImageTagsAsync(imageId, tagId);
+            return RedirectToAction(nameof(Index));
+        }
         // GET: Images
         public async Task<IActionResult> Index()
         {
-            return View(await _repository.Images.ToListAsync());
+            return View(await _repository.GetImagesForDesignerAsync(User.GetUserId()));
+        }
+
+
+
+        public IActionResult AddNewTag(int imageid)
+        {
+            var vm = new AddNewTag
+            {
+                ImageId = imageid,
+                Tag = new Tag()
+            };
+            return View(vm);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddNewTag(int imageId, Tag tag)
+        {
+            await _repository.AddTagAsync(tag);
+            await _repository.CreateImageTagsAsync(imageId, tag.Id);
+            return RedirectToAction(nameof(Index));
         }
 
 
@@ -64,12 +107,14 @@ namespace FinalProject.Controllers
 
                
                 image.FileName = Path.GetFileName(files.FileName);
+                image.DesignerId = _repository.GetDesignerIdForUserId(User.GetUserId());
 
                 await _repository.AddImageAsync(image);
                 return RedirectToAction(nameof(Index));
             }
             return View(image);
         }
+
 
         // GET: Images/Edit/5
         //public async Task<IActionResult> Edit(int? id)
@@ -158,6 +203,7 @@ namespace FinalProject.Controllers
         //    return View(image);
         //}
 
+
         // GET: Images/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -167,7 +213,9 @@ namespace FinalProject.Controllers
             }
 
             var image = await _repository.Images
+                .Where(i=>i.DesignerId == _repository.GetDesignerIdForUserId(User.GetUserId()))
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (image == null)
             {
                 return NotFound();

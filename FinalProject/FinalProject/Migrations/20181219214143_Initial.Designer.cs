@@ -4,18 +4,20 @@ using FinalProject.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FinalProject.Migrations
 {
     [DbContext(typeof(FlowerAppContext))]
-    partial class FlowerAppContextModelSnapshot : ModelSnapshot
+    [Migration("20181219214143_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.3-rtm-32065")
+                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -30,8 +32,6 @@ namespace FinalProject.Migrations
                     b.Property<string>("Name");
 
                     b.Property<string>("PhoneNumber");
-
-                    b.Property<string>("UserId");
 
                     b.HasKey("Id")
                         .HasAnnotation("SqlServer:Clustered", true);
@@ -51,8 +51,6 @@ namespace FinalProject.Migrations
 
                     b.Property<string>("PhoneNumber");
 
-                    b.Property<string>("UserId");
-
                     b.HasKey("Id")
                         .HasAnnotation("SqlServer:Clustered", true);
 
@@ -68,10 +66,6 @@ namespace FinalProject.Migrations
                     b.Property<int>("DesignerId");
 
                     b.Property<byte[]>("FileImage");
-
-                    //b.Property<byte[]>("FileImage");
-
-                    //b.Property<byte[]>("FileImage");
 
                     b.Property<string>("FileName");
 
@@ -392,34 +386,34 @@ namespace FinalProject.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            //modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
-            //    {
-            //        b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
-            //            .WithMany()
-            //            .HasForeignKey("UserId")
-            //            .OnDelete(DeleteBehavior.Cascade);
-            //    });
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
 
-            //modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
-            //    {
-            //        b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
-            //            .WithMany()
-            //            .HasForeignKey("RoleId")
-            //            .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
-            //        b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
-            //            .WithMany()
-            //            .HasForeignKey("UserId")
-            //            .OnDelete(DeleteBehavior.Cascade);
-            //    });
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
 
-            //modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
-            //    {
-            //        b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
-            //            .WithMany()
-            //            .HasForeignKey("UserId")
-            //            .OnDelete(DeleteBehavior.Cascade);
-            //    });
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
 #pragma warning restore 612, 618
         }
     }
