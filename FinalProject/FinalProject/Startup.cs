@@ -42,13 +42,7 @@ namespace FinalProject
             services.AddDbContext<FlowerAppContext>(config => config.UseSqlServer(Configuration.GetConnectionString("DbConnection")));
             //services.AddDbContext<FlowerAppContext>(config => config.UseInMemoryDatabase("FlowerDb"));        
 
-            Console.WriteLine("***********************************************");
-            Console.WriteLine("***********************************************");
-            Console.WriteLine("***********************************************");
-            Console.WriteLine(Environment.GetEnvironmentVariable("SENDGRID_API"));
-            Console.WriteLine("***********************************************");
-            Console.WriteLine("***********************************************");
-            Console.WriteLine("***********************************************");
+            
             services
                     .AddFluentEmail("floralisttheapp@gmail.com")
                     .AddRazorRenderer()
@@ -96,7 +90,7 @@ namespace FinalProject
             {
                 //context.Database.Migrate();
                 //identityContext.Database.Migrate();
-                //context.Database.EnsureCreated();
+                // context.Database.EnsureCreated();
                 context.Database.Migrate();
 
             }

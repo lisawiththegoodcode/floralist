@@ -23,8 +23,8 @@ namespace FinalProject.Services
                 //.From("floralisttheapp@gmail.com")
                 .To("nashid77@yahoo.com")
                 .Subject("hi from floralist")
-                .Body("hi again");
-            //.UsingTemplateFromFile($"{Directory.GetCurrentDirectory()}/Mytemplate.cshtml", new { Name = "Rad Dude" });
+                //.Body("hi again");
+           .UsingTemplateFromFile($"{Directory.GetCurrentDirectory()}/Mytemplate.cshtml", new { Name = "Rad Dude" });
 
             email.Send();
         }
