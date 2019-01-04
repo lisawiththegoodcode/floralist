@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="Views\Proposals\ProposalView.cshtml">
+    <Content Update="Views\Proposals\ProposalEmail.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Views\Proposals\Share.cshtml">

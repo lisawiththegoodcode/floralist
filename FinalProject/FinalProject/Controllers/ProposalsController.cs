@@ -88,7 +88,7 @@ namespace FinalProject.Controllers
             {
                 try
                 {
-                    _emailSender.sendProposalViewEmail();
+                    _emailSender.sendProposalEmail(proposal);
                     await _repository.ShareProposalAsync(id);
                 }
                 catch (DbUpdateConcurrencyException)
