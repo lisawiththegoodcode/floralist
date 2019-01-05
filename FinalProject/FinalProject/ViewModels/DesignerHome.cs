@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,7 +13,7 @@ namespace FinalProject.ViewModels
         public int DesignerId { get; set; }
 
         public IEnumerable<Image> Images { get; set; }
-        public IEnumerable<Proposal> Proposals { get; set; }
+        public IEnumerable<Proposal> ProposalsInProgress { get; set; }
         public IEnumerable<Customer> Customers { get; set; }
 
     }

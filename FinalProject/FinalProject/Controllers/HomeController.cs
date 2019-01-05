@@ -8,6 +8,7 @@ using FinalProject.Models;
 using FinalProject.ViewModels;
 using FinalProject.Services;
 using Shared.Web.MvcExtensions;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FinalProject.Controllers
 {
@@ -20,21 +21,19 @@ namespace FinalProject.Controllers
             _repository = repository;
         }
 
+        [Authorize]
         public IActionResult Index()
         {
             var vm = new DesignerHome
             {
-                Images = _repository.Images.ToList(),
-                Proposals = _repository.Proposals.ToList(),
-                //in the repo, make a get proposals for userid returns a list of proposals for current user
+                Images = _repository.GetImagesForDesigner(User.GetUserId()),
+                ProposalsInProgress = _repository.GetProposalsInProgressForDesigner(User.GetUserId()),
+                //need to add a designer id to customer and run a migration... or maybe customers are just global based on the fact that a customer has been created
                 Customers = _repository.Customers.ToList(),
-                //maybe customers are just global based on the fact that a customer has been created
-                //TODO: THIS IS HARDCODED RIGHT NOW, NEED TO FIGURE OUT LOGIC TO POPULATE NAME BASED ON WHO IS LOGGED IN
                 Designer = _repository.Designers.FirstOrDefault(m => m.Id == _repository.GetDesignerIdForUserId(User.GetUserId()))
 
             };
             return View(vm);
-            //return View();
         }
 
         public IActionResult About()

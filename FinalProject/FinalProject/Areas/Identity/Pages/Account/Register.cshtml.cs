@@ -52,9 +52,9 @@ namespace FinalProject.Areas.Identity.Pages.Account
             [Display(Name = "Phone Number")]
             public string PhoneNumber { get; set; }
 
-            [Required]
-            [Display(Name = "Account Type")]
-            public bool IsDesigner { get; set; }
+            //[Required]
+            //[Display(Name = "Account Type")]
+            //public bool IsDesigner { get; set; }
 
             [Required]
             [EmailAddress]
@@ -87,8 +87,8 @@ namespace FinalProject.Areas.Identity.Pages.Account
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
-                    if (Input.IsDesigner == true)
-                    {
+                    //if (Input.IsDesigner == true)
+                    //{
                         //create designer!!
                         var designer = new Designer
                         {
@@ -100,11 +100,11 @@ namespace FinalProject.Areas.Identity.Pages.Account
                         };
 
                         await _repository.AddDesignerAsync(designer);
-                    } else
-                    {
-                        //create Customer!!
-                        //do similar pattern to above
-                    }
+                    //} else
+                    //{
+                    //    //create Customer!!
+                    //    //do similar pattern to above
+                    //}
 
                     _logger.LogInformation("User created a new account with password.");
 

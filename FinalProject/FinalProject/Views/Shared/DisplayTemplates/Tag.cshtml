@@ -1,0 +1,51 @@
+﻿@model FinalProject.Models.Tag
+
+@{
+    var color = "#333";
+    if (Model.Type.ToLower() == "color")
+    {
+        color = Model.Name;
+    }
+
+    if (Model.Type.ToLower() == "season")
+    {
+        if (Model.Name.ToLower() == "summer")
+        {
+            color = "lightsalmon";
+        } else if (Model.Name.ToLower() == "spring")
+        {
+            color = "lightseagreen";
+        } else if (Model.Name.ToLower() == "fall")
+        {
+            color = "saddlebrown";
+        } else if (Model.Name.ToLower() == "winter")
+        {
+            color = "rosybrown";
+        }
+    }
+
+    if (Model.Type.ToLower() == "price")
+    {
+        color = "seagreen";
+
+        if (Model.Name.ToLower() == "$")
+        {
+            color = "lightgreen";
+        }
+        else if (Model.Name.ToLower() == "$$")
+        {
+            color = "limegreen";
+        }
+        else if (Model.Name.ToLower() == "$$$")
+        {
+            color = "darkolivegreen";
+        }
+        else if (Model.Name.ToLower() == "$$$$")
+        {
+            color = "darkgreen";
+        }
+    }
+
+}
+
+<span id="tag" class="btn btn-primary" style="background-color:@color;">@Model.Name</span>

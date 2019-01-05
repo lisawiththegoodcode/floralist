@@ -92,7 +92,7 @@ namespace FinalProject.Services
         public async Task ShareProposalAsync(int id)
         {
             var proposal = await GetProposalAsync(id);
-            proposal.IsShared = proposal.IsShared ? false : true;
+            proposal.IsShared = true;
             _flowerAppContext.Proposals.Update(proposal);
             await _flowerAppContext.SaveChangesAsync();
         }
@@ -123,12 +123,30 @@ namespace FinalProject.Services
                 .Where(x => x.Designer.UserId == userId)
                 .ToListAsync();
         }
+        
+        public List<Proposal> GetProposalsForDesigner(string userId)
+        {
+            return _flowerAppContext.Proposals
+                .Include(x => x.Customer)
+                .Include(x => x.Designer)
+                .Where(x => x.Designer.UserId == userId)
+                .ToList();
+        }
+
+        public List<Proposal> GetProposalsInProgressForDesigner(string userId)
+        {
+            return _flowerAppContext.Proposals
+                .Include(x => x.Customer)
+                .Include(x => x.Designer)
+                .Where(x => x.IsShared == false)
+                .Where(x => x.Designer.UserId == userId)
+                .ToList();
+        }
         #endregion
 
         #region Image Methods
         public Task AddImageAsync(Image image)
         {
-            //image.DesignerId = 1;
             _flowerAppContext.Images.Add(image);
             return _flowerAppContext.SaveChangesAsync();
         }
@@ -149,6 +167,16 @@ namespace FinalProject.Services
                 .Where(x => x.Designer.UserId == userId)
                 .ToListAsync();
         }
+
+        public List<Image> GetImagesForDesigner(string userId)
+        {
+            return _flowerAppContext.Images
+                .Include(x => x.ImageTags)
+                    .ThenInclude(x => x.Tag)
+                .Include(x => x.Designer)
+                .Where(x => x.Designer.UserId == userId)
+                .ToList();
+        }
         #endregion
 
         #region Tag Methods
@@ -168,13 +196,34 @@ namespace FinalProject.Services
                 .Include(x=>x.ImageTags)
                 .FirstOrDefault(i => i.Id == imageId);
 
-            ImageTag imageTag = new ImageTag
+            if (!image.ImageTags.Any<ImageTag>(x=>x.TagId == tagId))
             {
-                ImageId = imageId,
-                TagId = tagId,
-            };
+                ImageTag imageTag = new ImageTag
+                {
+                    ImageId = imageId,
+                    TagId = tagId,
+                };
 
-            image.ImageTags.Add(imageTag);
+                image.ImageTags.Add(imageTag);
+
+                _flowerAppContext.Images.Update(image);
+
+            }
+
+            return _flowerAppContext.SaveChangesAsync();
+
+        }
+
+        public Task DeleteImageTagAsync(int imageId, int tagId)
+        {
+
+            var image = _flowerAppContext.Images
+                .Include(x => x.ImageTags)
+                .FirstOrDefault(i => i.Id == imageId);
+
+            var imageTag = image.ImageTags.FirstOrDefault(x => x.TagId == tagId);
+
+            image.ImageTags.Remove(imageTag);
 
             _flowerAppContext.Images.Update(image);
             return _flowerAppContext.SaveChangesAsync();
