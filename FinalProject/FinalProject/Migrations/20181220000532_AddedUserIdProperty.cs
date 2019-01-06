@@ -7,12 +7,12 @@ namespace FinalProject.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_Images_Designers_DesignerId",
-                table: "Image");
+                name: "FK_Image_Designers_DesignerId",
+                table: "Images");
 
             migrationBuilder.AlterColumn<int>(
                 name: "DesignerId",
-                table: "Image",
+                table: "Images",
                 nullable: true,
                 oldClrType: typeof(int));
 
@@ -27,8 +27,8 @@ namespace FinalProject.Migrations
                 nullable: true);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Images_Designers_DesignerId",
-                table: "Image",
+                name: "FK_Image_Designers_DesignerId",
+                table: "Images",
                 column: "DesignerId",
                 principalTable: "Designers",
                 principalColumn: "Id",
@@ -38,8 +38,8 @@ namespace FinalProject.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_Images_Designers_DesignerId",
-                table: "Image");
+                name: "FK_Image_Designers_DesignerId",
+                table: "Images");
 
             migrationBuilder.DropColumn(
                 name: "UserId",
@@ -51,14 +51,14 @@ namespace FinalProject.Migrations
 
             migrationBuilder.AlterColumn<int>(
                 name: "DesignerId",
-                table: "Image",
+                table: "Images",
                 nullable: false,
                 oldClrType: typeof(int),
                 oldNullable: true);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Images_Designers_DesignerId",
-                table: "Image",
+                name: "FK_Image_Designers_DesignerId",
+                table: "Images",
                 column: "DesignerId",
                 principalTable: "Designers",
                 principalColumn: "Id",
