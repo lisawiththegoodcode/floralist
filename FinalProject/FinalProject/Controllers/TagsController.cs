@@ -26,6 +26,7 @@ namespace FinalProject.Controllers
         // GET: Tags
         public async Task<IActionResult> Index()
         {
+
             return View(await _repository.Tags.ToListAsync());
         }
 

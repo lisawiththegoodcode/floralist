@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace FinalProject.Services
@@ -29,6 +30,10 @@ namespace FinalProject.Services
                 .Subject($"Floral Design Proposal for {proposal.Title} 💐")
             //.Body($"Hi {proposal.Customer.Name}!");
                 .UsingTemplateFromFile($"{Directory.GetCurrentDirectory()}/Views/Proposals/ProposalEmail.cshtml", proposal);
+
+            //        .UsingTemplateFromEmbedded("FinalProject.Controllers.ProposalEmail.cshtml",
+            //proposal,
+            //Assembly.Load("FinalProject.Views"));
 
             Trace.WriteLine(email);
             Trace.WriteLine(proposal.Designer.Email);

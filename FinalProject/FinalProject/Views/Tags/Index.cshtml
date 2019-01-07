@@ -1,6 +1,8 @@
 ﻿@model IEnumerable<FinalProject.Models.Tag>
 
 @{
+    var types = new List<string>();
+
     ViewData["Title"] = "Tags";
 }
 <h4>Tags</h4>
@@ -20,20 +22,26 @@
             <th></th>
         </tr>
     </thead>
+
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Type)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                </td>
-            </tr>
+            if (!types.Contains(item.Type))
+            {
+                types.Add(item.Type);
+
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Type)
+                    </td>
+                    @*<td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>*@
+                    <td>
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+            }
         }
     </tbody>
 </table>
