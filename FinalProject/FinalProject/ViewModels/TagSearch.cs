@@ -12,6 +12,7 @@ namespace FinalProject.ViewModels
         public int TagId { get; set; }
         public Tag tag { get; set; }
         public IEnumerable<Tag> Tags { get; set; }
+        public List<string> Types { get; set; }
 
     }
 }

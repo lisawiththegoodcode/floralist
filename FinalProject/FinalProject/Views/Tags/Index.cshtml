@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<FinalProject.Models.Tag>
 
 @{
-    var types = new List<string>();
+    var types = Model.Select(x => x.Type).Distinct().ToList();
 
     ViewData["Title"] = "Tags";
 }
@@ -11,37 +11,29 @@
     <a asp-action="Create">Create New</a>
 </p>
 <table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Type)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-
-    <tbody>
-        @foreach (var item in Model)
-        {
-            if (!types.Contains(item.Type))
+    @foreach (var type in types)
+    {
+        <thead>
+            <tr>
+                <th>
+                    @type
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var tag in Model)
             {
-                types.Add(item.Type);
+                @if (tag.Type == type)
+                {
+                    <td>
+                        <p>@Html.DisplayFor(modelItem => tag)  <a id="remove-btn" asp-action="Delete" asp-route-id="@tag.Id">x</a></p>
 
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Type)
                     </td>
-                    @*<td>
-                            @Html.DisplayFor(modelItem => item.Name)
-                        </td>*@
-                    <td>
-                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                    </td>
-                </tr>
+                }
+                @*<tr>
+                    <td></td>
+                </tr>*@
             }
-        }
-    </tbody>
+        </tbody>
+    }
 </table>

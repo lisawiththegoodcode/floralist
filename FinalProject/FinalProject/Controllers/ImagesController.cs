@@ -32,7 +32,8 @@ namespace FinalProject.Controllers
             var vm = new TagSearch
             {
                 ImageId = imageId,
-                Tags = _repository.Tags.ToList()
+                Tags = _repository.Tags.ToList(),
+                Types = _repository.Tags.Select(x => x.Type).Distinct().ToList()
             };
             // pass the view model to the view
             return View(vm);
@@ -73,6 +74,17 @@ namespace FinalProject.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddNewTag(int imageId, Tag tag)
         {
+            if (_repository.Tags.Any(x => x.Type == tag.Type && x.Name == tag.Name))
+            {
+                var vm = new AddNewTag
+                {
+                    ImageId = imageId,
+                    Tag = new Tag()
+                };
+
+                ModelState.AddModelError("", "This tag already exists");
+                return View(vm);
+            }
             await _repository.AddTagAsync(tag);
             await _repository.CreateImageTagsAsync(imageId, tag.Id);
             return RedirectToAction(nameof(Index));

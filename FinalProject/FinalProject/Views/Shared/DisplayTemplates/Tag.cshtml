@@ -1,49 +1,50 @@
 ﻿@model FinalProject.Models.Tag
 
 @{
-    var color = "#333";
-    if (Model.Type.ToLower() == "color")
+    string GetRandomColor()
     {
-        color = Model.Name;
+        Random rand = new Random();
+        int max = byte.MaxValue + 1; // 256
+        int r = rand.Next(max);
+        int g = rand.Next(max);
+        int b = rand.Next(max);
+        string c = $"rgb({r}, {g}, {b})";
+
+        return c;
     }
 
-    if (Model.Type.ToLower() == "season")
+    var color = GetRandomColor();
+
+    if (Model.Type.ToLower() == "color")
+    {
+        color = Model.Name.ToLower().Replace(" ", "");
+    }
+    else if (Model.Type.ToLower() == "season")
     {
         if (Model.Name.ToLower() == "summer")
         {
             color = "lightsalmon";
-        } else if (Model.Name.ToLower() == "spring")
+        }
+        else if (Model.Name.ToLower() == "spring")
         {
             color = "lightseagreen";
-        } else if (Model.Name.ToLower() == "fall")
+        }
+        else if (Model.Name.ToLower() == "fall")
         {
             color = "saddlebrown";
-        } else if (Model.Name.ToLower() == "winter")
+        }
+        else if (Model.Name.ToLower() == "winter")
         {
             color = "rosybrown";
         }
+        else
+        {
+            color = GetRandomColor();
+        }
     }
-
-    if (Model.Type.ToLower() == "price")
+    else
     {
-        color = "seagreen";
-
-        if (Model.Name.ToLower() == "$")
-        {
-            color = "lightgreen";
-        }
-        else if (Model.Name.ToLower() == "$$")
-        {
-            color = "limegreen";
-        }
-        else if (Model.Name.ToLower() == "$$$")
-        {
-            color = "darkolivegreen";
-        }
-        else if (Model.Name.ToLower() == "$$$$")
-        {
-            color = "darkgreen";
-        }
+        color = GetRandomColor();
     }
 
 }

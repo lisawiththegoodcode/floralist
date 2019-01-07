@@ -1,7 +1,6 @@
 ﻿@model FinalProject.ViewModels.TagSearch
 
 @{
-    var types = new List<string>();
 
     ViewData["Title"] = "AddTags";
 }
@@ -12,22 +11,16 @@
     <div class="col-md-4">
         <form asp-controller="Images" asp-action="AddTags" asp-route-imageId="Model.ImageId" asp-route-tagId="Model.TagId">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            @foreach (var item in Model.Tags)
+            
+            @foreach (var item in Model.Types)
             {
-                if (!types.Contains(item.Type))
-                {
-                    types.Add(item.Type);
-
-                    @*@Html.DisplayFor(modelItem => item.Type)*@
-
-                    <div class="form-group">
-                        <label class="control-label">@item.Type</label>
-                        <select asp-for="TagId" asp-items="@Model.Tags.Select(x => new SelectListItem(x.Name, x.Id.ToString())).OrderBy(x => x.Text)" class="form-control"></select>
-                        <span asp-validation-for="TagId" class="text-danger"></span>
-                    </div>
-                }
+                <div class="form-group">
+                    <label class="control-label">@item</label>
+                    <select asp-for="TagId" asp-items="@Model.Tags.Where(x => x.Type == item).Select(x => new SelectListItem(x.Name, x.Id.ToString())).OrderBy(x => x.Text)" class="form-control"></select>
+                    <span asp-validation-for="TagId" class="text-danger"></span>
+                </div>
             }
-
+          
             <div class="form-group">
                 <input type="hidden" asp-for="ImageId" />
                 <input type="hidden" asp-for="TagId" />
