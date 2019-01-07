@@ -61,8 +61,8 @@ namespace FinalProject.Controllers
         {
             if (ModelState.IsValid)
             {
-                var designer = _context.Designers.FirstOrDefault(m => m.UserId == User.GetUserId());
-                customer.DesignerId = designer.Id; 
+                //var designer = _context.Designers.FirstOrDefault(m => m.UserId == User.GetUserId());
+                //customer.DesignerId = designer.Id; 
                 _context.Add(customer);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

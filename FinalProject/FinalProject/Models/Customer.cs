@@ -13,7 +13,7 @@ namespace FinalProject.Models
         public string PhoneNumber { get; set; }
         public List<Proposal> Proposals { get; set; }
 
-        public int DesignerId { get; set; }
-        public Designer Designer { get; set; }
+        //public int DesignerId { get; set; }
+        //public Designer Designer { get; set; }
     }
 }
