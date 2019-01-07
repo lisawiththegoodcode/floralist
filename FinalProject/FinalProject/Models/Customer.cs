@@ -12,6 +12,8 @@ namespace FinalProject.Models
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
         public List<Proposal> Proposals { get; set; }
-        public string UserId { get; set; }
+
+        public int DesignerId { get; set; }
+        public Designer Designer { get; set; }
     }
 }
