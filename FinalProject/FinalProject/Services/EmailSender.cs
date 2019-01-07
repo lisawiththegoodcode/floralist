@@ -28,12 +28,12 @@ namespace FinalProject.Services
                 .SetFrom(proposal.Designer.Email)
                 .To(proposal.Customer.Email)
                 .Subject($"Floral Design Proposal for {proposal.Title} 💐")
-            //.Body($"Hi {proposal.Customer.Name}!");
-                .UsingTemplateFromFile($"{Directory.GetCurrentDirectory()}/Views/Proposals/ProposalEmail.cshtml", proposal);
+                    //.Body($"Hi {proposal.Customer.Name}!");
+                    //.UsingTemplateFromFile($"{Directory.GetCurrentDirectory()}/Views/Proposals/ProposalEmail.cshtml", proposal);
 
-            //        .UsingTemplateFromEmbedded("FinalProject.Controllers.ProposalEmail.cshtml",
-            //proposal,
-            //Assembly.Load("FinalProject.Views"));
+                .UsingTemplateFromEmbedded("FinalProject.Views.Proposals.ProposalEmail.cshtml",
+            proposal,
+            Assembly.Load("FinalProject"));
 
             Trace.WriteLine(email);
             Trace.WriteLine(proposal.Designer.Email);

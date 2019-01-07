@@ -157,6 +157,7 @@ namespace FinalProject.Controllers
             return _repository.Images.Any(e => e.Id == id);
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public IActionResult Raw(int id)
         {
