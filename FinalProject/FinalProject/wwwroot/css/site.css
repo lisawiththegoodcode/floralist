@@ -51,7 +51,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-content: center;
+    align-items: center;
 }
 
 #text-dash{
@@ -70,6 +70,31 @@ a#remove-btn{
     font-weight: bold;
     border-color: #9d9d9d;
     cursor: default;
+}
+
+#salmon-btn {
+    width: 70%;
+    font-size: 14px;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin: 1%;
+    outline: 0;
+    cursor: pointer;
+    letter-spacing: 1px;
+    background-color: salmon;
+    border: none;
+    color: #FFFFFF;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 20px;
+}
+
+#salmon-btn:hover {
+    background-color: salmon;
+    transition: color 0.5s ease;
+    color: black;
 }
 
 /* Hide/rearrange for smaller screens */
