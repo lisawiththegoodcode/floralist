@@ -40,7 +40,7 @@ namespace FinalProject.Controllers
                     ? await _repository.GetImagesForDesignerAsync(User.GetUserId())
                     : await _repository.Images
                     .Where(i => i.DesignerId == _repository.GetDesignerIdForUserId(User.GetUserId()))
-                    .Where(i => i.FileName.Contains(searchString))
+                    .Where(i => i.ImageTags.Any(x=> x.Tag.Name == searchString))
                     .ToListAsync()
             };
             return View(vm);

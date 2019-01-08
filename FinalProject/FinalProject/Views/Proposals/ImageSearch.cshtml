@@ -6,50 +6,46 @@
     ViewData["Title"] = "ImageSearch";
 }
 
-<h4>Add Proposal Items</h4>
+<h4>Add Image to Proposal</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-controller="Proposals" asp-action="ImageSearch" method="get">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
             <div class="form-group">
-                <label class="control-label">Search</label>
-                <input type="text" name="SearchString" />
-                <input type="hidden" name="ProposalId" value="@Model.ProposalId"/>
-                <input type="submit" value="Search" class="form-control" />
+                <div id="search-bar" class="input-group">
+                    <span class="glyphicon glyphicon-search"></span>
+                    <input class="form-control" type="text" name="SearchString" placeholder="Search">
+                    <input type="hidden" name="ProposalId" value="@Model.ProposalId" />
+                </div>
             </div>
         </form>
+
+
+
     </div>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    Filename
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.Images)
-            {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FileName)
-                </td>
-                <td>
-                    <img src="/Images/Raw/@item.Id" id="img-sq" />
-                </td>
-                <td>
-                    <a asp-controller="ProposalItems" asp-action="Create" asp-route-imageId="@item.Id" asp-route-proposalId="@Model.ProposalId">Add to Proposal</a> |
-                </td>
-            </tr>
-            }
-        </tbody>
-    </table>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
+<div id="flex-container">
+    @foreach (var item in Model.Images)
+    {
+        <div id="img-add">
+            <img src="/Images/Raw/@item.Id" id="img-sq" />
+            <p>   </p>
+            <a asp-controller="ProposalItems" asp-action="Create" asp-route-imageId="@item.Id" asp-route-proposalId="@Model.ProposalId">Add to Proposal</a>
+        </div>
+    }
+</div>
+<hr />
+
+<div id="flex-container">
+    @*<div class="col-md-6">*@
+        <a class="col-md-6" id="salmon-btn" asp-action="Index">Back to My Proposals</a>
+    @* </div>
+    <div class="col-md-6">*@
+        <a class="col-md-6" id="salmon-btn" asp-action="Index">Continue Editing Proposal</a>
+    @*</div>*@
 </div>
 
 @section Scripts {
