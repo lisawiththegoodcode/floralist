@@ -8,7 +8,7 @@
     Hello @Model.Customer.Name!
 </p>
 <p>
-    It was nice meeting you and learning about your beautiful vision for this very special event. I'm excited for the opportunity to being a part of it! Please let me know what feedback you have for me once you get the chance to review the below proposal. 
+    It was nice meeting you and learning about your beautiful vision for this  special event. I'm excited for the opportunity to being a part of it! Please let me know what feedback you have for me once you get the chance to review the below proposal. 
 </p>
 <p>
     Thanks,
@@ -33,14 +33,19 @@
                 <table>
                     @for (int i = 0; i < Model.ProposalItems.Count; i++)
                     {
-                        <tr>
+                    <tr>
 
-                            @for (int ii = 0; ii < 4; ii++)
-                            {
-                                <td style="width: 250px;height: 250px; margin:0 5px 5px 5px;object-fit: cover;background-color:blue;"></td>
+                        @for (int ii = 0; ii < 4; ii++)
+                        {
+                            @*<td style="width: 250px;height: 250px; margin:0 5px 5px 5px;object-fit: cover;background-color:blue;"></td>*@
+                            <td>
 
-                            }
-                        </tr>
+                                <img style="width: 250px;height: 250px; margin:0 5px 5px 5px;object-fit: cover;" src="https://floralist.azurewebsites.net/Images/Raw/@Model.ProposalItems[i].Image.Id" alt="@Model.ProposalItems[i].Caption" />
+                                <p style="width: 250px;height:100%; margin:0 5px 5px 5px">@Model.ProposalItems[i].Caption</p>
+                            </td>
+
+                        }
+                    </tr>
 
                     }
 
@@ -50,10 +55,6 @@
         </tr>
 
     </tbody>
-
-
-    @*<img style="width: 100%;height: 250px;object-fit: cover;" src="https://floralist.azurewebsites.net/Images/Raw/@item.Image.Id" alt="@item.Caption" />*@
-
 
 </table>
 
