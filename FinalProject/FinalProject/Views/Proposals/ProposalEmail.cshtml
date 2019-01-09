@@ -1,9 +1,5 @@
 ﻿@model FinalProject.Models.Proposal
 
-@*@{
-    ViewData["Title"] = "Proposal";
-}*@
-
 @{ 
     Layout = null;
 }
@@ -22,7 +18,7 @@
             {
                 <div class="col-sm-3">
                     <div class="card">
-                        <img id="img-card" src="/Images/Raw/@item.Image.Id" alt="@item.Caption" />
+                        <img id="img-card" src="https://floralist.azurewebsites.net/Images/Raw/@item.Image.Id" alt="@item.Caption" />
                         <div class="card-body">
                             <p class="card-text">@item.Caption</p>
                         </div>
