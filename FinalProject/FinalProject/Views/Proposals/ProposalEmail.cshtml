@@ -20,7 +20,7 @@
     <thead>
         <tr>
 
-            <th style="background-color:lightgrey;font-family:Arial, Helvetica, sans-serif;text-align:center; border-radius:10px; height:200px;">
+            <th style="background-color:lightgrey;font-family:Arial, Helvetica, sans-serif;text-align:center; border-radius:10px; height:200px; width">
                 <h1 class="display-4 text-center">@Model.Title</h1>
                 <p class="lead text-center">@Model.Description</p>
             </th>
@@ -31,17 +31,18 @@
         <tr>
             <td>
                 <table>
-                    @for (int i = 0; i < Model.ProposalItems.Count; i++)
+                    @foreach (var item in Model.ProposalItems)
                     {
                     <tr>
 
-                        @for (int ii = 0; ii < 4; ii++)
+                        @for (int i = 0; i < 4; i++)
                         {
                             @*<td style="width: 250px;height: 250px; margin:0 5px 5px 5px;object-fit: cover;background-color:blue;"></td>*@
                             <td>
 
-                                <img style="width: 250px;height: 250px; margin:0 5px 5px 5px;object-fit: cover;" src="https://floralist.azurewebsites.net/Images/Raw/@Model.ProposalItems[i].Image.Id" alt="@Model.ProposalItems[i].Caption" />
-                                <p style="width: 250px;height:100%; margin:0 5px 5px 5px">@Model.ProposalItems[i].Caption</p>
+                                <img style="width: 250px;height: 250px; margin:0 5px 5px 5px;object-fit: cover;" src="https://floralist.azurewebsites.net/Images/Raw/@item.Image.Id" alt="@item.Caption" />
+                                
+                                <p style="width: 250px;height:100%; margin:0 5px 5px 5px">@item.Caption</p>
                             </td>
 
                         }
