@@ -1,6 +1,7 @@
 ﻿@model FinalProject.Models.Proposal
 
 @{
+    int i = 1;
     Layout = null;
 }
 
@@ -33,29 +34,32 @@
                 <table>
                     @foreach (var item in Model.ProposalItems)
                     {
-                    <tr>
+                        <tr>
+                            @while (i <= Model.ProposalItems.Count && i % 5 != 0)
+                            {
+                                <td>
 
-                        @for (int i = 0; i < 4; i++)
-                        {
-                            @*<td style="width: 250px;height: 250px; margin:0 5px 5px 5px;object-fit: cover;background-color:blue;"></td>*@
-                            <td>
+                                    <img style="width: 250px;height: 250px; margin:0 5px 5px 5px;object-fit: cover;" src="https://floralist.azurewebsites.net/Images/Raw/@item.Image.Id" alt="@item.Caption" />
+                                    <p style="width: 250px;height:100%; margin:0 5px 5px 5px">@item.Caption</p>
+                                </td>
+                                i++;
+                            }
+                        </tr>
+                            @while (i <= Model.ProposalItems.Count && i % 5 == 0)
+                            {
+                                <tr>
+                                    <td>
 
-                                <img style="width: 250px;height: 250px; margin:0 5px 5px 5px;object-fit: cover;" src="https://floralist.azurewebsites.net/Images/Raw/@item.Image.Id" alt="@item.Caption" />
-                                
-                                <p style="width: 250px;height:100%; margin:0 5px 5px 5px">@item.Caption</p>
-                            </td>
-
-                        }
-                    </tr>
-
+                                        <img style="width: 250px;height: 250px; margin:0 5px 5px 5px;object-fit: cover;" src="https://floralist.azurewebsites.net/Images/Raw/@item.Image.Id" alt="@item.Caption" />
+                                        <p style="width: 250px;height:100%; margin:0 5px 5px 5px">@item.Caption</p>
+                                    </td>
+                                </tr>
+                                i++;
+                            }
                     }
-
-
                 </table>
             </td>
         </tr>
-
     </tbody>
-
 </table>
 
