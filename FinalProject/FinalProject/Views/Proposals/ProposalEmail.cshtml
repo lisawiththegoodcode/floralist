@@ -21,7 +21,7 @@
     <thead>
         <tr>
 
-            <th style="background-color:lightgrey;font-family:Arial, Helvetica, sans-serif;text-align:center; border-radius:10px; height:200px; width:760px;margin-right:5px;">
+            <th style="background-color:lightgrey;font-family:Arial, Helvetica, sans-serif;text-align:center; border-radius:10px; height:200px; width:760px;">
                 <h1 class="display-4 text-center">@Model.Title</h1>
                 <p class="lead text-center">@Model.Description</p>
             </th>
@@ -40,8 +40,8 @@
                                 @while (i < Model.ProposalItems.Count)
                                 {
                                     <td>
-                                        <img style="width: 250px;height: 250px;object-fit: cover;margin-right:5px;" src="https://floralist.azurewebsites.net/Images/Raw/@item.Image.Id" alt="@item.Caption" />
-                                        <p style="width: 250px;height:100%;margin-right:5px;">@item.Caption</p>
+                                        <img style="width: 250px;height: 250px;object-fit: cover;" src="https://floralist.azurewebsites.net/Images/Raw/@item.Image.Id" alt="@item.Caption" />
+                                        <p style="width: 250px;height:100%;">@item.Caption</p>
                                     </td>
 
                                     i++;
