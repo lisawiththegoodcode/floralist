@@ -21,7 +21,7 @@
     <thead>
         <tr>
 
-            <th style="background-color:lightgrey;font-family:Arial, Helvetica, sans-serif;text-align:center; border-radius:10px; height:200px; width">
+            <th style="background-color:lightgrey;font-family:Arial, Helvetica, sans-serif;text-align:center; border-radius:10px; height:200px; width:775px;">
                 <h1 class="display-4 text-center">@Model.Title</h1>
                 <p class="lead text-center">@Model.Description</p>
             </th>
@@ -35,7 +35,7 @@
                     @foreach (var item in Model.ProposalItems)
                     {
                         <tr>
-                            @while (i <= Model.ProposalItems.Count && i % 5 != 0)
+                            @while (i <= Model.ProposalItems.Count && i % 4 != 0)
                             {
                                 <td>
 
@@ -45,7 +45,7 @@
                                 i++;
                             }
                         </tr>
-                            @while (i <= Model.ProposalItems.Count && i % 5 == 0)
+                            @while (i <= Model.ProposalItems.Count && i % 4 == 0)
                             {
                                 <tr>
                                     <td>
