@@ -40,6 +40,7 @@ namespace FinalProject.Services
         Task DeleteImageAsync(int id);
         Task<List<Image>> GetImagesForDesignerAsync(string userId);
         List<Image> GetImagesForDesigner(string userId);
+        Image GetImageById(int imageId);
 
 
         Task CreateImageTagsAsync(int imageId, int tagId);

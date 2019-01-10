@@ -5,50 +5,212 @@
     ViewData["Title"] = "AddTags";
 }
 
-<h2>Add Tag</h2>
+<div id="flex-container-col">
+    <h3>Add Tags to Image</h3>
+    <a id=salmon-btn-sm asp-action="Index">Done</a>
+</div>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-controller="Images" asp-action="AddTags" asp-route-imageId="Model.ImageId" asp-route-tagId="Model.TagId">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            
-            @foreach (var item in Model.Types)
-            {
+
+<table>
+    <tr>
+        <td>
+            <img src="/Images/Raw/@Model.ImageId" id="img-sq" />
+        </td>
+        <td>
+            <div id="tag-container">
+
+                @foreach (var item in Model.ImageTags)
+                {
+                    <p>@Html.DisplayFor(modelItem => item.Tag)</p>
+                }
+            </div>
+        </td>
+    </tr>
+</table>
+<hr />
+
+
+@*<div class="row">
+        <div class="col-md-4">
+            <form asp-controller="Images" asp-action="AddTags" asp-route-imageId="Model.ImageId" asp-route-tagId="Model.TagId">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                @foreach (var item in Model.Types)
+                {
+                    <div class="form-group">
+                        <label class="control-label">@item</label>
+                        <select asp-for="TagId" asp-items="@Model.Tags.Where(x => x.Type == item).Select(x => new SelectListItem(x.Name, x.Id.ToString())).OrderBy(x => x.Text)" class="form-control"></select>
+                        <span asp-validation-for="TagId" class="text-danger"></span>
+                    </div>
+                }
+
                 <div class="form-group">
-                    <label class="control-label">@item</label>
-                    <select asp-for="TagId" asp-items="@Model.Tags.Where(x => x.Type == item).Select(x => new SelectListItem(x.Name, x.Id.ToString())).OrderBy(x => x.Text)" class="form-control"></select>
-                    <span asp-validation-for="TagId" class="text-danger"></span>
+                    <input type="hidden" asp-for="ImageId" />
+                    <input type="hidden" asp-for="TagId" />
+                    <input type="submit" value="Save" class="btn btn-default" />
+                    OR
+                    <button class="btn btn-default">
+                        @Html.ActionLink("Add New Tag", "AddNewTag", "Images", new { imageId = Model.ImageId })
+                    </button>
                 </div>
-            }
-          
-            <div class="form-group">
-                <input type="hidden" asp-for="ImageId" />
-                <input type="hidden" asp-for="TagId" />
-                <input type="submit" value="Save" class="btn btn-default" />
-                OR
+            </form>
+        </div>
+
+        @*<form as-controller="Images" asp-action="AddTags" asp-route-imageId="Model.ImageId" asp-route-tags="Model.Tags" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            //select tag from a dropdown list
+            //click add
+            //image tag gets created
+            //image tag gets added to image list of image tags
+
+
+            </form>//this needs to be commented out
+    </div>*@
+
+
+<div id="accordion" class="row">
+    <div class="card col-md-2">
+        <div class="card-header" id="headingOne">
+            <h5 class="mb-0">
+                <button class="btn btn-default" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    Color
+                </button>
+            </h5>
+        </div>
+
+
+        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+            <div class="card-body">
+                @foreach (var tag in Model.Tags.OrderByDescending(x => x.Name).Reverse())
+                {
+                    @if (tag.Type.ToLower() == "color")
+                    {
+                        <form asp-controller="Images" asp-action="AddTags" asp-route-imageId="Model.ImageId" asp-route-tagId="tag.TagId">
+                            <div class="form-group">
+                                <input type="hidden" asp-for="@Model.ImageId" />
+                                <input type="hidden" asp-for="@tag.Id" />
+                                <button type="submit" formmethod="post">
+                                    @Html.DisplayFor(modelItem => tag)
+
+                                    @*=                       <input asp-for="tag.Id" type="submit" value="+" class="add-btn" />*@
+                                    @*<button id="add-btn" type="submit">
+                                            @Html.ActionLink("+", "AddTags", "Images", new { imageId = Model.ImageId, tagId = Model.TagId })
+                                        </button>*@
+                                </button>
+
+                            </div>
+                        </form>
+                    }
+
+                }
+            </div>
+        </div>
+    </div>
+    <div class="card col-md-2">
+        <div class="card-header" id="headingTwo">
+            <h5 class="mb-0">
+                <button class="btn btn-default collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    Price
+                </button>
+            </h5>
+        </div>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+            <div class="card-body">
+                @foreach (var tag in Model.Tags)
+                {
+                    @if (tag.Type.ToLower() == "price")
+                    {
+                        <p>@Html.DisplayFor(modelItem => tag)  <a id="add-btn" asp-action="Delete" asp-route-id="@tag.Id">+</a></p>
+
+                    }
+
+                }
+            </div>
+        </div>
+    </div>
+    <div class="card col-md-2">
+        <div class="card-header" id="headingThree">
+            <h5 class="mb-0">
+                <button class="btn btn-default collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    Season
+                </button>
+            </h5>
+        </div>
+        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+            <div class="card-body">
+                @foreach (var tag in Model.Tags)
+                {
+                    @if (tag.Type.ToLower() == "season")
+                    {
+                        <p>@Html.DisplayFor(modelItem => tag)  <a id="add-btn" asp-action="Delete" asp-route-id="@tag.Id">+</a></p>
+
+                    }
+
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="card col-md-2">
+        <div class="card-header" id="headingFour">
+            <h5 class="mb-0">
+                <button class="btn btn-default collapsed" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                    Keyword
+                </button>
+            </h5>
+        </div>
+        <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
+            <div class="card-body">
+                @foreach (var tag in Model.Tags)
+                {
+                    @if (tag.Type.ToLower() == "keyword")
+                    {
+                        <p>@Html.DisplayFor(modelItem => tag)  <a id="add-btn" asp-action="Delete" asp-route-id="@tag.Id">+</a></p>
+
+                    }
+
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="card col-md-2">
+        <div class="card-header" id="headingFive">
+            <h5 class="mb-0">
+                <button class="btn btn-default collapsed" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                    Other
+                </button>
+            </h5>
+        </div>
+        <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordion">
+            <div class="card-body">
+                @foreach (var tag in Model.Tags)
+                {
+                    @if (!(tag.Type.ToLower() == "keyword" || tag.Type.ToLower() == "season" || tag.Type.ToLower() == "color" || tag.Type.ToLower() == "price"))
+                    {
+                        <p>@Html.DisplayFor(modelItem => tag)  <a id="add-btn" asp-action="Delete" asp-route-id="@tag.Id">+</a></p>
+
+                    }
+
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="card col-md-2">
+        <div class="card-header">
+            <h5 class="mb-0">
                 <button class="btn btn-default">
                     @Html.ActionLink("Add New Tag", "AddNewTag", "Images", new { imageId = Model.ImageId })
                 </button>
-            </div>
-        </form>
+            </h5>
+        </div>
     </div>
-
-    @*<form as-controller="Images" asp-action="AddTags" asp-route-imageId="Model.ImageId" asp-route-tags="Model.Tags" method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        //select tag from a dropdown list
-        //click add
-        //image tag gets created
-        //image tag gets added to image list of image tags
-
-
-        </form>*@
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }
 

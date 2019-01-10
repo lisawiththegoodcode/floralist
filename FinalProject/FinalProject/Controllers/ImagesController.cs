@@ -32,6 +32,7 @@ namespace FinalProject.Controllers
             var vm = new TagSearch
             {
                 ImageId = imageId,
+                ImageTags = _repository.GetImageById(imageId).ImageTags,
                 Tags = _repository.Tags.ToList(),
                 Types = _repository.Tags.Select(x => x.Type).Distinct().ToList()
             };

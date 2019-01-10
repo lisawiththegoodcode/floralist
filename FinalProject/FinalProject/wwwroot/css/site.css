@@ -46,6 +46,23 @@ body {
     flex-direction: row;
 }
 
+#flex-container-col {
+    display: flex;
+    flex-direction: column;
+}
+
+
+#tag-container {
+    display: flex;
+    flex-direction: column;
+    height: 250px;
+    flex-wrap: wrap;
+}
+
+#tag-container>p {
+    margin-left: 10px;
+}
+
 #nav-style:hover {
     color:salmon;
     text-decoration: none;
@@ -86,6 +103,11 @@ a#remove-btn{
 
 }
 
+a#add-btn {
+    color: forestgreen;
+    font-size: 16px;
+}
+
 #tag {
     color: slategray;
     text-shadow: 1px;
@@ -118,6 +140,31 @@ a#remove-btn{
     transition: color 0.5s ease;
     color: black;
 }
+
+#salmon-btn-sm {
+    width: 200px;
+    font-size: 14px;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin: 0;
+    outline: 0;
+    cursor: pointer;
+    letter-spacing: 1px;
+    background-color: salmon;
+    border: none;
+    color: #FFFFFF;
+    padding: 10px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 20px;
+}
+
+    #salmon-btn-sm:hover {
+        background-color: salmon;
+        transition: color 0.5s ease;
+        color: black;
+    }
 #search-bar{
     display: flex;
     flex-direction: row;
