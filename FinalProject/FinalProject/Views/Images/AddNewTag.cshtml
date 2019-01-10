@@ -4,9 +4,8 @@
     ViewData["Title"] = "AddNewTag";
 }
 
-<h2>AddNewTag</h2>
+<h3>Add New Tag</h3>
 
-<h4>Tag</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -24,13 +23,13 @@
                 <span asp-validation-for="@Model.Tag.Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Create" id="salmon-btn-sm" />
             </div>
         </form>
     </div>
 </div>
-
+<hr />
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Back to Image Library</a>
 </div>
 

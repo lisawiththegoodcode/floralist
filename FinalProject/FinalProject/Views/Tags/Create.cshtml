@@ -3,7 +3,8 @@
 @{
     ViewData["Title"] = "Create New Tag";
 }
-<h4>Tag</h4>
+<h3>Create Tag</h3>
+
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -20,13 +21,14 @@
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Create" id="salmon-btn-sm" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <hr />
+    <a class="btn btn-link" asp-action="Index">Back to List</a>
 </div>
 

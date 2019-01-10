@@ -46,6 +46,24 @@ body {
     flex-direction: row;
 }
 
+#caption-style{
+    width: 250px;
+
+}
+
+#img-lib-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+#img-container{
+    display:flex;
+    flex-direction:column;
+    align-items: center;
+    margin: 5px;
+}
+
 #flex-container-col {
     display: flex;
     flex-direction: column;
@@ -55,17 +73,34 @@ body {
 #tag-container {
     display: flex;
     flex-direction: column;
-    height: 250px;
+    height: 270px;
     flex-wrap: wrap;
 }
 
 #tag-container>p {
-    margin-left: 10px;
+    margin: 1px 10px;
+}
+
+#nav-color {
+    border-color: #8C8C8C;
+    background-color: #8C8C8C;
+}
+
+#nav-style{
+    color: white;
 }
 
 #nav-style:hover {
-    color:salmon;
     text-decoration: none;
+    transition: color 0.5s ease; 
+    color: salmon;
+}
+
+#img-nav {
+    display: block;
+    position: absolute;
+    top:0;
+    max-height:50px;
 }
 
 /*#accordion {
@@ -99,13 +134,18 @@ body {
 
 a#remove-btn{
     color: red;
-    font-size: 11px;
+    font-size: 15px;
+    padding: 2px;
 
 }
 
-a#add-btn {
+#add-btn {
     color: forestgreen;
-    font-size: 16px;
+    font-size: 15px;
+    border: none;
+    padding: 2px;
+    background-color: transparent;
+    cursor: pointer;
 }
 
 #tag {
@@ -113,7 +153,6 @@ a#add-btn {
     text-shadow: 1px;
     font-weight: bold;
     border-color: #9d9d9d;
-    cursor: default;
 }
 
 #salmon-btn {
@@ -142,8 +181,8 @@ a#add-btn {
 }
 
 #salmon-btn-sm {
-    width: 200px;
-    font-size: 14px;
+    width: 115px;
+    font-size: 12px;
     text-transform: uppercase;
     font-weight: 500;
     margin: 0;

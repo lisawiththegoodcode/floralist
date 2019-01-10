@@ -5,19 +5,20 @@
 
     ViewData["Title"] = "Tags";
 }
-<h4>Manage Tags</h4>
+
+<h3>Manage Tags</h3>
 <p>
-    <a asp-action="Create">Create New</a>
+    <a id="salmon-btn-sm" asp-action="Create">Create New</a>
 </p>
 <hr />
 
-<h5>Types</h5>
+<h5><strong>Tags</strong></h5>
 
 <div id="accordion" class="row">
     <div class="card col-md-2">
         <div class="card-header" id="headingOne">
             <h5 class="mb-0">
-                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                <button class="btn btn-default" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                     Color
                 </button>
             </h5>
@@ -40,7 +41,7 @@
     <div class="card col-md-2">
         <div class="card-header" id="headingTwo">
             <h5 class="mb-0">
-                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                <button class="btn btn-default collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                     Price
                 </button>
             </h5>
@@ -62,7 +63,7 @@
     <div class="card col-md-2">
         <div class="card-header" id="headingThree">
             <h5 class="mb-0">
-                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                <button class="btn btn-default collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
                     Season
                 </button>
             </h5>
@@ -85,7 +86,7 @@
     <div class="card col-md-2">
         <div class="card-header" id="headingFour">
             <h5 class="mb-0">
-                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                <button class="btn btn-default btn-default" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
                     Keyword
                 </button>
             </h5>
@@ -104,20 +105,51 @@
             </div>
         </div>
     </div>
-  
-        @foreach (var type in types)
+
+    <div class="card col-md-2">
+        <div class="card-header" id="headingFive">
+            <h5 class="mb-0">
+                <button class="btn btn-default collapsed" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                    Other
+                </button>
+            </h5>
+        </div>
+        <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordion">
+            <div class="card-body">
+                @foreach (var type in types)
+                {
+                    @if (!(type.ToLower() == "keyword" || type.ToLower() == "season" || type.ToLower() == "color" || type.ToLower() == "price"))
+                    {
+                        @foreach (var tag in Model)
+                        {
+                            @if (tag.Type == type)
+                            {
+                                <p>@Html.DisplayFor(modelItem => tag)  <a id="remove-btn" asp-action="Delete" asp-route-id="@tag.Id">x</a></p>
+
+                            }
+
+                        }
+
+                    }
+
+                }
+            </div>
+        </div>
+    </div>
+
+    @*@foreach (var type in types)
         {
-            @if(!(type.ToLower() == "color" || type.ToLower() == "keyword" || type.ToLower() == "season" || type.ToLower() == "price"))
+            @if (!(type.ToLower() == "color" || type.ToLower() == "keyword" || type.ToLower() == "season" || type.ToLower() == "price"))
             {
-            <div class="card col-md-2">
-                <div class="card-header" id="heading-@type.Replace(" ", "")">
-                    <h5 class="mb-0">
+                <div class="card col-md-2">
+                    <div class="card-header" id="heading-@type.Replace(" ", "")">
+                        <h5 class="mb-0">
                             <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse-@type.Replace(" ", "")" aria-expanded="false" aria-controls="collapse-@type.Replace(" ", "")">
                                 @type
                             </button>
-                    </h5>
-                </div>
-                <div id="collapse-@type.Replace(" ", "")" class="collapse" aria-labelledby="heading-@type.Replace(" ", "")" data-parent="#accordion">
+                        </h5>
+                    </div>
+                    <div id="collapse-@type.Replace(" ", "")" class="collapse" aria-labelledby="heading-@type.Replace(" ", "")" data-parent="#accordion">
                         <div class="card-body">
 
                             @foreach (var tag in Model)
@@ -131,9 +163,9 @@
                             }
 
                         </div>
-                </div>
+                    </div>
 
-            </div>
+                </div>
             }
-        }
+        }*@
 </div>

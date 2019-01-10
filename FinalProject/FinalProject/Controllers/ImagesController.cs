@@ -45,16 +45,23 @@ namespace FinalProject.Controllers
         public async Task<IActionResult> AddTags(int imageId, int tagId)
         {
             await _repository.CreateImageTagsAsync(imageId, tagId);
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("AddTags", new { imageId = imageId });
         }
 
         [HttpGet]
-        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> RemoveTag(int imageId, int tagId)
         {
             await _repository.DeleteImageTagAsync(imageId, tagId);
             return RedirectToAction(nameof(Index));
         }
+
+        [HttpGet]
+        public async Task<IActionResult> RemoveTagFromAddTags(int imageId, int tagId)
+        {
+            await _repository.DeleteImageTagAsync(imageId, tagId);
+            return RedirectToAction("AddTags", new { imageId = imageId });
+        }
+
         // GET: Images
         public async Task<IActionResult> Index()
         {
