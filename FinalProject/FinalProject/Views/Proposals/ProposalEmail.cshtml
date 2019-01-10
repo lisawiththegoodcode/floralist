@@ -1,7 +1,7 @@
 ﻿@model FinalProject.Models.Proposal
 
 @{
-    int i = 1;
+    int i = 0;
     Layout = null;
 }
 
@@ -9,7 +9,7 @@
     Hello @Model.Customer.Name!
 </p>
 <p>
-    It was nice meeting you and learning about your beautiful vision for this  special event. I'm excited for the opportunity to being a part of it! Please let me know what feedback you have for me once you get the chance to review the below proposal. 
+    It was very nice meeting you and learning about your beautiful vision for your special event. I'm excited about the opportunity to bring it to life. Please let me know what feedback you have for me once you've reviewed the below proposal. 
 </p>
 <p>
     Thanks,
@@ -34,28 +34,26 @@
                 <table>
                     @foreach (var item in Model.ProposalItems)
                     {
-                        <tr>
-                            @while (i <= Model.ProposalItems.Count && i % 4 != 0)
-                            {
-                                <td>
-
-                                    <img style="width: 250px;height: 250px; margin:0 5px 5px 5px;object-fit: cover;" src="https://floralist.azurewebsites.net/Images/Raw/@item.Image.Id" alt="@item.Caption" />
-                                    <p style="width: 250px;height:100%; margin:0 5px 5px 5px">@item.Caption</p>
-                                </td>
-                                i++;
-                            }
-                        </tr>
-                            @while (i <= Model.ProposalItems.Count && i % 4 == 0)
-                            {
-                                <tr>
+                        @while(i < Model.ProposalItems.Count && i % 3==0)
+                        {
+                            <tr>
+                                @while (i < Model.ProposalItems.Count)
+                                {
                                     <td>
 
                                         <img style="width: 250px;height: 250px; margin:0 5px 5px 5px;object-fit: cover;" src="https://floralist.azurewebsites.net/Images/Raw/@item.Image.Id" alt="@item.Caption" />
-                                        <p style="width: 250px;height:100%; margin:0 5px 5px 5px">@item.Caption</p>
+                                        <p style="width: 250px;height:100%; margin:10px 5px 0 5px">@item.Caption</p>
                                     </td>
-                                </tr>
-                                i++;
-                            }
+
+                                    i++;
+
+                                    if(i%3==0)
+                                    {
+                                        break;
+                                    }
+                                }
+                            </tr>
+                        }
                     }
                 </table>
             </td>
