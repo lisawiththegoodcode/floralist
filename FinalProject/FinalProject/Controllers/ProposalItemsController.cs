@@ -9,9 +9,11 @@ using FinalProject.Data;
 using FinalProject.Models;
 using FinalProject.ViewModels;
 using FinalProject.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FinalProject.Controllers
 {
+    [Authorize]
     public class ProposalItemsController : Controller
     {
         private readonly IRepository _repository;

@@ -19,6 +19,11 @@ namespace FinalProject.Services
         Task AddDesignerAsync(Designer designer);
         int GetDesignerIdForUserId(string userId);
 
+        Task AddProposalItemAsync(int proposalId, ProposalItem proposalItem);
+        Task<ProposalItem> GetProposalItemAsync(int? id);
+        Task DeleteProposalItemAsync(int id);
+
+        
         Task AddProposalAsync(Proposal proposal);
         Task<Proposal> GetProposalAsync(int? id);
         Task UpdateProposalAsync(int id, Proposal proposal);
@@ -26,17 +31,23 @@ namespace FinalProject.Services
         Task DeleteProposalAsync(int id);
         List<ProposalItem> GetProposalItemsForProposal(int id);
         Task<List<Proposal>> GetProposalsForDesignerAsync(string userId);
+        List<Proposal> GetProposalsForDesigner(string userId);
+        List<Proposal> GetProposalsInProgressForDesigner(string userId);
+
 
         Task AddImageAsync(Image image);
         Task DeleteImageAsync(int id);
         Task<List<Image>> GetImagesForDesignerAsync(string userId);
+        List<Image> GetImagesForDesigner(string userId);
+
 
         Task CreateImageTagsAsync(int imageId, int tagId);
+        Task DeleteImageTagAsync(int imageId, int tagId);
         Task AddTagAsync(Tag tag);
         Task DeleteTagAsync(int id);
 
-        Task AddProposalItemAsync(int proposalId, ProposalItem newProposalItem);
-        Task DeleteProposalItemAsync(int id);
-        Task<ProposalItem> GetProposalItemAsync(int? id);
+
+        
+
     }
 }

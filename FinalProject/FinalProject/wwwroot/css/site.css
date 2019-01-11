@@ -59,6 +59,18 @@ body {
     text-align: center;
 }
 
+a#remove-btn{
+    color: red;
+    font-size: 11px;
+
+}
+
+#tag {
+    color: #9d9d9d;
+    border-color: #9d9d9d;
+    cursor: default;
+}
+
 /* Hide/rearrange for smaller screens */
 @media screen and (max-width: 767px) {
     /* Hide captions */

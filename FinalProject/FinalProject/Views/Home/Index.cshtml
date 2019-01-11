@@ -29,22 +29,22 @@
 <hr />
 
 <div class="row">
-    <div class="col-md-4" id="dash-card">
-        <h2 id="text-dash">@Model.Proposals.Count() Proposals In Progess</h2>
+    <div class="col-md-6" id="dash-card">
+        <h2 id="text-dash">@Model.ProposalsInProgress.Count() @(Model.ProposalsInProgress.Count() == 1 ? "Proposal" : "Proposals") In Progress</h2>
         <a class="btn btn-default" asp-action="Index" asp-controller="Proposals">
             Complete Proposals
         </a>
     </div>
-    <div class="col-md-4" id="dash-card">
-        <h2 id="text-dash">@Model.Images.Count() Images</h2>
+    <div class="col-md-6" id="dash-card">
+        <h2 id="text-dash">@Model.Images.Count() @(Model.Images.Count()==1? "Image" : "Images") in Image Library</h2>
         <a class="btn btn-default" asp-action="Index" asp-controller="Images" >
-            Upload Images
+            Manage Images
         </a>
     </div>
-    <div class="col-md-4" id="dash-card">
-        <h2 id="text-dash">@Model.Customers.Count() Customers</h2>
+    @*<div class="col-md-4" id="dash-card">
+        <h2 id="text-dash">@Model.Customers.Count() @(Model.Customers.Count() == 1 ? "Customer" : "Customers") in Customer Directory</h2>
         <a class="btn btn-default" asp-action="Index" asp-controller="Customers">
             Manage Customers
         </a>
-    </div>
+    </div>*@
 </div>

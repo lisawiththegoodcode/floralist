@@ -9,9 +9,14 @@ using System.Threading.Tasks;
 
 namespace FinalProject.Services
 {
-    public class EmailSender
+    public class EmailSender 
     {
         private IFluentEmail _email;
+
+        public EmailSender()
+        {
+
+        }
 
         public EmailSender([FromServices]IFluentEmail email)
         {
@@ -30,9 +35,9 @@ namespace FinalProject.Services
               
                 .SetFrom(proposal.Designer.Email)
                 .To(proposal.Customer.Email)
-                .Subject($"Your Floral Design Proposal from {proposal.Designer.Name} is Ready! 💐")
-                .Body($"Hi {proposal.Customer.Name}!");
-            //.UsingTemplateFromFile($"{Directory.GetCurrentDirectory()}/Views/Proposals/ProposalEmail.cshtml", proposal);
+                .Subject($"Floral Design Proposal for {proposal.Title} 💐")
+                //.Body($"Hi {proposal.Customer.Name}!");
+                .UsingTemplateFromFile($"{Directory.GetCurrentDirectory()}/Views/Proposals/ProposalEmail.cshtml", proposal);
 
 
             email.Send();

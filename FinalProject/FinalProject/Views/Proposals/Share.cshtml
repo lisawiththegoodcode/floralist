@@ -13,11 +13,17 @@
 <hr />
 
 <div class="container">
-
-    <h4>Are you sure you want to @(Model.IsShared ? "unshare" : "share") this proposal with @Model.Customer.Name?</h4>
+    @if (Model.IsShared)
+    {
+        <h4>This proposal has been previously sent to @Model.Customer.Email. Would you like to email again?</h4>
+    }
+    else
+    {
+        <h4>Are you sure you want to send this proposal to @Model.Customer.Email?</h4>
+    }
     <form asp-action="Share">
         <input type="hidden" asp-for="Id" />
-        <input type="submit" value="@(Model.IsShared ? "Unshare" : "Share")" class="btn btn-default" />
+        <input type="submit" value="@(Model.IsShared? "Send Again" : "Send Email")" class="btn btn-default" />
     </form>
     <hr />
 
@@ -31,17 +37,17 @@
     @*<div class="container">*@
     <div class="row">
         @foreach (var item in Model.ProposalItems)
-                {
-        <div class="col-sm-3">
-            <div class="card">
-                <img id="img-sq" src="/Images/Raw/@item.Image.Id" alt="@item.Caption" />
-                @*<img src="~/images/@Model.ProposalItems[i].Image.FileName" width=200 height=200 style="object-fit:cover" />*@
-                <div class="card-body">
-                    <p class="card-text">@item.Caption</p>
+        {
+            <div class="col-sm-3">
+                <div class="card">
+                    <img id="img-sq" src="/Images/Raw/@item.Image.Id" alt="@item.Caption" />
+                    @*<img src="~/images/@Model.ProposalItems[i].Image.FileName" width=200 height=200 style="object-fit:cover" />*@
+                    <div class="card-body">
+                        <p class="card-text">@item.Caption</p>
+                    </div>
                 </div>
             </div>
-        </div>
-                }
+        }
     </div>
     @*</div>*@
 </div>

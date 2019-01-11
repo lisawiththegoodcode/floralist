@@ -10,9 +10,11 @@ using FinalProject.Models;
 using FinalProject.Services;
 using FinalProject.ViewModels;
 using Shared.Web.MvcExtensions;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FinalProject.Controllers
 {
+    [Authorize]
     public class ProposalsController : Controller
     {
         private readonly IRepository _repository;
@@ -58,10 +60,10 @@ namespace FinalProject.Controllers
                 return NotFound();
             }
 
-            if (UserUnauthorizedToView(proposal.Designer.UserId))
-            {
-                return NotFound();
-            }
+            //if (UserUnauthorizedToView(proposal.Designer.UserId))
+            //{
+            //    return NotFound();
+            //}
 
             return View(proposal);
         }
@@ -79,10 +81,10 @@ namespace FinalProject.Controllers
             }
 
             proposal = await _repository.GetProposalAsync(id);
-            if (UserUnauthorizedToView(proposal.Designer.UserId))
-            {
-                return NotFound();
-            }
+            //if (UserUnauthorizedToView(proposal.Designer.UserId))
+            //{
+            //    return NotFound();
+            //}
 
             if (ModelState.IsValid)
             {
@@ -138,10 +140,10 @@ namespace FinalProject.Controllers
                 return NotFound();
             }
 
-            if (UserUnauthorizedToView(proposal.Designer.UserId))
-            {
-                return NotFound();
-            }
+            //if (UserUnauthorizedToView(proposal.Designer.UserId))
+            //{
+            //    return NotFound();
+            //}
 
             return View(proposal);
         }
@@ -184,10 +186,10 @@ namespace FinalProject.Controllers
                 return NotFound();
             }
 
-            if (UserUnauthorizedToView(proposal.Designer.UserId))
-            {
-                return NotFound();
-            }
+            //if (UserUnauthorizedToView(proposal.Designer.UserId))
+            //{
+            //    return NotFound();
+            //}
 
             return View(proposal);
         }
@@ -204,10 +206,10 @@ namespace FinalProject.Controllers
                 return NotFound();
             }
 
-            if (UserUnauthorizedToView(proposal.Designer.UserId))
-            {
-                return NotFound();
-            }
+            //if (UserUnauthorizedToView(proposal.Designer.UserId))
+            //{
+            //    return NotFound();
+            //}
 
             if (ModelState.IsValid)
             {
@@ -243,13 +245,14 @@ namespace FinalProject.Controllers
 
             if (proposal == null)
             {
+
                 return NotFound();
             }
 
-            if (UserUnauthorizedToView(proposal.Designer.UserId))
-            {
-                return NotFound();
-            }
+            //if (UserUnauthorizedToView(proposal.Designer.UserId))
+            //{
+            //    return NotFound();
+            //}
 
             return View(proposal);
         }

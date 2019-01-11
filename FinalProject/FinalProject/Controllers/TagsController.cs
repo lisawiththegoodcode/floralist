@@ -9,9 +9,11 @@ using FinalProject.Data;
 using FinalProject.Models;
 using FinalProject.Services;
 using FinalProject.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FinalProject.Controllers
 {
+    [Authorize]
     public class TagsController : Controller
     {
         private readonly IRepository _repository;

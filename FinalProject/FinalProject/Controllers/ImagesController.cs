@@ -16,9 +16,11 @@ using Microsoft.Net.Http.Headers;
 using Microsoft.Extensions.Primitives;
 using Shared.Web.MvcExtensions;
 using FinalProject.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FinalProject.Controllers
 {
+    [Authorize]
     public class ImagesController : Controller
     {
         private readonly IRepository _repository;
@@ -47,8 +49,15 @@ namespace FinalProject.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddTags(int imageId, int tagId)
         {
-
             await _repository.CreateImageTagsAsync(imageId, tagId);
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        //[ValidateAntiForgeryToken]
+        public async Task<IActionResult> RemoveTag(int imageId, int tagId)
+        {
+            await _repository.DeleteImageTagAsync(imageId, tagId);
             return RedirectToAction(nameof(Index));
         }
         // GET: Images
