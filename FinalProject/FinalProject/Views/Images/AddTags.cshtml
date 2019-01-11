@@ -6,7 +6,7 @@
 }
 
 <div id="flex-container-col">
-    <h4>Add Tags to Image</h4>
+    <h3>Add Tags</h3>
     <a id=salmon-btn-sm asp-action="Index">Done</a>
 </div>
 <hr />
@@ -67,7 +67,7 @@
         </div>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
             <div class="card-body">
-                @foreach (var tag in Model.Tags)
+                @foreach (var tag in Model.Tags.OrderByDescending(x => x.Name).Reverse())
                 {
                     @if (tag.Type.ToLower() == "price")
                     {
@@ -96,7 +96,7 @@
         </div>
         <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
             <div class="card-body">
-                @foreach (var tag in Model.Tags)
+                @foreach (var tag in Model.Tags.OrderByDescending(x => x.Name).Reverse())
                 {
                     @if (tag.Type.ToLower() == "season")
                     {
@@ -126,7 +126,7 @@
         </div>
         <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
             <div class="card-body">
-                @foreach (var tag in Model.Tags)
+                @foreach (var tag in Model.Tags.OrderByDescending(x => x.Name).Reverse())
                 {
                     @if (tag.Type.ToLower() == "keyword")
                     {

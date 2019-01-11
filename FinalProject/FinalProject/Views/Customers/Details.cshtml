@@ -6,6 +6,7 @@
 }
 
 <h3>Customer Details</h3>
+<a id=salmon-btn-sm asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
 <hr />
 <div>
     <dl class="dl-horizontal">
@@ -36,7 +37,6 @@
     </dl>
 </div>
 <div>
-    <a id=salmon-btn-sm asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
     <hr />
     <a class="btn btn-link" asp-action="Index">Back to List</a>
 </div>

@@ -108,9 +108,10 @@ body {
 }*/
 
 #img-card {
-    width: 100%;
+    width: 250px;
     height: 250px;
     object-fit: cover;
+    margin: 5px;
 }
 
 #img-carousel {

@@ -3,12 +3,11 @@
 
 @{
     var customerItems = repository.Customers.Select(x => new SelectListItem(x.Name, x.Id.ToString()));
-    var designerItems = repository.Designers.Select(x => new SelectListItem(x.Name, x.Id.ToString()));
 
     ViewData["Title"] = "Proposals";
 }
 
-<h4>Proposal</h4>
+<h3>Create Proposal</h3>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -26,26 +25,19 @@
             </div>
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
+                <textarea asp-for="Description" class="form-control"></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
-            @*<div class="form-group">
-                <label class="control-label">Images</label>
-                <br />
-                <a asp-controller="ProposalItemsController" asp-action="Create">Add New Image</a>*@
-            @*//HTML ACTION LINK VS ANCHOR WITH TAG HELPERS?
-            //TRIGGER ADD PROPOSAL ITEMS VIEW ON SUBMIT BUTTON BELOW? (RENAME NEXT?)*@
-
-
             <div class="form-group">
-                <input type="submit" value="Save & Add Images" class="btn btn-default" />
+                <input type="submit" value="Save" id="salmon-btn-sm" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <hr />
+    <a class="btn btn-link" asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {
