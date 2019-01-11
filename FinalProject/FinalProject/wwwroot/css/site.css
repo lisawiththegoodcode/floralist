@@ -36,7 +36,7 @@ body {
 .proposal-sq {
     width: 250px;
     height: 250px;
-    border: 1.5px solid #8C8C8C;
+    border: 2px solid #8C8C8C;
     border-radius: 25px;
     background-color:transparent;
     box-shadow: 0 0 .01em #8C8C8C;
@@ -46,10 +46,11 @@ body {
     flex-direction:column;
 }
 
-/*.proposal-sq:hover{
-    transition: color 6s ease;
-    color: salmon;
-}*/
+.proposal-sq>h3 {
+    width: 240px;
+    overflow: hidden;
+    text-overflow:ellipsis;
+}
 
 #prop-shared{
     border-color: seagreen;

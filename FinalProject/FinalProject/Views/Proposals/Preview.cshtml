@@ -28,7 +28,7 @@
                             <tr>
                                 @while (i < Model.ProposalItems.Count)
                                 {
-                                <td>
+                                <td valign="top">
                                     @*<img id="img-card" src="https://floralist.azurewebsites.net/Images/Raw/@Model.ProposalItems[i].Id" alt="@Model.ProposalItems[i].Caption" />*@
                                     <img id="img-card" src="~/Images/Raw/@Model.ProposalItems[i].Image.Id" alt="@Model.ProposalItems[i].Caption" />
                                     <p style="width: 250px;height:100%;">@Model.ProposalItems[i].Caption</p>

@@ -47,7 +47,7 @@
         </div>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
             <div class="card-body">
-                @foreach (var tag in Model)
+                @foreach (var tag in Model.OrderByDescending(x => x.Name).Reverse())
                 {
                     @if (tag.Type.ToLower() == "price")
                     {
@@ -90,7 +90,7 @@
         </div>
         <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
             <div class="card-body">
-                @foreach (var tag in Model)
+                @foreach (var tag in Model.OrderByDescending(x => x.Name).Reverse())
                 {
                     @if (tag.Type.ToLower() == "keyword")
                     {
@@ -116,7 +116,7 @@
                 {
                     @if (!(type.ToLower() == "keyword" || type.ToLower() == "season" || type.ToLower() == "color" || type.ToLower() == "price"))
                     {
-                        @foreach (var tag in Model)
+                        @foreach (var tag in Model.OrderByDescending(x => x.Name).Reverse())
                         {
                             @if (tag.Type == type)
                             {

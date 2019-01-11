@@ -32,7 +32,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
-                <textarea asp-for="Description" class="form-control"></textarea>
+                <textarea rows="3" asp-for="Description" class="form-control"></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
         </div>
@@ -44,7 +44,7 @@
                         <div id="img-add">
                             <img src="/Images/Raw/@Model.ProposalItems[i].Image.Id" id="img-sq" />
                             <p></p>
-                            <input placeholder="Caption" asp-for="@Model.ProposalItems[i].Caption" class="form-control" />
+                            <textarea rows="3" placeholder="Caption" asp-for="@Model.ProposalItems[i].Caption" class="form-control"></textarea>
                             <span asp-validation-for="@Model.ProposalItems[i].Caption" class="text-danger"></span>
                             <input type="hidden" asp-for="@Model.ProposalItems[i].Id" />
                             <input type="hidden" asp-for="@Model.ProposalItems[i].ProposalId" />
