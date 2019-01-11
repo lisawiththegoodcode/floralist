@@ -11,7 +11,7 @@ namespace FinalProject.ViewModels
         public int ImageId { get; set; }
         public int TagId { get; set; }
         public List<ImageTag> ImageTags { get; set; }
-        public Tag tag { get; set; }
+        public Tag Tag { get; set; }
         public IEnumerable<Tag> Tags { get; set; }
         public List<string> Types { get; set; }
 

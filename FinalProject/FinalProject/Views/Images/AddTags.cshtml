@@ -179,7 +179,7 @@
     <div class="card col-md-2">
         <div class="card-header">
             <h5 class="mb-0">
-                <a asp-controller="Images" asp-action="AddNewTag" asp-route-imageId="@Model.ImageId" id="tag-type" class="btn btn-default">
+                <a asp-controller="Images" asp-action="AddNewTag" asp-route-imageId="@Model.ImageId" asp-route-tag="@Model.Tag" id="tag-type" class="btn btn-default">
                     @*@Html.ActionLink("Add New Tag", "AddNewTag", "Images", new { imageId = Model.ImageId })*@
                     Add New Tag
                 </a>
