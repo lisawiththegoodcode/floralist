@@ -166,7 +166,7 @@ body {
     width: 100%;
     height: 399px;
     object-fit: cover;
-    background-color: salmon;
+    background-color: transparent;
     margin-bottom: 20px;
 }
 #dash-card{
