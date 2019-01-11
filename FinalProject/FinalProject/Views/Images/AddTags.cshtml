@@ -19,7 +19,7 @@
         <div id="tag-container">
             @foreach (var tag in Model.ImageTags)
             {
-                <p>@Html.DisplayFor(modelItem => tag.Tag)  <a id="remove-btn" asp-action="RemoveTagFromAddTags" asp-route-imageId="@Model.ImageId" asp-route-tagId="@tag.TagId">x</a></p>
+            <p><a id="remove-btn" asp-action="RemoveTagFromAddTags" asp-route-imageId="@Model.ImageId" asp-route-tagId="@tag.TagId">x</a>@Html.DisplayFor(modelItem => tag.Tag)</p>
             }
         </div>
     </div>
@@ -29,7 +29,7 @@
     <div class="card col-md-2">
         <div class="card-header" id="headingOne">
             <h5 class="mb-0">
-                <button class="btn btn-default" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                <button id="tag-type" class="btn btn-default" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                     Color
                 </button>
             </h5>
@@ -45,10 +45,10 @@
                         <form asp-controller="Images" asp-action="AddTags" asp-route-imageId="@Model.ImageId" asp-route-tagId="@tag.Id">
                             <div class="form-group">
                                 <input type="hidden" asp-for="@Model.ImageId" />
+                                <input type="submit" formmethod="post" value="+" id="add-btn" >
                                 <button id="add-btn" type="submit" formmethod="post">
                                     @Html.DisplayFor(modelItem => tag)
                                 </button>
-                                <input type="submit" formmethod="post" value="+" id="add-btn" >
                             </div>
                         </form>
                     }
@@ -60,7 +60,7 @@
     <div class="card col-md-2">
         <div class="card-header" id="headingTwo">
             <h5 class="mb-0">
-                <button class="btn btn-default collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                <button id="tag-type" class="btn btn-default collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                     Price
                 </button>
             </h5>
@@ -74,10 +74,10 @@
                         <form asp-controller="Images" asp-action="AddTags" asp-route-imageId="@Model.ImageId" asp-route-tagId="@tag.Id">
                             <div class="form-group">
                                 <input type="hidden" asp-for="@Model.ImageId" />
+                                <input type="submit" formmethod="post" value="+" id="add-btn">
                                 <button id="add-btn" type="submit" formmethod="post">
                                     @Html.DisplayFor(modelItem => tag)
                                 </button>
-                                <input type="submit" formmethod="post" value="+" id="add-btn">
                             </div>
                         </form>
                     }
@@ -89,7 +89,7 @@
     <div class="card col-md-2">
         <div class="card-header" id="headingThree">
             <h5 class="mb-0">
-                <button class="btn btn-default collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                <button id="tag-type" class="btn btn-default collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
                     Season
                 </button>
             </h5>
@@ -103,10 +103,10 @@
                         <form asp-controller="Images" asp-action="AddTags" asp-route-imageId="@Model.ImageId" asp-route-tagId="@tag.Id">
                             <div class="form-group">
                                 <input type="hidden" asp-for="@Model.ImageId" />
+                                <input type="submit" formmethod="post" value="+" id="add-btn">
                                 <button id="add-btn" type="submit" formmethod="post">
                                     @Html.DisplayFor(modelItem => tag)
                                 </button>
-                                <input type="submit" formmethod="post" value="+" id="add-btn">
                             </div>
                         </form>
                     }
@@ -119,7 +119,7 @@
     <div class="card col-md-2">
         <div class="card-header" id="headingFour">
             <h5 class="mb-0">
-                <button class="btn btn-default collapsed" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                <button id="tag-type" class="btn btn-default collapsed" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
                     Keyword
                 </button>
             </h5>
@@ -133,10 +133,10 @@
                         <form asp-controller="Images" asp-action="AddTags" asp-route-imageId="@Model.ImageId" asp-route-tagId="@tag.Id">
                             <div class="form-group">
                                 <input type="hidden" asp-for="@Model.ImageId" />
+                                <input type="submit" formmethod="post" value="+" id="add-btn">
                                 <button id="add-btn" type="submit" formmethod="post">
                                     @Html.DisplayFor(modelItem => tag)
                                 </button>
-                                <input type="submit" formmethod="post" value="+" id="add-btn">
                             </div>
                         </form>
                     }
@@ -149,7 +149,7 @@
     <div class="card col-md-2">
         <div class="card-header" id="headingFive">
             <h5 class="mb-0">
-                <button class="btn btn-default collapsed" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                <button id="tag-type" class="btn btn-default collapsed" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
                     Other
                 </button>
             </h5>
@@ -163,10 +163,10 @@
                         <form asp-controller="Images" asp-action="AddTags" asp-route-imageId="@Model.ImageId" asp-route-tagId="@tag.Id">
                             <div class="form-group">
                                 <input type="hidden" asp-for="@Model.ImageId" />
+                                <input type="submit" formmethod="post" value="+" id="add-btn">
                                 <button id="add-btn" type="submit" formmethod="post">
                                     @Html.DisplayFor(modelItem => tag)
                                 </button>
-                                <input type="submit" formmethod="post" value="+" id="add-btn">
                             </div>
                         </form>
                     }
@@ -179,9 +179,10 @@
     <div class="card col-md-2">
         <div class="card-header">
             <h5 class="mb-0">
-                <button class="btn btn-default">
-                    @Html.ActionLink("Add New Tag", "AddNewTag", "Images", new { imageId = Model.ImageId })
-                </button>
+                <a asp-controller="Images" asp-action="AddNewTag" asp-route-imageId="@Model.ImageId" id="tag-type" class="btn btn-default">
+                    @*@Html.ActionLink("Add New Tag", "AddNewTag", "Images", new { imageId = Model.ImageId })*@
+                    Add New Tag
+                </a>
             </h5>
         </div>
     </div>

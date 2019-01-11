@@ -49,8 +49,10 @@
                             <input type="hidden" asp-for="@Model.ProposalItems[i].Id" />
                             <input type="hidden" asp-for="@Model.ProposalItems[i].ProposalId" />
                             <input type="hidden" asp-for="@Model.ProposalItems[i].ImageId" />
+                        <div id="proposal-act">
+                            <a asp-controller="ProposalItems" asp-action="Delete" asp-route-id="@Model.ProposalItems[i].Id" asp-route-proposalId="@Model.Id">Delete from Proposal</a>
                         </div>
-                        <a id="remove-btn" asp-controller="ProposalItems" asp-action="Delete" asp-route-id="@Model.ProposalItems[i].Id" asp-route-proposalId="@Model.Id">x</a>
+                        </div>
                     </div>
                 }
                 </div>

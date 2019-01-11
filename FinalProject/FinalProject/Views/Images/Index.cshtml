@@ -25,7 +25,7 @@
             <div id="tag-container">
                 @foreach (var tag in item.ImageTags)
                 {
-                    <p>@Html.DisplayFor(modelItem => tag.Tag)  <a id="remove-btn" asp-action="RemoveTag" asp-route-imageId="@item.Id" asp-route-tagId="@tag.Tag.Id">x</a></p>
+                <p><a id="remove-btn" asp-action="RemoveTag" asp-route-imageId="@item.Id" asp-route-tagId="@tag.Tag.Id">x</a>@Html.DisplayFor(modelItem => tag.Tag) </p>
                 }
             </div>
         </div>
@@ -33,37 +33,3 @@
     </div>
     }
 </div>
-
-@*<table class="table">
-        <thead>
-            <tr>
-                <th>
-                    Image
-                </th>
-                <th>
-                    Tags
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        <img src="/Images/Raw/@item.Id" id="img-sq" />
-                    </td>
-                    <td>
-                        @foreach (var tag in item.ImageTags)
-                        {
-                            <p>@Html.DisplayFor(modelItem => tag.Tag)  <a id="remove-btn" asp-action="RemoveTag" asp-route-imageId="@item.Id" asp-route-tagId="@tag.Tag.Id">x</a></p>
-                        }
-                    </td>
-                    <td>
-                        <a asp-action="AddTags" asp-route-imageId="@item.Id">Add Tags</a> |
-                        <a asp-action="Delete" asp-route-id="@item.Id">Delete Image</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>*@

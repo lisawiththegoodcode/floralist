@@ -13,5 +13,4 @@
     }
 }
 
-<p class="btn" id="shared-btn" style="border:1.25px solid @color;color:@color;">@(Model.IsShared ? "Shared with Client" : "In Progress")</p>
-
+<h4 id="shared-btn" style="color:@color;">[@(Model.IsShared ? "Shared with Client" : "In Progress")]</h4>
