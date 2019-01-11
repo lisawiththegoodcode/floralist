@@ -1,0 +1,17 @@
+﻿@model FinalProject.Models.Proposal
+
+@{
+    string color = "";
+
+    if (Model.IsShared)
+    {
+        color = "darkseagreen";
+    }
+    else
+    {
+        color = "goldenrod";
+    }
+}
+
+<p class="btn" id="shared-btn" style="border:1.25px solid @color;color:@color;">@(Model.IsShared ? "Shared with Client" : "In Progress")</p>
+

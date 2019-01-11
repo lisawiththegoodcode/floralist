@@ -2,18 +2,20 @@
 @inject FinalProject.Services.IRepository repository
 
 @{
-    //I could use a view model here instead of injecting these lists
+    //I could use a view model here instead of injecting this
     var customerItems = repository.Customers.Select(x => new SelectListItem(x.Name, x.Id.ToString()));
-    var designerItems = repository.Designers.Select(x => new SelectListItem(x.Name, x.Id.ToString()));
 
     ViewData["Title"] = "Proposals";
 }
 
-<h4>Proposal</h4>
+<h3>Edit Proposal</h3>
+<p>
+    <a id="salmon-btn-sm" asp-action="ImageSearch" asp-route-proposalId="@Model.Id">Add Images</a>
+</p>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
+<form asp-action="Edit">
+    <div class="row">
+        <div class="col-md-4">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <input type="hidden" asp-for="DesignerId" />
@@ -30,71 +32,77 @@
             </div>
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
+                <textarea asp-for="Description" class="form-control"></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
+        </div>
+    </div>
+                <div id="img-lib-container">
+                @for (var i = 0; i < Model.ProposalItems.Count; i++)
+                {
+                    <div id="prop-item-container">
+                        <div id="img-add">
+                            <img src="/Images/Raw/@Model.ProposalItems[i].Image.Id" id="img-sq" />
+                            <p></p>
+                            <input placeholder="Caption" asp-for="@Model.ProposalItems[i].Caption" class="form-control" />
+                            <span asp-validation-for="@Model.ProposalItems[i].Caption" class="text-danger"></span>
+                            <input type="hidden" asp-for="@Model.ProposalItems[i].Id" />
+                            <input type="hidden" asp-for="@Model.ProposalItems[i].ProposalId" />
+                            <input type="hidden" asp-for="@Model.ProposalItems[i].ImageId" />
+                        </div>
+                        <a id="remove-btn" asp-controller="ProposalItems" asp-action="Delete" asp-route-id="@Model.ProposalItems[i].Id" asp-route-proposalId="@Model.Id">x</a>
+                    </div>
+                }
+                </div>
             <div class="form-group">
-                <label class="control-label">Images</label>
-                <p>
-                    @Html.ActionLink("Add Image", "ImageSearch", new { proposalId = Model.Id})
-                </p>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>
-                                Image
-                            </th>
-                            <th>
-                                Caption
-                            </th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @*@foreach (var item in Model.ProposalItems)*@
-                        @for (var i = 0; i < Model.ProposalItems.Count; i++)
-                        {
-                            <tr>
-                                <td>
-                                    <img src="/Images/Raw/@Model.ProposalItems[i].Image.Id" id="img-sq" />
-                                    @*<img src="~/images/@Model.ProposalItems[i].Image.FileName" width=200 height=200 style="object-fit:cover" />*@
-                                    @*@Html.DisplayFor(modelItem => item.Image.FileName)*@
-                                </td>
-                                <td>
-                                    @*<div class="form-group">*@
-                                    <label asp-for="@Model.ProposalItems[i].Caption" class="control-label"></label>
-                                    <input asp-for="@Model.ProposalItems[i].Caption" class="form-control" />
-                                    <span asp-validation-for="@Model.ProposalItems[i].Caption" class="text-danger"></span>
-                                    <input type="hidden" asp-for="@Model.ProposalItems[i].Id" />
-                                    <input type="hidden" asp-for="@Model.ProposalItems[i].ProposalId" />
-                                    <input type="hidden" asp-for="@Model.ProposalItems[i].ImageId" />
-
-                                    @*</div>*@
-                                    @*<input  value="@item.Caption" />*@
-                                    @*@Html.DisplayFor(modelItem => item.Caption)*@
-                                    @*@Html.TextBoxFor(X => Model.ProposalItems[i].Caption, new { @class="form-control" })*@
-                                </td>
-                                <td>
-                                    <a asp-action="Delete" asp-controller="ProposalItems" asp-route-id="@Model.ProposalItems[i].Id">Delete</a>
-
-                                    <!-- NOTE these don't work properly yet -->
-                                    @*@Html.ActionLink("Delete", "Delete", "ProposalItems", new { id = Model.ProposalItems[i].Id })*@
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
             </div>
-
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Save" id="salmon-btn-sm" />
             </div>
         </form>
-    </div>
-</div>
+    @*</div>
+</div>*@
+@*<div class="form-group">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Image
+                </th>
+                <th>
+                    Caption
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (var i = 0; i < Model.ProposalItems.Count; i++)
+            {
+                <tr>
+                    <td>
+                        <img src="/Images/Raw/@Model.ProposalItems[i].Image.Id" id="img-sq" />
+                    </td>
+                    <td>
+                        <label asp-for="@Model.ProposalItems[i].Caption" class="control-label"></label>
+                        <input asp-for="@Model.ProposalItems[i].Caption" class="form-control" />
+                        <span asp-validation-for="@Model.ProposalItems[i].Caption" class="text-danger"></span>
+                        <input type="hidden" asp-for="@Model.ProposalItems[i].Id" />
+                        <input type="hidden" asp-for="@Model.ProposalItems[i].ProposalId" />
+                        <input type="hidden" asp-for="@Model.ProposalItems[i].ImageId" />
+
+                    </td>
+                    <td>
+                        <a asp-action="Delete" asp-controller="ProposalItems" asp-route-id="@Model.ProposalItems[i].Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>*@
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <hr />
+    <a class="btn btn-link" asp-action="Index">Back to My Proposals</a>
 </div>
 
 @section Scripts {
