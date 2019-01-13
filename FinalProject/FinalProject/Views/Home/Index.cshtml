@@ -8,13 +8,8 @@
     <div class="carousel-inner" role="listbox">
         <div class="item active">
 
-            <img id="img-carousel" class="img-responsive" />
+            <img id="img-carousel" src="~/images/banner.jpg" class="img-responsive" />
 
-            <div class="carousel-caption" role="option">
-                <p>
-                    Welcome to Floralist!
-                </p>
-            </div>
         </div>
         @foreach (var item in Model.Images)
         {
@@ -24,20 +19,20 @@
         }
     </div>
 </div>
-
-<h1>Welcome back @Model.Designer.Name! Let's get to work:</h1>
+ 
+<h1>Hello @Model.Designer.Name! Let's get to work:</h1>
 <hr />
 
 <div class="row">
     <div class="col-md-6" id="dash-card">
-        <h2 id="text-dash">@Model.ProposalsInProgress.Count() @(Model.ProposalsInProgress.Count() == 1 ? "Proposal" : "Proposals") In Progress</h2>
-        <a class="btn btn-default" asp-action="Index" asp-controller="Proposals">
+        <h2 id="text-dash">@(Model.ProposalsInProgress.Count() == 1 ? "Proposal" : "Proposals") In Progress: [@Model.ProposalsInProgress.Count()] </h2>
+        <a id="salmon-btn" asp-action="Index" asp-controller="Proposals">
             Complete Proposals
         </a>
     </div>
     <div class="col-md-6" id="dash-card">
-        <h2 id="text-dash">@Model.Images.Count() @(Model.Images.Count()==1? "Image" : "Images") in Image Library</h2>
-        <a class="btn btn-default" asp-action="Index" asp-controller="Images" >
+        <h2 id="text-dash">@(Model.Images.Count() == 1 ? "Image" : "Images") in Image Library: [@Model.Images.Count()]</h2>
+        <a id="salmon-btn" asp-action="Index" asp-controller="Images" >
             Manage Images
         </a>
     </div>
@@ -48,3 +43,4 @@
         </a>
     </div>*@
 </div>
+ 

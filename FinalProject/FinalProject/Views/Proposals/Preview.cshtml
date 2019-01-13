@@ -1,42 +1,97 @@
 ﻿@model FinalProject.Models.Proposal
 
 @{
+    int i = 0;
     ViewData["Title"] = "Proposals";
 }
-    <div class="container">
-        <h4>@Model.Customer.Name's Proposal</h4>
-        <h4>
+<div class="container">
+    <h3>@Model.Customer.Name's Proposal</h3>
+    <a id="salmon-btn-sm" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+    <hr />
+
+
+    <table>
+        <thead>
+            <tr>
+                <th style="background-color:lightgrey;font-family:Arial, Helvetica, sans-serif;text-align:center; border-radius:10px; height:200px; width:760px;">
+                    <h1 class="display-4 text-center">@Model.Title</h1>
+                    <p class="lead text-center">@Model.Description</p>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <table>
+                        @while (i < Model.ProposalItems.Count && i % 3 == 0)
+                        {
+                            <tr>
+                                @while (i < Model.ProposalItems.Count)
+                                {
+                                <td>
+                                    @*<img id="img-card" src="https://floralist.azurewebsites.net/Images/Raw/@Model.ProposalItems[i].Id" alt="@Model.ProposalItems[i].Caption" />*@
+                                    <img id="img-card" src="~/Images/Raw/@Model.ProposalItems[i].Image.Id" alt="@Model.ProposalItems[i].Caption" />
+                                    <p style="width: 250px;height:100%;">@Model.ProposalItems[i].Caption</p>
+                                </td>
+
+                                    i++;
+
+                                    if (i % 3 == 0)
+                                    {
+                                        break;
+                                    }
+
+                                }
+                            </tr>
+                        }
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+
+
+
+
+
+    @*<h4>
             This proposal is currently @(Model.IsShared ? "shared" : "unshared") with @(Model.Customer.Name). Would you like to @(Model.IsShared ? "unshare" : "share")?
         </h4>
         <form asp-action="Share">
             <input type="hidden" asp-for="Id" />
             <input type="submit" value="@(Model.IsShared ? "Unshare" : "Share")" class="btn btn-default" />
         </form>
-        <hr />
-        <div class="jumbotron jumbotron-fluid">
-            <div class="container">
-                <h1 class="display-4 text-center">@Model.Title</h1>
-                <p class="lead text-center">@Model.Description</p>
-            </div>
+        <hr />*@
+    @*<div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1 class="display-4 text-center">@Model.Title</h1>
+            <p class="lead text-center">@Model.Description</p>
         </div>
-        @*<div class="container">*@
-        <div class="row">
-            @foreach (var item in Model.ProposalItems)
-            {
-                <div class="col-sm-3">
-                    <div class="card">
-                        <img id="img-card" src="/Images/Raw/@item.Image.Id" alt="@item.Caption" />
-                        @*<img src="~/images/@Model.ProposalItems[i].Image.FileName" width=200 height=200 style="object-fit:cover" />*@
-                        <div class="card-body">
-                            <p class="card-text">@item.Caption</p>
-                        </div>
+    </div>*@
+    @*<div class="container">*@
+    @*<div class="row">
+        @foreach (var item in Model.ProposalItems)
+        {
+            <div class="col-sm-3">
+                <div class="card">
+                    <img id="img-card" src="/Images/Raw/@item.Image.Id" alt="@item.Caption" />
+                    @*<img src="~/images/@Model.ProposalItems[i].Image.FileName" width=200 height=200 style="object-fit:cover" />*@
+                    @*<div class="card-body">
+                        <p class="card-text">@item.Caption</p>
                     </div>
                 </div>
-            }
-        </div>
-        @*</div>*@
+            </div>
+        }
     </div>
+    </div>*@
+@*</div>*@
     <div>
-        <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-        <a asp-action="Index">Back to List</a>
+        <hr />
+        <a class="btn btn-link" asp-action="Index">Back to My Proposals</a>
     </div>

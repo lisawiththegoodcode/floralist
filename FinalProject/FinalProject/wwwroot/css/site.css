@@ -33,13 +33,86 @@ body {
     object-fit: cover;
 }
 
-
-#img-card {
-    width: 100%;
-    height: 250px;
-    object-fit: cover;
+#img-add {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 1%;
 }
 
+#flex-container {
+    display: flex;
+    flex-direction: row;
+}
+
+#caption-style{
+    width: 250px;
+
+}
+
+#img-lib-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+#img-container{
+    display:flex;
+    flex-direction:column;
+    align-items: center;
+    margin: 5px;
+}
+
+#flex-container-col {
+    display: flex;
+    flex-direction: column;
+}
+
+
+#tag-container {
+    display: flex;
+    flex-direction: column;
+    height: 270px;
+    flex-wrap: wrap;
+}
+
+#tag-container>p {
+    margin: 1px 10px;
+}
+
+#nav-color {
+    border-color: #8C8C8C;
+    background-color: #8C8C8C;
+}
+
+#nav-style{
+    color: white;
+}
+
+#nav-style:hover {
+    text-decoration: none;
+    transition: color 0.5s ease; 
+    color: salmon;
+}
+
+#img-nav {
+    display: block;
+    position: absolute;
+    top:0;
+    max-height:50px;
+}
+
+/*#accordion {
+    display: flex;
+}*/
+
+#img-card {
+    width: 250px;
+    height: 250px;
+    object-fit: cover;
+    margin: 5px;
+}
 
 #img-carousel {
     width: 100%;
@@ -52,23 +125,102 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-content: center;
+    align-items: center;
 }
 
 #text-dash{
     text-align: center;
+    font-size: 1.8em;
 }
 
 a#remove-btn{
     color: red;
-    font-size: 11px;
+    font-size: 15px;
+    padding: 2px;
 
 }
 
+#add-btn {
+    color: forestgreen;
+    font-size: 15px;
+    border: none;
+    padding: 2px;
+    background-color: transparent;
+    cursor: pointer;
+}
+
 #tag {
-    color: #9d9d9d;
+    color: slategray;
+    text-shadow: 1px;
+    font-weight: bold;
     border-color: #9d9d9d;
-    cursor: default;
+}
+
+#salmon-btn {
+    width: 70%;
+    font-size: 14px;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin: 1%;
+    outline: 0;
+    cursor: pointer;
+    letter-spacing: 1px;
+    background-color: salmon;
+    border: none;
+    color: #FFFFFF;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 20px;
+}
+
+#salmon-btn:hover {
+    background-color: salmon;
+    transition: color 0.5s ease;
+    color: black;
+}
+
+#salmon-btn-sm {
+    width: 115px;
+    font-size: 12px;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin: 0;
+    outline: 0;
+    cursor: pointer;
+    letter-spacing: 1px;
+    background-color: salmon;
+    border: none;
+    color: #FFFFFF;
+    padding: 10px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 20px;
+}
+
+    #salmon-btn-sm:hover {
+        background-color: salmon;
+        transition: color 0.5s ease;
+        color: black;
+    }
+#search-bar{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+#search-bar input[type=text]{
+border: none;
+border-radius: 0;
+box-shadow: 0 1px 0 0 #eeeeee;
+display:inline-flex;
+}
+
+#search-bar input[type=text]:focus:not([readonly]) {
+    border-bottom: 1px solid salmon;
+    box-shadow: 0 1px 0 0 salmon;
 }
 
 /* Hide/rearrange for smaller screens */

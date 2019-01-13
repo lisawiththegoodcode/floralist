@@ -11,6 +11,7 @@ using FinalProject.Services;
 using FinalProject.ViewModels;
 using Shared.Web.MvcExtensions;
 using Microsoft.AspNetCore.Authorization;
+using System.Diagnostics;
 
 namespace FinalProject.Controllers
 {
@@ -39,7 +40,7 @@ namespace FinalProject.Controllers
                     ? await _repository.GetImagesForDesignerAsync(User.GetUserId())
                     : await _repository.Images
                     .Where(i => i.DesignerId == _repository.GetDesignerIdForUserId(User.GetUserId()))
-                    .Where(i => i.FileName.Contains(searchString))
+                    .Where(i => i.ImageTags.Any(x=> x.Tag.Name == searchString))
                     .ToListAsync()
             };
             return View(vm);
@@ -75,6 +76,8 @@ namespace FinalProject.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Share(int id, Proposal proposal)
         {
+            Trace.WriteLine("In share task of proposals controller");
+
             if (id != proposal.Id)
             {
                 return NotFound();
@@ -90,6 +93,7 @@ namespace FinalProject.Controllers
             {
                 try
                 {
+                    Trace.WriteLine(proposal);
                     _emailSender.sendProposalEmail(proposal);
                     await _repository.ShareProposalAsync(id);
                 }

@@ -1,15 +1,17 @@
 ﻿@model IEnumerable<FinalProject.Models.Customer>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Customers ";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h4>Customers</h4>
-<hr />
+<h3>Manage Customers</h3>
 <p>
-    <a asp-action="Create">Create New</a>
+    <a id="salmon-btn-sm" asp-action="Create">Create New</a>
 </p>
+<hr />
+
+
 <table class="table">
     <thead>
         <tr>
@@ -20,7 +22,7 @@
                 @Html.DisplayNameFor(model => model.Email)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PhoneNumber)
+                Phone Number
             </th>
             <th></th>
         </tr>

@@ -4,37 +4,31 @@
     ViewData["Title"] = "Proposals";
 }
 
-<!DOCTYPE html>
+<h3>My Proposals</h3>
+<p>
+    <a id="salmon-btn-sm" asp-action="Create">Create New</a>
+</p>
+<hr />
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
-</head>
-<body>
-    <h4>Proposals</h4>
-    <hr />
-    <p>
-        <a asp-action="Create">Create New Proposal</a>
-    </p>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Customer)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Title)
-                </th>
-                <th>
-                    Status
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Customer)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                Status
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.Customer.Name)
@@ -52,8 +46,7 @@
                     <a asp-action="Share" asp-route-id="@item.Id">Email Client</a>
                 </td>
             </tr>
-            }
-        </tbody>
-    </table>
-</body>
-</html>
+        }
+    </tbody>
+</table>
+

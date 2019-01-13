@@ -195,9 +195,7 @@ namespace FinalProject.Services
             //var image = _flowerAppContext.Images.FirstOrDefault(i => i.Id == imageId);
             //image.ImageTags = imageTags;
 
-            var image = _flowerAppContext.Images
-                .Include(x=>x.ImageTags)
-                .FirstOrDefault(i => i.Id == imageId);
+            var image = GetImageById(imageId);
 
             if (!image.ImageTags.Any<ImageTag>(x=>x.TagId == tagId))
             {
@@ -217,12 +215,17 @@ namespace FinalProject.Services
 
         }
 
+        public Image GetImageById (int imageId)
+        {
+            return _flowerAppContext.Images
+                .Include(x => x.ImageTags)
+                .FirstOrDefault(i => i.Id == imageId);
+        }
+
         public Task DeleteImageTagAsync(int imageId, int tagId)
         {
 
-            var image = _flowerAppContext.Images
-                .Include(x => x.ImageTags)
-                .FirstOrDefault(i => i.Id == imageId);
+            var image = GetImageById(imageId);
 
             var imageTag = image.ImageTags.FirstOrDefault(x => x.TagId == tagId);
 
@@ -245,6 +248,7 @@ namespace FinalProject.Services
             _flowerAppContext.Tags.Remove(tag);
             return _flowerAppContext.SaveChangesAsync();
         }
+
         #endregion
 
 

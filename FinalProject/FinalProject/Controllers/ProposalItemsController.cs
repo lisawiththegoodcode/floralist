@@ -26,16 +26,13 @@ namespace FinalProject.Controllers
         // GET: ProposalItems/Create
         public IActionResult Create(int imageId, int proposalId)
         {
-            // create an AddProposalItem view model to hold info for the view
             var vm = new AddProposalItem
             {
                 ProposalId = proposalId,
                 ImageId = imageId,
-                // get the image object by id
                 Image = _repository.Images.FirstOrDefault(i => i.Id == imageId),
                 Caption = ""
             };
-            // pass the view model to the view
             return View(vm);
         }
         
@@ -59,7 +56,10 @@ namespace FinalProject.Controllers
                 await _repository.AddProposalItemAsync(vm.ProposalId, newProposalItem);
 
                 // redirect to the Proposal Edit page
-                return RedirectToAction("Edit", "Proposals", new { id = vm.ProposalId });
+                //return RedirectToAction("Edit", "Proposals", new { id = vm.ProposalId });
+
+                //redirect to Proposals Image Search page
+                return RedirectToAction("ImageSearch", "Proposals", new { proposalId = vm.ProposalId, searchString = "" });
             }
             return View(vm);
         }

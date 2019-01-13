@@ -7,49 +7,39 @@
 }
 
 
-<h4>Images</h4>
-<hr />
+<h3>Image Library</h3>
+
 <p>
-    <a asp-action="Create">Upload New Image</a>
+    <a id="salmon-btn-sm" asp-action="Create">Upload New</a>
 </p>
+<hr />
 
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Image
-            </th>
-            <th>
-                Tags
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-            
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        <img src="/Images/Raw/@item.Id" id="img-sq" />
-                    </td>
-                    <td>
-                        @* Placeholder for tags *@
-                        @foreach (var tag in item.ImageTags)
-                        {
+<div id="img-lib-container">
+    @foreach (var item in Model)
+    {
+    <div id="flex-container-col">
+        <div id="flex-container">
+            <div id="img-container">
+                <img src="/Images/Raw/@item.Id" id="img-sq" />
+                <p>
+                    <a asp-action="AddTags" asp-route-imageId="@item.Id">Add Tags</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete Image</a>
+                </p>
+            </div>
+            <div id="tag-container">
+                @foreach (var tag in item.ImageTags)
+                {
+                    <p>@Html.DisplayFor(modelItem => tag.Tag)  <a id="remove-btn" asp-action="RemoveTag" asp-route-imageId="@item.Id" asp-route-tagId="@tag.Tag.Id">x</a></p>
+                }
+            </div>
+        </div>
 
-                            <p>@tag.Tag.Type : @tag.Tag.Name</p>
-                            <a asp-action="RemoveTag" asp-route-imageId="@item.Id" asp-route-tagId="@tag.Tag.Id">Remove</a> 
-                            //need to create the remove tag
-                        }
-                    </td>
-                    <td>
-                        <a asp-action="AddTags" asp-route-imageId="@item.Id">Add Tags</a> |
-                        <a asp-action="Delete" asp-route-id="@item.Id">Delete Image</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    </div>
+    }
+</div>
+
+
+
+        
 

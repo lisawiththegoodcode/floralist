@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using FinalProject.Data;
 using FinalProject.Models;
 using Microsoft.AspNetCore.Authorization;
+using Shared.Web.MvcExtensions;
 
 namespace FinalProject.Controllers
 {
@@ -60,6 +61,8 @@ namespace FinalProject.Controllers
         {
             if (ModelState.IsValid)
             {
+                //var designer = _context.Designers.FirstOrDefault(m => m.UserId == User.GetUserId());
+                //customer.DesignerId = designer.Id; 
                 _context.Add(customer);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

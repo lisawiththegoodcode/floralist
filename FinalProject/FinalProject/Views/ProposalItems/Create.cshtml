@@ -4,32 +4,33 @@
     ViewData["Title"] = "AddProposalItem";
 }
 
-<h2>Add To Proposal</h2>
+<h3>Add Image To Proposal</h3>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create" asp-route-imageId="Model.ImageId" asp-route-proposalId="@Model.ProposalId" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <img src="/Images/Raw/@Model.Image.Id" id="img-sq" />
-            </div>
-            <div class="form-group">
-                <input type="hidden" asp-for="ImageId" />
-                <input type="hidden" asp-for="ProposalId" />
-                @*//This is slightly diff than the name/value pattern in image search. Same effect or diff effect?*@
-                <label asp-for="Caption" class="control-label"></label>
-                <input asp-for="Caption" class="form-control" />
-                <span asp-validation-for="Caption" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
+            <div id="flex-container-col">
+                <div class="form-group">
+                    <img src="/Images/Raw/@Model.Image.Id" id="img-sq" />
+                </div>
+                <div id="caption-style" class="form-group">
+                    <input type="hidden" asp-for="ImageId" />
+                    <input type="hidden" asp-for="ProposalId" />
+                    <label asp-for="Caption" class="control-label"></label>
+                    <textarea rows="3" asp-for="Caption" class="form-control"></textarea>
+                    <span asp-validation-for="Caption" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input id="salmon-btn-sm" type="submit" value="Save"/>
+                </div>
             </div>
         </form>
     </div>
 </div>
-
+<hr />
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a class="btn btn-link" asp-controller="Images" asp-action="ImageSearch">Back to My Proposals</a>
 </div>
 
 @section Scripts {

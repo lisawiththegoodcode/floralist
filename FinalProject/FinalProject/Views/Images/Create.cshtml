@@ -6,28 +6,29 @@
 }
 
 
-    <h4>Upload Image</h4>
-    <hr />
-    <div class="row">
-        <div class="col-md-4">
 
-            <form method="post" enctype="multipart/form-data" asp-controller="Images" asp-action="Create">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group">
-                    <input type="file" name="files" asp-for="FileImage" />
-                    <span asp-validation-for="FileImage" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Upload" class="btn btn-default" />
-                </div>
-            </form>
+<h3>Upload Image</h3>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" enctype="multipart/form-data" asp-controller="Images" asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <input class="btn btn-default" type="file" name="files" asp-for="FileImage" />
+                <span asp-validation-for="FileImage" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input id="salmon-btn-sm" type="submit" value="Upload" class="btn btn-default" />
+            </div>
+        </form>
 
-        </div>
     </div>
+</div>
 
-    <div>
-        <a asp-action="Index">Back to List</a>
-    </div>
+<hr />
+<div>
+    <a asp-action="Index">Back to Image Library</a>
+</div>
 
 
 @section Scripts {

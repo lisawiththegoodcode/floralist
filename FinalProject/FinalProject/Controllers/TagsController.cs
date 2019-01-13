@@ -26,6 +26,7 @@ namespace FinalProject.Controllers
         // GET: Tags
         public async Task<IActionResult> Index()
         {
+
             return View(await _repository.Tags.ToListAsync());
         }
 
@@ -45,6 +46,13 @@ namespace FinalProject.Controllers
         {
             if (ModelState.IsValid)
             {
+                //does tag.type already exist? if so throw an error, send them back 
+                if (_repository.Tags.Any(x => x.Type == tag.Type && x.Name == tag.Name))
+                {
+                    ModelState.AddModelError("", "This tag already exists");
+                    return View(tag);
+                } 
+         
                 await _repository.AddTagAsync(tag);
                 return RedirectToAction(nameof(Index));
             }

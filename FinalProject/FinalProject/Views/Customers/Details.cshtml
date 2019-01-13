@@ -5,11 +5,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
-
+<h3>Customer Details</h3>
+<a id=salmon-btn-sm asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+<hr />
 <div>
-    <h4>Customer</h4>
-    <hr />
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.Name)
@@ -17,14 +16,20 @@
         <dd>
             @Html.DisplayFor(model => model.Name)
         </dd>
+        <dd>
+            
+        </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Email)
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Email)
         </dd>
+        <dd>
+
+        </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.PhoneNumber)
+            Phone Number
         </dt>
         <dd>
             @Html.DisplayFor(model => model.PhoneNumber)
@@ -32,6 +37,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <hr />
+    <a class="btn btn-link" asp-action="Index">Back to List</a>
 </div>

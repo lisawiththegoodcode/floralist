@@ -1,10 +1,21 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <DockerTargetOS>Windows</DockerTargetOS>
     <UserSecretsId>25c9446f-3863-43c4-aec4-5f6aece46ca4</UserSecretsId>
+    <MvcRazorExcludeRefAssembliesFromPublish>false</MvcRazorExcludeRefAssembliesFromPublish>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="Views\Proposals\ProposalEmail.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Proposals\ProposalEmail.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </EmbeddedResource>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="FluentEmail.Core" Version="2.5.1" />
@@ -22,9 +33,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="Views\Proposals\ProposalEmail.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
     <Content Update="Views\Proposals\Share.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

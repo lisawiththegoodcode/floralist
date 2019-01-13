@@ -21,23 +21,28 @@ namespace Controller.Tests
     {
         private readonly Mock<IRepository> _mockRepo;
         private readonly Mock<EmailSender> _mockService;
+        private readonly Mock<IEmailSenderProxy> _mockEmailSender;
         private readonly Mock<IFluentEmail> _mockFluentEmail;
         private readonly ImagesController _imagesController;
         private readonly ProposalsController _proposalController;
         private readonly ProposalItemsController _proposalItemsController;
+        private readonly TagsController _tagsController;
         
 
         public FloralistControllerTest()
         {
             _mockRepo = new Mock<IRepository>();
             _mockService = new Mock<EmailSender>();
+            _mockEmailSender = new Mock<IEmailSenderProxy>() { CallBase = true};
             _mockFluentEmail = new Mock<IFluentEmail>();
             _imagesController = new ImagesController(_mockRepo.Object);
             _proposalController = new ProposalsController(_mockRepo.Object, _mockService.Object);
             _proposalItemsController = new ProposalItemsController(_mockRepo.Object);
+            _tagsController = new TagsController(_mockRepo.Object);
 
         }
 
+        //Helper Method For Mocking Controller Context
         public ControllerContext CreateMockControllerContext()
         {
             var claimsPrincipal = new Mock<ClaimsPrincipal>();
@@ -56,6 +61,32 @@ namespace Controller.Tests
             return context;
         }
 
+        public interface IEmailSenderProxy
+        {
+            void sendProposalEmail(Proposal proposal);
+        }
+
+        public class EmailSenderProxy : IEmailSenderProxy
+        {
+
+            private readonly EmailSender _emailSender;
+
+
+            public EmailSenderProxy(EmailSender emailSender)
+            {
+                _emailSender = emailSender;
+            }
+
+            public void sendProposalEmail(Proposal proposal)
+            {
+                
+
+                _emailSender.sendProposalEmail(proposal);
+
+            }
+        }
+
+        
 
         [Fact]
         public async void ImagesController_Create_Test()
@@ -117,28 +148,7 @@ namespace Controller.Tests
             Assert.Equal("ImageSearch", redirectToActionResult.ActionName);
         }
 
-        [Fact]
-        public async Task ProposalsController_Share_Test()
-        {
-            var proposal = new Proposal();
-            var Id = 1;
-            // Arrange
-
-            _proposalController.ControllerContext = CreateMockControllerContext();
-
-            _mockService.Setup(c => c.sendProposalEmail(proposal)).Verifiable();
-            _mockRepo.Setup(c => c.ShareProposalAsync(Id));
-
-            // Act
-            var result = await _proposalController.Share(Id, proposal) as IActionResult;
-
-            // Assert
-            var redirectToActionResult = Assert.IsType<RedirectToActionResult>(result);
-            Assert.Null(redirectToActionResult.ControllerName);
-            Assert.Equal("Index", redirectToActionResult.ActionName);
-
-
-        }
+        
 
         [Fact]
         public async void ProposalItemsController_Delete_Test()
@@ -158,33 +168,65 @@ namespace Controller.Tests
             Assert.IsType<NotFoundResult>(result);
         }
 
-        public interface IEmailSenderProxy
+        [Fact]
+        public async void TagsController_Create_test()
         {
-            void sendProposalEmail(Proposal proposal);
+            //Arrange
+            var tag = new Tag();
+
+            _mockRepo.Setup(c => c.AddTagAsync(It.IsAny<Tag>())).Returns(Task.CompletedTask);
+
+            //Act
+            // Act
+            var result = await _tagsController.Create(tag) as IActionResult;
+
+            // Assert
+            var redirectToActionResult = Assert.IsType<RedirectToActionResult>(result);
+            Assert.Null(redirectToActionResult.ControllerName);
+            Assert.Equal("Index", redirectToActionResult.ActionName);
+
         }
 
-        public class EmailSenderProxy : IEmailSenderProxy
+        
+
+        [Fact]
+        public async Task ProposalsController_Share_Test()
         {
-
-            private readonly EmailSender _emailSender;
+            // Arrange
             
+            var proposal = new Proposal() { Id = 1, Title = "Hello", DesignerId = 1};
+            var Id = 1;
+           
 
-            public EmailSenderProxy(EmailSender emailSender)
-            {
-                _emailSender = emailSender;
-            }
+            _proposalController.ControllerContext = CreateMockControllerContext();
 
-            public void sendProposalEmail(Proposal proposal)
-            {
-                
-            
-                throw new Exception("send email failed cuz bla bla bla");
-            }
+            const string toEmail = "bob@test.com";
+            const string fromEmail = "johno@test.com";
+            const string subject = "sup dawg";
+            _mockFluentEmail.Setup(c => c.SetFrom(fromEmail, null)).CallBase();
+            _mockFluentEmail.Setup(c => c.To(toEmail)).CallBase();
+            _mockFluentEmail.Setup(c => c.Subject(subject)).CallBase();
+            //_mockFluentEmail.Setup(c => c.UsingTemplateFromEmbedded(null));
+            _mockFluentEmail.Object.Send();
+
+            _mockRepo.Setup(c => c.GetProposalAsync(Id)).Returns(Task.FromResult(proposal));
+            //_mockService.Setup(c => c.sendProposalEmail(It.IsAny<Proposal>())).CallBase();
+            //_mockEmailSender.Setup(c => c.sendProposalEmail(It.IsAny<Proposal>()));
+            _mockEmailSender.Setup(c => c.sendProposalEmail(It.IsAny<Proposal>())).CallBase();
+            _mockRepo.Setup(c => c.ShareProposalAsync(Id)).Returns(Task.CompletedTask);
+
+            // Act
+            var result = await _proposalController.Share(Id, proposal) as IActionResult;
+
+            // Assert
+            var redirectToActionResult = Assert.IsType<RedirectToActionResult>(result);
+            Assert.Null(redirectToActionResult.ControllerName);
+            Assert.Equal("Index", redirectToActionResult.ActionName);
 
 
         }
 
-        }
+    }
 
-        }
+ }
     

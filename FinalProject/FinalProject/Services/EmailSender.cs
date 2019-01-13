@@ -3,8 +3,10 @@ using FluentEmail.Core;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace FinalProject.Services
@@ -25,6 +27,8 @@ namespace FinalProject.Services
 
         public void sendProposalEmail(Proposal proposal)
         {
+            Trace.WriteLine($"In sendProposalEmail method with {proposal}");
+
             var email = _email
 
            //     //.From("floralisttheapp@gmail.com")
@@ -36,8 +40,20 @@ namespace FinalProject.Services
                 .SetFrom(proposal.Designer.Email)
                 .To(proposal.Customer.Email)
                 .Subject($"Floral Design Proposal for {proposal.Title} 💐")
+
                 //.Body($"Hi {proposal.Customer.Name}!");
-                .UsingTemplateFromFile($"{Directory.GetCurrentDirectory()}/Views/Proposals/ProposalEmail.cshtml", proposal);
+
+                // .UsingTemplateFromFile($"{Directory.GetCurrentDirectory()}/Views/Proposals/ProposalEmail.cshtml", proposal);
+
+                .UsingTemplateFromEmbedded("FinalProject.Views.Proposals.ProposalEmail.cshtml",
+            proposal,
+            Assembly.Load("FinalProject"));
+
+            Trace.WriteLine(email);
+            Trace.WriteLine(proposal.Designer.Email);
+            Trace.WriteLine(proposal.Customer.Email);
+            Trace.WriteLine($"{Directory.GetCurrentDirectory()}/Views/Proposals/ProposalEmail.cshtml");
+
 
 
             email.Send();

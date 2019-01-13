@@ -39,7 +39,9 @@ namespace FinalProject.Controllers
             var vm = new TagSearch
             {
                 ImageId = imageId,
-                Tags = _repository.Tags.ToList()
+                ImageTags = _repository.GetImageById(imageId).ImageTags,
+                Tags = _repository.Tags.ToList(),
+                Types = _repository.Tags.Select(x => x.Type).Distinct().ToList()
             };
             // pass the view model to the view
             return View(vm);
@@ -50,16 +52,23 @@ namespace FinalProject.Controllers
         public async Task<IActionResult> AddTags(int imageId, int tagId)
         {
             await _repository.CreateImageTagsAsync(imageId, tagId);
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("AddTags", new { imageId = imageId });
         }
 
         [HttpGet]
-        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> RemoveTag(int imageId, int tagId)
         {
             await _repository.DeleteImageTagAsync(imageId, tagId);
             return RedirectToAction(nameof(Index));
         }
+
+        [HttpGet]
+        public async Task<IActionResult> RemoveTagFromAddTags(int imageId, int tagId)
+        {
+            await _repository.DeleteImageTagAsync(imageId, tagId);
+            return RedirectToAction("AddTags", new { imageId = imageId });
+        }
+
         // GET: Images
         public async Task<IActionResult> Index()
         {
@@ -82,6 +91,17 @@ namespace FinalProject.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddNewTag(int imageId, Tag tag)
         {
+            if (_repository.Tags.Any(x => x.Type == tag.Type && x.Name == tag.Name))
+            {
+                var vm = new AddNewTag
+                {
+                    ImageId = imageId,
+                    Tag = new Tag()
+                };
+
+                ModelState.AddModelError("", "This tag already exists");
+                return View(vm);
+            }
             await _repository.AddTagAsync(tag);
             await _repository.CreateImageTagsAsync(imageId, tag.Id);
             return RedirectToAction(nameof(Index));
@@ -249,6 +269,7 @@ namespace FinalProject.Controllers
         }
         
 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> Raw(int id)
         {

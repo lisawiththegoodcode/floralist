@@ -4,20 +4,26 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] | Floralist</title>
-
+    <link rel="shortcut icon" href="~/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="~/favicon.ico" type="image/x-icon">
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
         <link rel="stylesheet" href="~/css/site.css" />
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
-        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+        @*<link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true"
+            asp-fallback-href="~/css/site.css"/>*@
+        <link rel="stylesheet" href="~/css/site.css" />
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+
     </environment>
 </head>
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
+    <nav id="nav-color" class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -26,17 +32,16 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Floralist</a>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand"><img src="~/images/icon.png" id="img-nav"/></a>
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Proposals" asp-action="Index">My Proposals</a></li>
-                    <li><a asp-area="" asp-controller="Images" asp-action="Index">Image Library</a></li>
-                    <li><a asp-area="" asp-controller="Customers" asp-action="Index">Customer Directory</a></li>
-                    <li><a asp-area="" asp-controller="Tags" asp-action="Index">Manage Tags</a></li>
-
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a id="nav-style" asp-area="" asp-controller="Proposals" asp-action="Index">My Proposals</a></li>
+                    <li><a id="nav-style" asp-area="" asp-controller="Images" asp-action="Index">Image Library</a></li>
+                    <li><a id="nav-style" asp-area="" asp-controller="Customers" asp-action="Index">Customers</a></li>
+                    <li><a id="nav-style" asp-area="" asp-controller="Tags" asp-action="Index">Tags</a></li>
+                    <partial name="_LoginPartial" />
                 </ul>
-                <partial name="_LoginPartial" />
             </div>
         </div>
     </nav>
@@ -47,7 +52,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; 2018 - Lisa Umhey & Nashid Afreen</p>
+            <p>&copy; 2019 - Lisa Umhey & Nashid Afreen</p>
         </footer>
     </div>
 
