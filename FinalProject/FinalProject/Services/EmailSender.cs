@@ -22,8 +22,6 @@ namespace FinalProject.Services
 
         public void sendProposalEmail(Proposal proposal)
         {
-            Trace.WriteLine($"In sendProposalEmail method with {proposal}");
-
             var email = _email
                 .SetFrom(proposal.Designer.Email)
                 .To(proposal.Customer.Email)
@@ -32,12 +30,7 @@ namespace FinalProject.Services
             proposal,
             Assembly.Load("FinalProject"));
 
-            Trace.WriteLine(email);
-            Trace.WriteLine(proposal.Designer.Email);
-            Trace.WriteLine(proposal.Customer.Email);
-            Trace.WriteLine($"{Directory.GetCurrentDirectory()}/Views/Proposals/ProposalEmail.cshtml");
-
-            email.Send();
+           email.Send();
         }
     }
 }
