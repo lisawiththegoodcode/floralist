@@ -21,19 +21,17 @@ namespace Controller.Tests
     {
         private readonly Mock<IRepository> _mockRepo;
         private readonly Mock<EmailSender> _mockService;
-        private readonly Mock<IEmailSenderProxy> _mockEmailSender;
         private readonly Mock<IFluentEmail> _mockFluentEmail;
         private readonly ImagesController _imagesController;
         private readonly ProposalsController _proposalController;
         private readonly ProposalItemsController _proposalItemsController;
         private readonly TagsController _tagsController;
-        
+
 
         public FloralistControllerTest()
         {
             _mockRepo = new Mock<IRepository>();
             _mockService = new Mock<EmailSender>();
-            _mockEmailSender = new Mock<IEmailSenderProxy>() { CallBase = true};
             _mockFluentEmail = new Mock<IFluentEmail>();
             _imagesController = new ImagesController(_mockRepo.Object);
             _proposalController = new ProposalsController(_mockRepo.Object, _mockService.Object);
@@ -42,7 +40,7 @@ namespace Controller.Tests
 
         }
 
-        //Helper Method For Mocking Controller Context
+        //Helper Method to create Mocking for Controller Context
         public ControllerContext CreateMockControllerContext()
         {
             var claimsPrincipal = new Mock<ClaimsPrincipal>();
@@ -61,32 +59,6 @@ namespace Controller.Tests
             return context;
         }
 
-        public interface IEmailSenderProxy
-        {
-            void sendProposalEmail(Proposal proposal);
-        }
-
-        public class EmailSenderProxy : IEmailSenderProxy
-        {
-
-            private readonly EmailSender _emailSender;
-
-
-            public EmailSenderProxy(EmailSender emailSender)
-            {
-                _emailSender = emailSender;
-            }
-
-            public void sendProposalEmail(Proposal proposal)
-            {
-                
-
-                _emailSender.sendProposalEmail(proposal);
-
-            }
-        }
-
-        
 
         [Fact]
         public async void ImagesController_Create_Test()
@@ -94,14 +66,13 @@ namespace Controller.Tests
             //Arrange
             var images = new Image() { };
             var file = new Mock<IFormFile>();
-
-            _imagesController.ControllerContext = CreateMockControllerContext();
-
-            //var sourceImg = File.OpenRead(@"C:\Users\mfhos\Documents\ACA\netcore-final-project\FinalProject\FinalProject\wwwroot\images\kelly-sikkema-250501-unsplash.jpg");
             var ms = new MemoryStream();
-
             var fileName = "kelly-sikkema-250501-unsplash.jpg";
 
+            //Instance of the Controller Context
+            _imagesController.ControllerContext = CreateMockControllerContext();
+
+            //Setup to create File object
             file.Setup(f => f.CopyToAsync(It.IsAny<Stream>(), It.IsAny<CancellationToken>()))
             .Returns((Stream stream, CancellationToken token) => ms.CopyToAsync(stream)).Verifiable();
             file.Setup(f => f.FileName).Returns(fileName);
@@ -132,10 +103,7 @@ namespace Controller.Tests
             // Arrange
             
             _proposalController.ControllerContext = CreateMockControllerContext();
-            
-
             _mockRepo.Setup(c => c.GetDesignerIdForUserId(It.IsAny<string>())).Returns(1);
-
             _mockRepo.Setup(c => c.AddProposalAsync(It.IsAny<Proposal>())).Returns(Task.CompletedTask);
 
 
@@ -196,23 +164,11 @@ namespace Controller.Tests
             
             var proposal = new Proposal() { Id = 1, Title = "Hello", DesignerId = 1};
             var Id = 1;
-           
 
             _proposalController.ControllerContext = CreateMockControllerContext();
 
-            const string toEmail = "bob@test.com";
-            const string fromEmail = "johno@test.com";
-            const string subject = "sup dawg";
-            _mockFluentEmail.Setup(c => c.SetFrom(fromEmail, null)).CallBase();
-            _mockFluentEmail.Setup(c => c.To(toEmail)).CallBase();
-            _mockFluentEmail.Setup(c => c.Subject(subject)).CallBase();
-            //_mockFluentEmail.Setup(c => c.UsingTemplateFromEmbedded(null));
-            _mockFluentEmail.Object.Send();
-
             _mockRepo.Setup(c => c.GetProposalAsync(Id)).Returns(Task.FromResult(proposal));
-            //_mockService.Setup(c => c.sendProposalEmail(It.IsAny<Proposal>())).CallBase();
-            //_mockEmailSender.Setup(c => c.sendProposalEmail(It.IsAny<Proposal>()));
-            _mockEmailSender.Setup(c => c.sendProposalEmail(It.IsAny<Proposal>())).CallBase();
+            _mockService.Setup(c => c.sendProposalEmail(It.IsAny<Proposal>()));
             _mockRepo.Setup(c => c.ShareProposalAsync(Id)).Returns(Task.CompletedTask);
 
             // Act

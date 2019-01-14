@@ -25,7 +25,7 @@ namespace FinalProject.Services
             _email = email;
         }
 
-        public void sendProposalEmail(Proposal proposal)
+        public virtual void sendProposalEmail(Proposal proposal)
         {
             Trace.WriteLine($"In sendProposalEmail method with {proposal}");
 
