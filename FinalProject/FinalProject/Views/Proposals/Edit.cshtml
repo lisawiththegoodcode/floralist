@@ -9,11 +9,11 @@
 }
 
 <h3>Edit Proposal</h3>
+<form asp-action="Edit" method="post">
 <p>
     <a id="salmon-btn-sm" asp-action="ImageSearch" asp-route-proposalId="@Model.Id">Add Images</a>
 </p>
 <hr />
-<form asp-action="Edit">
     <div class="row">
         <div class="col-md-4">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>

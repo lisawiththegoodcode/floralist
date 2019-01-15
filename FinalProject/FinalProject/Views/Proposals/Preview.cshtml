@@ -4,51 +4,56 @@
     int i = 0;
     ViewData["Title"] = "Proposals";
 }
+
 <div class="container">
     <h3>@Model.Customer.Name's Proposal</h3>
     <a id="salmon-btn-sm" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
     <hr />
 
+    <div class="table-responsive">
 
-    <table>
-        <thead>
-            <tr>
-                <th style="background-color:#CCCCCC;font-family:Arial, Helvetica, sans-serif;text-align:center; border-radius:20px; height:200px; width:760px;">
-                    <h1 class="display-4 text-center">@Model.Title</h1>
-                    <p class="lead text-center">@Model.Description</p>
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>
-                    <table>
-                        @while (i < Model.ProposalItems.Count && i % 3 == 0)
-                        {
-                            <tr>
-                                @while (i < Model.ProposalItems.Count)
-                                {
-                                <td valign="top">
-                                    @*<img id="img-card" src="https://floralist.azurewebsites.net/Images/Raw/@Model.ProposalItems[i].Id" alt="@Model.ProposalItems[i].Caption" />*@
-                                    <img id="img-card" src="~/Images/Raw/@Model.ProposalItems[i].Image.Id" alt="@Model.ProposalItems[i].Caption" />
-                                    <p style="width: 250px;height:100%;">@Model.ProposalItems[i].Caption</p>
-                                </td>
-
-                                    i++;
-
-                                    if (i % 3 == 0)
+        <table>
+            <thead>
+                <tr>
+                    <th>
+                        <div id="proposal-header">
+                            <h1 class="display-4 text-center">@Model.Title</h1>
+                            <p class="lead text-center">@Model.Description</p>
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <table>
+                            @while (i < Model.ProposalItems.Count && i % 3 == 0)
+                            {
+                                <tr>
+                                    @while (i < Model.ProposalItems.Count)
                                     {
-                                        break;
-                                    }
+                                    <td valign="top">
+                                        @*<img id="img-card" src="https://floralist.azurewebsites.net/Images/Raw/@Model.ProposalItems[i].Id" alt="@Model.ProposalItems[i].Caption" />*@
+                                        <img id="img-card" src="~/Images/Raw/@Model.ProposalItems[i].Image.Id" alt="@Model.ProposalItems[i].Caption" />
+                                        <p style="width: 250px;height:100%;">@Model.ProposalItems[i].Caption</p>
+                                    </td>
 
-                                }
-                            </tr>
-                        }
-                    </table>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+                                        i++;
+
+                                        if (i % 3 == 0)
+                                        {
+                                            break;
+                                        }
+
+                                    }
+                                </tr>
+                            }
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 

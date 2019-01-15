@@ -93,6 +93,7 @@ body {
     margin:5px;
 }
 
+
 #caption-style {
     width: 250px;
 }
@@ -296,10 +297,37 @@ display:inline-flex;
     box-shadow: 0 1px 0 0 salmon;
 }
 
+#proposal-header {
+    background-color:#CCCCCC;
+    font-family:Arial, Helvetica, sans-serif;
+    text-align:center; 
+    border-radius:20px; 
+    padding: 5px;
+    height:auto; 
+    max-width: 780px;
+}
+
+
+/*@media (max-width: 900px){
+    #proposal-header {
+        m ax-width:531px;
+    }
+    #img-card{
+        width:175px;
+        height:175px;
+        margin:1px;
+    }
+
+}*/
+
 /* Hide/rearrange for smaller screens */
 @media screen and (max-width: 767px) {
     /* Hide captions */
     .carousel-caption {
         display: none;
+    }
+
+    #img-lib-container{
+        justify-content:center;
     }
 }
