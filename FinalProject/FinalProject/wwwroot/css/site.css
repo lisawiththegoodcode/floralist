@@ -298,11 +298,11 @@ display:inline-flex;
 }
 
 #proposal-header {
-    background-color:#CCCCCC;
+    /*background-color:#CCCCCC;*/
     font-family:Arial, Helvetica, sans-serif;
     text-align:center; 
     border-radius:20px; 
-    padding: 5px;
+    padding: 20px;
     height:auto; 
     max-width: 780px;
 }

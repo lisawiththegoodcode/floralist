@@ -11,9 +11,10 @@
     <hr />
 
     @*<div class="table-responsive">*@
+    <div class="proposal-sq">
 
-        <table>
-            <thead>
+        <table style="border: 1.25px solid #8C8C8C;">
+            <thead style="border-bottom: 1.25px solid #8C8C8C;">
                 <tr>
                     <th>
                         <div id="proposal-header">
@@ -32,11 +33,11 @@
                                 <tr>
                                     @while (i < Model.ProposalItems.Count)
                                     {
-                                    <td valign="top">
-                                        @*<img id="img-card" src="https://floralist.azurewebsites.net/Images/Raw/@Model.ProposalItems[i].Id" alt="@Model.ProposalItems[i].Caption" />*@
-                                        <img id="img-card" src="~/Images/Raw/@Model.ProposalItems[i].Image.Id" alt="@Model.ProposalItems[i].Caption" />
-                                        <p style="width: 250px;height:100%;">@Model.ProposalItems[i].Caption</p>
-                                    </td>
+                                        <td valign="top">
+                                            @*<img id="img-card" src="https://floralist.azurewebsites.net/Images/Raw/@Model.ProposalItems[i].Id" alt="@Model.ProposalItems[i].Caption" />*@
+                                            <img id="img-card" src="~/Images/Raw/@Model.ProposalItems[i].Image.Id" alt="@Model.ProposalItems[i].Caption" />
+                                            <p style="margin:0 0 0 5px; width: 250px;height:100%;">@Model.ProposalItems[i].Caption</p>
+                                        </td>
 
                                         i++;
 
@@ -54,7 +55,7 @@
             </tbody>
         </table>
     </div>
-@*</div>*@
+    @*</div>*@
 
 
 
@@ -74,11 +75,11 @@
         </form>
         <hr />*@
     @*<div class="jumbotron jumbotron-fluid">
-        <div class="container">
-            <h1 class="display-4 text-center">@Model.Title</h1>
-            <p class="lead text-center">@Model.Description</p>
-        </div>
-    </div>*@
+            <div class="container">
+                <h1 class="display-4 text-center">@Model.Title</h1>
+                <p class="lead text-center">@Model.Description</p>
+            </div>
+        </div>*@
     @*<div class="container">*@
     @*<div class="row">
         @foreach (var item in Model.ProposalItems)
@@ -87,15 +88,15 @@
                 <div class="card">
                     <img id="img-card" src="/Images/Raw/@item.Image.Id" alt="@item.Caption" />
                     @*<img src="~/images/@Model.ProposalItems[i].Image.FileName" width=200 height=200 style="object-fit:cover" />*@
-                    @*<div class="card-body">
-                        <p class="card-text">@item.Caption</p>
+    @*<div class="card-body">
+                            <p class="card-text">@item.Caption</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-        }
-    </div>
-    </div>*@
-@*</div>*@
+            }
+        </div>
+        </div>*@
+    @*</div>*@
     <div>
         <hr />
         <a class="btn btn-link" asp-action="Index">Back to My Proposals</a>
