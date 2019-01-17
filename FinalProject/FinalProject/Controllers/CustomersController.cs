@@ -25,7 +25,11 @@ namespace FinalProject.Controllers
         // GET: Customers
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Customers.ToListAsync());
+            var designer = _context.Designers.FirstOrDefault(m => m.UserId == User.GetUserId());
+            return View(await _context.Customers
+                .Where(x => x.DesignerId == designer.Id)
+                .Where(x => x.IsActive == true)
+                .ToListAsync());
         }
 
         // GET: Customers/Details/5
@@ -61,8 +65,9 @@ namespace FinalProject.Controllers
         {
             if (ModelState.IsValid)
             {
-                //var designer = _context.Designers.FirstOrDefault(m => m.UserId == User.GetUserId());
-                //customer.DesignerId = designer.Id; 
+                var designer = _context.Designers.FirstOrDefault(m => m.UserId == User.GetUserId());
+                customer.DesignerId = designer.Id;
+                customer.IsActive = true;
                 _context.Add(customer);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -145,7 +150,8 @@ namespace FinalProject.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var customer = await _context.Customers.FindAsync(id);
-            _context.Customers.Remove(customer);
+            customer.IsActive = false;
+            _context.Update(customer);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

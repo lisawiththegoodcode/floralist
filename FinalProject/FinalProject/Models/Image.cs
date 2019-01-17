@@ -17,6 +17,9 @@ namespace FinalProject.Models
         public List<ImageTag> ImageTags { get; set; }
         public List<ProposalItem> ProposalItems { get; set; }
 
+        public bool IsActive { get; set; }
+
+
 
     }
 }

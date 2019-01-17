@@ -154,7 +154,8 @@ namespace FinalProject.Services
         public Task DeleteImageAsync(int id)
         {
             var image = _flowerAppContext.Images.FirstOrDefault(m => m.Id == id);
-            _flowerAppContext.Images.Remove(image);
+            image.IsActive = false;
+            _flowerAppContext.Images.Update(image);
             return _flowerAppContext.SaveChangesAsync();
         }
 
@@ -165,6 +166,7 @@ namespace FinalProject.Services
                     .ThenInclude(x => x.Tag)
                 .Include(x => x.Designer)
                 .Where(x => x.Designer.UserId == userId)
+                .Where(x => x.IsActive == true)
                 .ToListAsync();
         }
 
