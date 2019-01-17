@@ -10,93 +10,52 @@
     <a id="salmon-btn-sm" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
     <hr />
 
-    @*<div class="table-responsive">*@
-    <div class="proposal-sq">
-
-        <table style="border: 1.25px solid #8C8C8C;">
-            <thead style="border-bottom: 1.25px solid #8C8C8C;">
-                <tr>
-                    <th>
-                        <div id="proposal-header">
-                            <h1 class="display-4 text-center">@Model.Title</h1>
-                            <p class="lead text-center">@Model.Description</p>
-                        </div>
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>
-                        <table>
-                            @while (i < Model.ProposalItems.Count && i % 3 == 0)
-                            {
-                                <tr>
-                                    @while (i < Model.ProposalItems.Count)
-                                    {
-                                        <td valign="top">
-                                            @*<img id="img-card" src="https://floralist.azurewebsites.net/Images/Raw/@Model.ProposalItems[i].Id" alt="@Model.ProposalItems[i].Caption" />*@
-                                            <img id="img-card" src="~/Images/Raw/@Model.ProposalItems[i].Image.Id" alt="@Model.ProposalItems[i].Caption" />
-                                            <p style="margin:0 0 0 5px; width: 250px;height:100%;">@Model.ProposalItems[i].Caption</p>
-                                        </td>
-
-                                        i++;
-
-                                        if (i % 3 == 0)
+    <div>
+        <div class="proposal-container">
+            <table class="scaleable-wrapper">
+                <thead>
+                    <tr>
+                        <th>
+                            <div id="proposal-header">
+                                <h1 class="display-4 text-center">@Model.Title</h1>
+                                <p class="lead text-center">@Model.Description</p>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <table>
+                                @while (i < Model.ProposalItems.Count && i % 3 == 0)
+                                {
+                                    <tr>
+                                        @while (i < Model.ProposalItems.Count)
                                         {
-                                            break;
+                                            <td valign="top">
+                                                @*<img id="img-card" src="https://floralist.azurewebsites.net/Images/Raw/@Model.ProposalItems[i].Id" alt="@Model.ProposalItems[i].Caption" />*@
+                                                <img id="img-card" src="~/Images/Raw/@Model.ProposalItems[i].Image.Id" alt="@Model.ProposalItems[i].Caption" />
+                                                <p style="margin:0 0 0 5px; width: 250px;height:100%;">@Model.ProposalItems[i].Caption</p>
+                                            </td>
+
+                                            i++;
+
+                                            if (i % 3 == 0)
+                                            {
+                                                break;
+                                            }
+
                                         }
-
-                                    }
-                                </tr>
-                            }
-                        </table>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    @*</div>*@
-
-
-
-
-
-
-
-
-
-
-    @*<h4>
-            This proposal is currently @(Model.IsShared ? "shared" : "unshared") with @(Model.Customer.Name). Would you like to @(Model.IsShared ? "unshare" : "share")?
-        </h4>
-        <form asp-action="Share">
-            <input type="hidden" asp-for="Id" />
-            <input type="submit" value="@(Model.IsShared ? "Unshare" : "Share")" class="btn btn-default" />
-        </form>
-        <hr />*@
-    @*<div class="jumbotron jumbotron-fluid">
-            <div class="container">
-                <h1 class="display-4 text-center">@Model.Title</h1>
-                <p class="lead text-center">@Model.Description</p>
-            </div>
-        </div>*@
-    @*<div class="container">*@
-    @*<div class="row">
-        @foreach (var item in Model.ProposalItems)
-        {
-            <div class="col-sm-3">
-                <div class="card">
-                    <img id="img-card" src="/Images/Raw/@item.Image.Id" alt="@item.Caption" />
-                    @*<img src="~/images/@Model.ProposalItems[i].Image.FileName" width=200 height=200 style="object-fit:cover" />*@
-    @*<div class="card-body">
-                            <p class="card-text">@item.Caption</p>
-                        </div>
-                    </div>
-                </div>
-            }
+                                    </tr>
+                                }
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-        </div>*@
-    @*</div>*@
+        </div>
+    </div>
     <div>
         <hr />
         <a class="btn btn-link" asp-action="Index">Back to My Proposals</a>
