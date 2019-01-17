@@ -1,6 +1,11 @@
 ﻿@model FinalProject.Models.Tag
-
+@inject FinalProject.Services.IRepository repository
 @{
+    var types = repository.Tags
+        .GroupBy(x => x.Type)
+        .Select(x => x.First())
+        .Select(x => new SelectListItem(x.Type, x.Id.ToString()));
+
     ViewData["Title"] = "Create New Tag";
 }
 <h3>Create Tag</h3>
@@ -12,7 +17,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Type" class="control-label"></label>
-                <input asp-for="Type" class="form-control" />
+                <select asp-for="Type" asp-items="@types" class="form-control"></select>
                 <span asp-validation-for="Type" class="text-danger"></span>
             </div>
             <div class="form-group">
