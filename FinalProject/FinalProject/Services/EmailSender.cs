@@ -27,8 +27,6 @@ namespace FinalProject.Services
 
         public virtual void sendProposalEmail(Proposal proposal)
         {
-            Trace.WriteLine($"In sendProposalEmail method with {proposal}");
-
             var email = _email
 
            //     //.From("floralisttheapp@gmail.com")
@@ -57,6 +55,8 @@ namespace FinalProject.Services
 
 
             email.Send();
+
+          
         }
     }
 }

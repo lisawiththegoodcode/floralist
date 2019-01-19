@@ -8,7 +8,7 @@ body {
 /* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
 .body-content {
-    padding: 15px 15px 0 15px;
+    padding: 0 15px;
 }
 
 /* Carousel */
@@ -33,6 +33,47 @@ body {
     object-fit: cover;
 }
 
+.proposal-sq {
+    width: 250px;
+    height: 250px;
+    border: 2px solid #8C8C8C;
+    border-radius: 25px;
+    background-color:transparent;
+    box-shadow: 0 0 .01em #8C8C8C;
+    display: flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+}
+
+.proposal-sq>h3 {
+    width: 240px;
+    overflow: hidden;
+    text-overflow:ellipsis;
+}
+
+#prop-shared{
+    border-color: seagreen;
+}
+
+#prop-shared:hover {
+    transition: background-color 6s ease;
+    background-color: seagreen;
+}
+
+#prop-in-progress{
+    border-color: goldenrod;
+}
+
+#prop-in-progress:hover {
+    transition: background-color 5s ease;
+    background-color: goldenrod;
+}
+
+#proposal-act{
+    margin-top:2px;
+}
+
 #img-add {
     display: flex;
     flex-direction: column;
@@ -46,9 +87,15 @@ body {
     flex-direction: row;
 }
 
-#caption-style{
-    width: 250px;
+#prop-item-container{
+    display:flex;
+    flex-direction:row;
+    margin:5px;
+}
 
+
+#caption-style {
+    width: 250px;
 }
 
 #img-lib-container {
@@ -82,12 +129,12 @@ body {
 }
 
 #nav-color {
-    border-color: #8C8C8C;
-    background-color: #8C8C8C;
+    border-bottom:1.25px solid #404040;
+    background-color: white;
 }
 
 #nav-style{
-    color: white;
+    color: #404040;
 }
 
 #nav-style:hover {
@@ -100,7 +147,10 @@ body {
     display: block;
     position: absolute;
     top:0;
-    max-height:50px;
+    left:0;
+    max-height:40px;
+    padding-top:8px;
+    padding-left:8px;
 }
 
 /*#accordion {
@@ -114,11 +164,16 @@ body {
     margin: 5px;
 }
 
+.carousel-inner img {
+    margin: auto;
+}
+
 #img-carousel {
-    width: 100%;
+    width: 600px;
     height: 350px;
     object-fit: cover;
-    background-color: salmon;
+    background-color: transparent;
+    margin-top: 25px;
     margin-bottom: 20px;
 }
 #dash-card{
@@ -135,14 +190,22 @@ body {
 
 a#remove-btn{
     color: red;
-    font-size: 15px;
+    font-size: 18px;
     padding: 2px;
+}
 
+#hamburger-style{
+    border:none;
+    background-color:#CCCCCC;
+}
+
+#hamburger-style:hover{
+    background-color:#404040;
 }
 
 #add-btn {
     color: forestgreen;
-    font-size: 15px;
+    font-size: 18px;
     border: none;
     padding: 2px;
     background-color: transparent;
@@ -150,10 +213,20 @@ a#remove-btn{
 }
 
 #tag {
-    color: slategray;
+    color: #404040;
     text-shadow: 1px;
     font-weight: bold;
-    border-color: #9d9d9d;
+    border: 1.25px solid #8C8C8C;
+    padding: 1px 10px;
+    background-color: transparent;
+}
+
+#tag-type{
+    background-color: #CCCCCC;
+    color: white;
+    font-weight: bold;
+    border-color: #CCCCCC;
+    text-shadow: .5px .5px .5px #8C8C8C ;
 }
 
 #salmon-btn {
@@ -200,11 +273,12 @@ a#remove-btn{
     border-radius: 20px;
 }
 
-    #salmon-btn-sm:hover {
-        background-color: salmon;
-        transition: color 0.5s ease;
-        color: black;
-    }
+#salmon-btn-sm:hover {
+    background-color: salmon;
+    transition: color 0.5s ease;
+    color: black;
+}
+
 #search-bar{
     display: flex;
     flex-direction: row;
@@ -223,10 +297,51 @@ display:inline-flex;
     box-shadow: 0 1px 0 0 salmon;
 }
 
+#proposal-header {
+    /*background-color:#CCCCCC;*/
+    font-family:Arial, Helvetica, sans-serif;
+    text-align:center; 
+    padding: 20px;
+    height:auto; 
+    max-width: 780px;
+    border-bottom: 2px solid #8C8C8C;
+}
+
+
+.proposal-container {
+    padding: 20px;
+    max-width: 780px;
+    height: 100%;
+    border: 2px solid #8C8C8C;
+    border-radius: 25px;
+    background-color: transparent;
+    box-shadow: 0 0 .01em #8C8C8C;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
 /* Hide/rearrange for smaller screens */
 @media screen and (max-width: 767px) {
     /* Hide captions */
     .carousel-caption {
         display: none;
+    }
+
+    #img-lib-container{
+        justify-content:center;
+    }
+
+    .scaleable-wrapper {
+        transform: scale(0.6);
+        transform-origin: top center;
+    }
+}
+
+@media screen and (min-width:768px) and (max-width: 1000px){
+    .scaleable-wrapper {
+        transform: scale(0.8);
+        transform-origin: top center;
     }
 }

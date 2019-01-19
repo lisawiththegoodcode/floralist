@@ -9,44 +9,41 @@
     <a id="salmon-btn-sm" asp-action="Create">Create New</a>
 </p>
 <hr />
+<div id="img-lib-container">
+    @foreach (var item in Model)
+    {
+    <div id="img-add">
 
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Customer)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                Status
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
+        @if (item.IsShared)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Customer.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Title)
-                </td>
-                <td>
-                    @(item.IsShared ? "Shared with Client" : "In Progress")
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> |
-                    <a asp-action="Preview" asp-route-id="@item.Id">View</a> |
-                    <a asp-action="Share" asp-route-id="@item.Id">Email Client</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+            <a asp-action="Preview" asp-route-id="@item.Id" class="btn btn-default proposal-sq" id="prop-shared">
+                @* maybe add the first image from the propsal as the background *@
+                <h3>
+                    @item.Title
+                </h3>
+                <br />
 
+                @Html.DisplayFor(modelItem => item)
+            </a>
+        }
+        else
+        {
+        <a asp-action="Preview" asp-route-id="@item.Id" class="btn btn-default proposal-sq" id="prop-in-progress">
+            @* maybe add the first image from the propsal as the background *@
+            <h3>
+                @item.Title
+            </h3>
+            <br />
+            @Html.DisplayFor(modelItem => item)
+        </a>
+        }
+
+        <div id="proposal-act">
+            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> |
+            <a asp-action="Preview" asp-route-id="@item.Id">View</a> |
+            <a asp-action="Share" asp-route-id="@item.Id">Email Client</a>
+        </div>
+    </div>
+    }
+</div>

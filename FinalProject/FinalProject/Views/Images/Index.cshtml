@@ -30,7 +30,7 @@
             <div id="tag-container">
                 @foreach (var tag in item.ImageTags)
                 {
-                    <p>@Html.DisplayFor(modelItem => tag.Tag)  <a id="remove-btn" asp-action="RemoveTag" asp-route-imageId="@item.Id" asp-route-tagId="@tag.Tag.Id">x</a></p>
+                <p><a id="remove-btn" asp-action="RemoveTag" asp-route-imageId="@item.Id" asp-route-tagId="@tag.Tag.Id">x</a>@Html.DisplayFor(modelItem => tag.Tag) </p>
                 }
             </div>
         </div>
@@ -38,8 +38,3 @@
     </div>
     }
 </div>
-
-
-
-        
-

@@ -132,9 +132,9 @@ namespace FinalProject.Controllers
                     await files.CopyToAsync(stream);
                     image.FileImage = stream.ToArray();
 
-                }
+                }             
 
-               
+                image.IsActive = true;
                 image.FileName = Path.GetFileName(files.FileName);
                 image.DesignerId = _repository.GetDesignerIdForUserId(User.GetUserId());
 
@@ -243,6 +243,7 @@ namespace FinalProject.Controllers
 
             var image = await _repository.Images
                 .Where(i=>i.DesignerId == _repository.GetDesignerIdForUserId(User.GetUserId()))
+
                 .FirstOrDefaultAsync(m => m.Id == id);
 
             if (image == null)
