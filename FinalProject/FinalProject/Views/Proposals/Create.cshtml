@@ -1,9 +1,6 @@
-﻿@model FinalProject.Models.Proposal
-@inject FinalProject.Services.IRepository repository
+﻿@model FinalProject.ViewModels.ProposalCustomers
 
 @{
-    var customerItems = repository.Customers.Select(x => new SelectListItem(x.Name, x.Id.ToString()));
-
     ViewData["Title"] = "Proposals";
 }
 
@@ -14,19 +11,19 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Customer" class="control-label"></label>
-                <select asp-for="CustomerId" asp-items="@customerItems" class="form-control"></select>
-                <span asp-validation-for="CustomerId" class="text-danger"></span>
+                <label asp-for="Proposal.Customer" class="control-label"></label>
+                <select asp-for="Proposal.CustomerId" asp-items="Model.Customers.Select(x => new SelectListItem(x.Name, x.Id.ToString()))" class="form-control"></select>
+                <span asp-validation-for="Proposal.CustomerId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
+                <label asp-for="Proposal.Title" class="control-label"></label>
+                <input asp-for="Proposal.Title" class="form-control" />
+                <span asp-validation-for="Proposal.Title" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <textarea asp-for="Description" class="form-control"></textarea>
-                <span asp-validation-for="Description" class="text-danger"></span>
+                <label asp-for="Proposal.Description" class="control-label"></label>
+                <textarea asp-for="Proposal.Description" class="form-control"></textarea>
+                <span asp-validation-for="Proposal.Description" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" id="salmon-btn-sm" />
