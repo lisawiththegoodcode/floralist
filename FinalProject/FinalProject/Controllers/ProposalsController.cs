@@ -29,6 +29,8 @@ namespace FinalProject.Controllers
 
         public async Task<IActionResult> ImageSearch(int proposalId, string searchString)
         {
+            //queryable query the image table
+            //deferred execution when using linq. building up the query, calling to list is telling linq im done and to build the results
             var vm = new ImageSearch
             {
                 ProposalId = proposalId,
@@ -58,6 +60,12 @@ namespace FinalProject.Controllers
             {
                 return NotFound();
             }
+
+            //if (UserUnauthorizedToView(proposal.Designer.UserId))
+            //{
+            //    return NotFound();
+            //}
+
             return View(proposal);
         }
 
@@ -76,7 +84,11 @@ namespace FinalProject.Controllers
             }
 
             proposal = await _repository.GetProposalAsync(id);
- 
+            //if (UserUnauthorizedToView(proposal.Designer.UserId))
+            //{
+            //    return NotFound();
+            //}
+
             if (ModelState.IsValid)
             {
                 try
@@ -104,9 +116,17 @@ namespace FinalProject.Controllers
         // GET: Proposals
         public async Task<IActionResult> Index()
         {
-  
+            //gonna need something like this to control who sees what data
+            //var userId = userManager.getUserId();
+
+            //return View(await _repository.Proposals
+            //    .Include(x => x.Customer)
+            //    .Include(x => x.Designer)
+            //    .Where(x => x.Designer.UserId == User.GetUserId())
+            //    .ToListAsync());
+
             return View(await _repository.GetProposalsForDesignerAsync(User.GetUserId()));
-       
+
         }
 
         // GET: Proposals/Details/5
@@ -123,20 +143,19 @@ namespace FinalProject.Controllers
             {
                 return NotFound();
             }
-            
+
+            //if (UserUnauthorizedToView(proposal.Designer.UserId))
+            //{
+            //    return NotFound();
+            //}
+
             return View(proposal);
         }
 
         // GET: Proposals/Create
         public IActionResult Create()
         {
-            var vm = new ProposalCustomers
-            {
-                Customers = _repository.Customers
-                    .Where(x => x.DesignerId == _repository.GetDesignerIdForUserId(User.GetUserId()))
-                    .Where(x => x.IsActive == true)
-            };
-            return View(vm);
+            return View();
         }
 
         // POST: Proposals/Create
@@ -164,20 +183,19 @@ namespace FinalProject.Controllers
                 return NotFound();
             }
 
-            var vm = new ProposalCustomers
-            {
-                Proposal = await _repository.GetProposalAsync(id),
-                Customers = _repository.Customers
-                    .Where(x => x.DesignerId == _repository.GetDesignerIdForUserId(User.GetUserId()))
-                    .Where(x => x.IsActive == true)
-            };
+            var proposal = await _repository.GetProposalAsync(id);
 
-            if (vm.Proposal == null)
+            if (proposal == null)
             {
                 return NotFound();
             }
-            
-            return View(vm);
+
+            //if (UserUnauthorizedToView(proposal.Designer.UserId))
+            //{
+            //    return NotFound();
+            //}
+
+            return View(proposal);
         }
 
         // POST: Proposals/Edit/5
@@ -191,7 +209,12 @@ namespace FinalProject.Controllers
             {
                 return NotFound();
             }
-            
+
+            //if (UserUnauthorizedToView(proposal.Designer.UserId))
+            //{
+            //    return NotFound();
+            //}
+
             if (ModelState.IsValid)
             {
                 try
@@ -228,7 +251,12 @@ namespace FinalProject.Controllers
             {
                 return NotFound();
             }
-            
+
+            //if (UserUnauthorizedToView(proposal.Designer.UserId))
+            //{
+            //    return NotFound();
+            //}
+
             return View(proposal);
         }
 
