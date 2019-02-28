@@ -68,7 +68,7 @@ namespace FinalProject.Controllers
                 var designer = _context.Designers.FirstOrDefault(m => m.UserId == User.GetUserId());
                 customer.DesignerId = designer.Id;
                 customer.IsActive = true;
-                _context.Customers.Add(customer);
+                _context.Add(customer);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -83,8 +83,7 @@ namespace FinalProject.Controllers
                 return NotFound();
             }
 
-            var customer = await _context.Customers.FirstOrDefaultAsync(x => x.Id == id);
-
+            var customer = await _context.Customers.FindAsync(id);
             if (customer == null)
             {
                 return NotFound();
@@ -108,10 +107,7 @@ namespace FinalProject.Controllers
             {
                 try
                 {
-                    var designer = _context.Designers.FirstOrDefault(m => m.UserId == User.GetUserId());
-                    customer.DesignerId = designer.Id;
-                    customer.IsActive = true;
-                    _context.Customers.Update(customer);
+                    _context.Update(customer);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
