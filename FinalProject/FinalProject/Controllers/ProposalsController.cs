@@ -132,9 +132,7 @@ namespace FinalProject.Controllers
         {
             var vm = new ProposalCustomers
             {
-                Customers = _repository.Customers
-                    .Where(x => x.DesignerId == _repository.GetDesignerIdForUserId(User.GetUserId()))
-                    .Where(x => x.IsActive == true)
+                Customers = _repository.GetCustomersForDesigner(User.GetUserId())
             };
             return View(vm);
         }
@@ -167,9 +165,7 @@ namespace FinalProject.Controllers
             var vm = new ProposalCustomers
             {
                 Proposal = await _repository.GetProposalAsync(id),
-                Customers = _repository.Customers
-                    .Where(x => x.DesignerId == _repository.GetDesignerIdForUserId(User.GetUserId()))
-                    .Where(x => x.IsActive == true)
+                Customers = _repository.GetCustomersForDesigner(User.GetUserId())
             };
 
             if (vm.Proposal == null)

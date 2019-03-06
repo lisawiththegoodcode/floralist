@@ -142,6 +142,13 @@ namespace FinalProject.Services
                 .Where(x => x.Designer.UserId == userId)
                 .ToList();
         }
+        public List<Customer> GetCustomersForDesigner(string userId)
+        {
+            return _flowerAppContext.Customers
+                .Where(x => x.DesignerId == GetDesignerIdForUserId(userId))
+                .Where(x => x.IsActive == true)
+                .ToList();
+        }
         #endregion
 
         #region Image Methods

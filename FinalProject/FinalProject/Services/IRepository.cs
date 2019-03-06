@@ -34,6 +34,8 @@ namespace FinalProject.Services
         Task<List<Proposal>> GetProposalsForDesignerAsync(string userId);
         List<Proposal> GetProposalsForDesigner(string userId);
         List<Proposal> GetProposalsInProgressForDesigner(string userId);
+        List<Customer> GetCustomersForDesigner(string userId);
+
 
 
         Task AddImageAsync(Image image);
