@@ -1,4 +1,4 @@
-# Floralist :bouquet:
+# :bouquet: Floralist | https://floralist.azurewebsites.net/ 
 1. Make a login
 1. Upload some images
 1. Tag your images
